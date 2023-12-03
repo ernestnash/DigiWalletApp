@@ -1,10 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import Registration from './app/components/Registration';
+import DisplayImage from './app/components/DisplayImage';
+
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Welcome to DigiWallet!</Text>
+      <DisplayImage />
+      <Registration />
       <StatusBar style="auto" />
     </View>
   );
@@ -13,7 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#D5212A',
     alignItems: 'center',
     justifyContent: 'center',
   },
