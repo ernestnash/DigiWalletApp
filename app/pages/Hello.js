@@ -2,8 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import DisplayImage from '../components/DisplayImage';
-import Login from './Login';
-import Register from './Register';
 
 
 export default function Hello({ navigation }) {
@@ -38,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   welcomeText: {
-    color: '#d5212a',
+    color: '#991029',
     margin: 50,
     fontSize: 30,
     fontWeight: 'bold',
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
-    backgroundColor: '#D5212A',
+    backgroundColor: '#991029',
     color: '#fff',
   }
 });

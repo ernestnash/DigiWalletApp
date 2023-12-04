@@ -2,7 +2,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const Registration = ({ message }) => {
+const Login = ({navigation}) => {
+  const onPressLogin = () => {
+    navigation.navigate('Dashboard');
+  };
+  const onPressText = () => {
+    navigation.navigate('Register');
+  };
   return (
     <View style={styles.Register}>
       <Text style={styles.heading}>Log in to DigiWallet</Text>
@@ -17,8 +23,8 @@ const Registration = ({ message }) => {
               secureTextEntry={true}
               underlineColorAndroid={'transparent'}
             />
-      <Text style={styles.link}>Don't have an account?</Text>
-      <TouchableOpacity style={styles.button}>
+      <Text style={styles.link} onPress={onPressText} >Don't have an account?</Text>
+      <TouchableOpacity style={styles.button} onPress={onPressLogin} >
             <Text style={styles.text}>LogIn</Text>
       </TouchableOpacity>
     </View>
@@ -27,20 +33,20 @@ const Registration = ({ message }) => {
 
 const styles = StyleSheet.create({
   Register: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#f1f1f1',
     padding: 10,
     borderRadius: 8,
     marginTop: 60
   },
   heading: {
-    fontSize: 18,
+    fontSize: 30,
     color: '#333',
     justifyContent: 'center',
     alignSelf: 'center',
     padding: 20,
   },
   link: {
-    color: '#D5212A',
+    color: '#991029',
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 15,
@@ -65,9 +71,9 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     borderRadius: 5,
-    backgroundColor: '#D5212A',
+    backgroundColor: '#991029',
     color: '#fff',
   }
 });
 
-export default Registration;
+export default Login;

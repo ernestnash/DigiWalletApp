@@ -1,8 +1,14 @@
 // components/MyComponent.js
-import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-const Registration = ({ message }) => {
+const Registration = ({navigation}) => {
+  const onPressSignup = () => {
+    navigation.navigate('Dashboard');
+  };
+  const onPressText = () => {
+    navigation.navigate('Login');
+  };
   return (
     <View style={styles.Register}>
       <Text style={styles.heading}>Sign Up for DigiWallet</Text>
@@ -22,29 +28,32 @@ const Registration = ({ message }) => {
               secureTextEntry={true}
               underlineColorAndroid={'transparent'}
             />
-      <Text style={styles.link}>Already have an account?</Text>
-      <TouchableOpacity style={styles.button}>
+      <Text style={styles.link} onPress={onPressText}>Already have an account?</Text>
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={onPressSignup}>
             <Text style={styles.text}>Sign Up</Text>
       </TouchableOpacity>
+      <StatusBar style="auto" />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   Register: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#f1f1f1',
     padding: 10,
     borderRadius: 8,
   },
   heading: {
-    fontSize: 18,
+    fontSize: 30,
     color: '#333',
     justifyContent: 'center',
     alignSelf: 'center',
     padding: 20,
   },
   link: {
-    color: '#D5212A',
+    color: '#991029',
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 15,
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     borderRadius: 5,
-    backgroundColor: '#D5212A',
+    backgroundColor: '#991029',
     color: '#fff',
   }
 });

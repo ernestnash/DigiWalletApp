@@ -17,7 +17,7 @@ const DisplayImage = () => {
 
 const styles = StyleSheet.create({
   DisplayImage: {
-    backgroundColor: '#D5212A',
+    backgroundColor: '#991029',
     padding: 10,
     borderRadius: 50,
   },

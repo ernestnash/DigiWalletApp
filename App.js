@@ -7,15 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Hello from './app/pages/Hello';
 import Login from './app/pages/Login';
 import Register from './app/pages/Register';
+import Dashboard from './app/pages/Dashboard';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Hello />
-    //   <StatusBar style="auto" />
-    // </View>
 
     <NavigationContainer>
       <Stack.Navigator>
@@ -27,12 +24,17 @@ export default function App() {
         <Stack.Screen 
           name="Login" 
           component={Login} 
-          options={{ headerShown: false }}
+          options={{ headerShown: false }} // Hide the header for the Login screen
         />
         <Stack.Screen 
           name="Register" 
           component={Register} 
-          options={{ headerShown: false }}
+          options={{ headerShown: false }} // Hide the header for the Register screen
+        />
+        <Stack.Screen 
+          name="Dashboard" 
+          component={Dashboard} 
+          options={{ headerShown: false }} // Hide the header for the Register screen
         />
       </Stack.Navigator>
     </NavigationContainer>
