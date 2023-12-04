@@ -5,26 +5,21 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 const Registration = ({ message }) => {
   return (
     <View style={styles.Register}>
-      <Text style={styles.heading}>Sign Up for DigiWallet</Text>
+      <Text style={styles.heading}>Log in to DigiWallet</Text>
       <TextInput
               style={styles.textInput}
-              placeholder='Enter Full Name'
+              placeholder='Account Number'
               underlineColorAndroid={'transparent'}
             />
       <TextInput
               style={styles.textInput}
-              placeholder='Enter Phone Number'
-              underlineColorAndroid={'transparent'}
-            />
-      <TextInput
-              style={styles.textInput}
-              placeholder='Enter Pin'
+              placeholder='Pin'
               secureTextEntry={true}
               underlineColorAndroid={'transparent'}
             />
-      <Text style={styles.link}>Already have an account?</Text>
+      <Text style={styles.link}>Don't have an account?</Text>
       <TouchableOpacity style={styles.button}>
-            <Text style={styles.text}>Sign Up</Text>
+            <Text style={styles.text}>LogIn</Text>
       </TouchableOpacity>
     </View>
   );
