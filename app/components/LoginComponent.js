@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     padding: 10,
     borderRadius: 8,
+    marginTop: 60
   },
   heading: {
     fontSize: 18,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   textInput: {
-    height: 40,
+    height: 45,
     width: 320,
     padding: 8,
     margin: 10,

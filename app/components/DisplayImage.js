@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Image, StyleSheet} from 'react-native';
 
-const DisplayImage = ({ message }) => {
+const DisplayImage = () => {
   return (
     <View style={styles.DisplayImage}>
 
@@ -17,15 +17,16 @@ const DisplayImage = ({ message }) => {
 
 const styles = StyleSheet.create({
   DisplayImage: {
-    // backgroundColor: '#e0e0e0',
+    backgroundColor: '#D5212A',
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 50,
   },
   logo: {
-    width: 60,
-    height: 60,
+    width: 200,
+    height: 190,
     padding: 40,
     marginBottom: 40,
+    marginTop: 1,
   }
   
 });
