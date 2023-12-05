@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
 
 import DisplayImage from '../components/DisplayImage';
+
+import ExternalStyles from '../components/ExternalStyles';
 
 
 export default function Hello({ navigation }) {
@@ -12,46 +14,23 @@ export default function Hello({ navigation }) {
     navigation.navigate('Register');
   };
   return (
-      <View style={styles.container}>
-        <DisplayImage />
-        <Text style={styles.welcomeText}>
+      <View style={ExternalStyles.container}>
+        <SafeAreaView>
+          <View>
+            <DisplayImage/>
+          </View>
+        </SafeAreaView>
+        <Text style={ExternalStyles.welcomeText}>
           Welcome to DigiWallet
         </Text>
-        <TouchableOpacity style={styles.button} onPress={onPressLogin}>
-          <Text style={styles.text}>logIn</Text>
+        <TouchableOpacity style={ExternalStyles.buttonHello} onPress={onPressLogin}>
+          <Text style={ExternalStyles.text}>logIn</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onPressSignup}>
-          <Text style={styles.text}>SignUp</Text>
+        <TouchableOpacity style={ExternalStyles.buttonHello} onPress={onPressSignup}>
+          <Text style={ExternalStyles.text}>SignUp</Text>
         </TouchableOpacity>
 
         <StatusBar style="auto" />
       </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  welcomeText: {
-    color: '#991029',
-    margin: 50,
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  button: {
-    alignItems: 'center',
-    width: 200,
-    padding: 15,
-    marginTop: 20,
-    borderRadius: 5,
-    backgroundColor: '#991029',
-    color: '#fff',
-  }
-});

@@ -1,79 +1,95 @@
 // components/MyComponent.js
+import { useState } from 'react';
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native';
+
+import ExternalStyles from './ExternalStyles';
 
 const Login = ({navigation}) => {
-  const onPressLogin = () => {
-    navigation.navigate('Dashboard');
+
+  const [account_number, setAccountNumber] = useState('');
+  const [pin, setPin] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const urlData = 'http://192.168.0.49:8000';
+
+
+  const onPressLogin = async () => {
+    try {
+
+      setIsLoading(true); // Show loading indicator when the button is pressed
+
+      if (!account_number || !pin) {
+        console.error('All fields are required.');
+        return;
+      }
+      console.log('account_number:', account_number);
+      console.log('pin:', pin);
+
+      const response = await fetch(`${urlData}/api/users/login`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          account_number: account_number,
+          pin: pin,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error data:', errorData);
+        throw new Error(`Logging in failed with status code ${response.status}`);
+      }
+
+      // Handle Navigation to the dashboard
+      navigation.navigate('Dashboard');
+    } catch (error) {
+      console.error('Error Logging in user:', error);
+    
+      if (error instanceof Error) {
+        // This is a standard JavaScript Error object
+        console.error('Standard JavaScript Error:', error.message);
+      } else {
+        // Handle other types of errors
+        console.error('Unknown error type:', typeof error, error);
+      }
+    
+    } finally {
+      setIsLoading(false); // Hide loading indicator regardless of success or failure
+    }
   };
   const onPressText = () => {
     navigation.navigate('Register');
   };
   return (
-    <View style={styles.Register}>
-      <Text style={styles.heading}>Log in to DigiWallet</Text>
+    <View style={ExternalStyles.Register}>
+      <Text style={ExternalStyles.heading}>Log in to DigiWallet</Text>
       <TextInput
-              style={styles.textInput}
+              style={ExternalStyles.textInput}
               placeholder='Account Number'
+              onChangeText={(text) => setAccountNumber(text)}
+              value={account_number}
               underlineColorAndroid={'transparent'}
             />
       <TextInput
-              style={styles.textInput}
+              style={ExternalStyles.textInput}
               placeholder='Pin'
+              onChangeText={(text) => setPin(text)}
               secureTextEntry={true}
+              value={pin}
               underlineColorAndroid={'transparent'}
             />
-      <Text style={styles.link} onPress={onPressText} >Don't have an account?</Text>
-      <TouchableOpacity style={styles.button} onPress={onPressLogin} >
-            <Text style={styles.text}>LogIn</Text>
+      <Text style={ExternalStyles.link} onPress={onPressText} >Don't have an account?</Text>
+      {isLoading && <ActivityIndicator size="small" style={ExternalStyles.activity} />}
+      <TouchableOpacity style={ExternalStyles.button} onPress={onPressLogin} >
+            <Text style={ExternalStyles.text}>LogIn</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  Register: {
-    backgroundColor: '#f1f1f1',
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 60
-  },
-  heading: {
-    fontSize: 30,
-    color: '#333',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 20,
-  },
-  link: {
-    color: '#991029',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    fontSize: 15,
-  },
-  text: {
-    color: '#fff',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    fontSize: 15,
-  },
-  textInput: {
-    height: 45,
-    width: 320,
-    padding: 8,
-    margin: 10,
-    borderColor: '#343A40',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  button: {
-    alignItems: 'center',
-    padding: 20,
-    marginTop: 20,
-    borderRadius: 5,
-    backgroundColor: '#991029',
-    color: '#fff',
-  }
-});
+
 
 export default Login;

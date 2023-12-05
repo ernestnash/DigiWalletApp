@@ -2,12 +2,14 @@
 import React from 'react';
 import { View, Image, StyleSheet} from 'react-native';
 
+import ExternalStyles from './ExternalStyles';
+
 const DisplayImage = () => {
   return (
-    <View style={styles.DisplayImage}>
+    <View style={ExternalStyles.DisplayImage}>
 
         <Image 
-            style={styles.logo}
+            style={ExternalStyles.logo}
             source={{ uri: 'https://digisoftsolutions.co.ke/wp-content/uploads/2022/05/Logo-300x284-1.png'}}
         />
       
@@ -15,20 +17,5 @@ const DisplayImage = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  DisplayImage: {
-    backgroundColor: '#991029',
-    padding: 10,
-    borderRadius: 50,
-  },
-  logo: {
-    width: 200,
-    height: 190,
-    padding: 40,
-    marginBottom: 40,
-    marginTop: 1,
-  }
-  
-});
 
 export default DisplayImage;

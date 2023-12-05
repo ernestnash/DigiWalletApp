@@ -34,7 +34,7 @@ export default function App() {
         <Stack.Screen 
           name="Dashboard" 
           component={Dashboard} 
-          options={{ headerShown: false }} // Hide the header for the Register screen
+          options={{ headerShown: true }} // Hide the header for the Dashboard screen
         />
       </Stack.Navigator>
     </NavigationContainer>

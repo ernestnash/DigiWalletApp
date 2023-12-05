@@ -1,86 +1,108 @@
 // components/MyComponent.js
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { StatusBar} from 'expo-status-bar';
+import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native';
 
-const Registration = ({navigation}) => {
-  const onPressSignup = () => {
-    navigation.navigate('Dashboard');
+import ExternalStyles from './ExternalStyles';
+import React from 'react';
+
+export default function Registration({ navigation }) {
+
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [pin, setPin] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const urlData = 'http://192.168.0.49:8000';
+
+  const onPressSignup = async () => {
+    try {
+
+      setIsLoading(true); // Show loading indicator when the button is pressed
+
+      if (!fullName || !phoneNumber || !pin) {
+        console.error('All fields are required.');
+        return;
+      }
+      console.log('full_name:', fullName);
+      console.log('phone_number:', phoneNumber);
+      console.log('pin:', pin);
+
+      const response = await fetch(`${urlData}/api/users`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: fullName,
+          phone_number: phoneNumber,
+          pin: pin,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error data:', errorData);
+        throw new Error(`Registration failed with status code ${response.status}`);
+      }
+
+      // Handle Navigation to the dashboard
+      navigation.navigate('Dashboard');
+
+    } catch (error) {
+      console.error('Error registering user:', error);
+    
+      if (error instanceof Error) {
+        // This is a standard JavaScript Error object
+        console.error('Standard JavaScript Error:', error.message);
+      } else {
+        // Handle other types of errors
+        console.error('Unknown error type:', typeof error, error);
+      }
+    
+    } finally {
+      setIsLoading(false); // Hide loading indicator regardless of success or failure
+    }
   };
   const onPressText = () => {
     navigation.navigate('Login');
   };
   return (
-    <View style={styles.Register}>
-      <Text style={styles.heading}>Sign Up for DigiWallet</Text>
+    <View style={ExternalStyles.Register}>
+      <Text style={ExternalStyles.heading}>Sign Up for DigiWallet</Text>
       <TextInput
-              style={styles.textInput}
+              style={ExternalStyles.textInput}
               placeholder='Enter Full Name'
+              onChangeText={(text) => setFullName(text)}
+              value={fullName}
               underlineColorAndroid={'transparent'}
             />
       <TextInput
-              style={styles.textInput}
+              style={ExternalStyles.textInput}
               placeholder='Enter Phone Number'
+              onChangeText={(text) => setPhoneNumber(text)}
+              value={phoneNumber}
               underlineColorAndroid={'transparent'}
             />
       <TextInput
-              style={styles.textInput}
+              style={ExternalStyles.textInput}
               placeholder='Enter Pin'
+              onChangeText={(text) => setPin(text)}
               secureTextEntry={true}
+              value={pin}
               underlineColorAndroid={'transparent'}
             />
-      <Text style={styles.link} onPress={onPressText}>Already have an account?</Text>
+      <Text style={ExternalStyles.link} onPress={onPressText}>Already have an account?</Text>
+      {isLoading && <ActivityIndicator size="small" style={ExternalStyles.activity} />}
       <TouchableOpacity 
-        style={styles.button}
+        style={ExternalStyles.button}
         onPress={onPressSignup}>
-            <Text style={styles.text}>Sign Up</Text>
+            <Text style={ExternalStyles.text}>Sign Up</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  Register: {
-    backgroundColor: '#f1f1f1',
-    padding: 10,
-    borderRadius: 8,
-  },
-  heading: {
-    fontSize: 30,
-    color: '#333',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 20,
-  },
-  link: {
-    color: '#991029',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    fontSize: 15,
-  },
-  text: {
-    color: '#fff',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    fontSize: 15,
-  },
-  textInput: {
-    height: 45,
-    width: 320,
-    padding: 8,
-    margin: 10,
-    borderColor: '#343A40',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  button: {
-    alignItems: 'center',
-    padding: 20,
-    marginTop: 20,
-    borderRadius: 5,
-    backgroundColor: '#991029',
-    color: '#fff',
-  }
-});
 
-export default Registration;
+// export default Registration;

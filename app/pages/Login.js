@@ -2,21 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginComponent from '../components/LoginComponent';
 
+import ExternalStyles from '../components/ExternalStyles';
 
 export default function Login() {
   return (
-    <View style={styles.container}>
+    <View style={ExternalStyles.container}>
       <LoginComponent />
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
