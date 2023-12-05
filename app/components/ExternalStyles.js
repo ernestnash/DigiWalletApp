@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const {height} = Dimensions.get("window");
+const {height, width} = Dimensions.get("window");
 
 const ExternalStyles = StyleSheet.create({
     DisplayImage: {
@@ -82,6 +82,41 @@ const ExternalStyles = StyleSheet.create({
       marginTop: 10,
       color: '#4a77aa',
     },
+    redContainer: {
+      // backgroundColor: '#d43',
+      height: height/2,
+      alignSelf: 'stretch',
+      flex: 1
+    },
+    displayBalance: {
+      backgroundColor: '#4a77aa',
+      padding: 10,
+      width: width/1,
+      height: height/3,
+      borderBottomEndRadius: 30,
+      borderBottomLeftRadius: 30,
+    },
+    displayMenu: {
+      backgroundColor: '#4a77aa',
+      padding: 10,
+      width: width/1,
+      height: height/15,
+    },
+    balance: {
+      padding: 40,
+      fontSize: 30,
+      color: '#fff',
+      alignSelf: "center",
+      justifyContent: "center",
+    },
+    menu: {
+      width: width/1,
+      height: height/15,
+    },
+    round: {
+      backgroundColor: '#d43',
+      borderRadius: 20,
+    }
     
   })
 

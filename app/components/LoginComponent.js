@@ -7,7 +7,7 @@ import ExternalStyles from './ExternalStyles';
 
 const Login = ({navigation}) => {
 
-  const [account_number, setAccountNumber] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const urlData = 'http://192.168.0.49:8000';
@@ -18,11 +18,11 @@ const Login = ({navigation}) => {
 
       setIsLoading(true); // Show loading indicator when the button is pressed
 
-      if (!account_number || !pin) {
+      if (!phone_number || !pin) {
         console.error('All fields are required.');
         return;
       }
-      console.log('account_number:', account_number);
+      console.log('account_number:', phone_number);
       console.log('pin:', pin);
 
       const response = await fetch(`${urlData}/api/users/login`, {
@@ -32,8 +32,8 @@ const Login = ({navigation}) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          account_number: account_number,
-          pin: pin,
+          "phone_number": phone_number,
+          "pin": pin,
         }),
       });
 
@@ -42,9 +42,10 @@ const Login = ({navigation}) => {
         console.error('Error data:', errorData);
         throw new Error(`Logging in failed with status code ${response.status}`);
       }
-
+      
       // Handle Navigation to the dashboard
       navigation.navigate('Dashboard');
+      
     } catch (error) {
       console.error('Error Logging in user:', error);
     
@@ -69,8 +70,8 @@ const Login = ({navigation}) => {
       <TextInput
               style={ExternalStyles.textInput}
               placeholder='Account Number'
-              onChangeText={(text) => setAccountNumber(text)}
-              value={account_number}
+              onChangeText={(value) => setPhoneNumber(value)}
+              value={phone_number}
               underlineColorAndroid={'transparent'}
             />
       <TextInput

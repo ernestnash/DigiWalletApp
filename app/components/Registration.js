@@ -30,7 +30,7 @@ export default function Registration({ navigation }) {
       const response = await fetch(`${urlData}/api/users`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -73,21 +73,21 @@ export default function Registration({ navigation }) {
       <TextInput
               style={ExternalStyles.textInput}
               placeholder='Enter Full Name'
-              onChangeText={(text) => setFullName(text)}
+              onChangeText={(value) => setFullName(value)}
               value={fullName}
               underlineColorAndroid={'transparent'}
             />
       <TextInput
               style={ExternalStyles.textInput}
               placeholder='Enter Phone Number'
-              onChangeText={(text) => setPhoneNumber(text)}
+              onChangeText={(value) => setPhoneNumber(value)}
               value={phoneNumber}
               underlineColorAndroid={'transparent'}
             />
       <TextInput
               style={ExternalStyles.textInput}
               placeholder='Enter Pin'
-              onChangeText={(text) => setPin(text)}
+              onChangeText={(value) => setPin(value)}
               secureTextEntry={true}
               value={pin}
               underlineColorAndroid={'transparent'}

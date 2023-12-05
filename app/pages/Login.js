@@ -4,10 +4,10 @@ import LoginComponent from '../components/LoginComponent';
 
 import ExternalStyles from '../components/ExternalStyles';
 
-export default function Login() {
+export default function Login({navigation}) {
   return (
     <View style={ExternalStyles.container}>
-      <LoginComponent />
+      <LoginComponent navigation={ navigation }/>
       <StatusBar style="auto" />
     </View>
   );
