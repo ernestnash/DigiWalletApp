@@ -14,7 +14,7 @@ const Login = ({navigation}) => {
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const urlData = 'http://192.168.100.84:8000';
+  const urlData = 'http://192.168.0.49:8000';
 
   const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 

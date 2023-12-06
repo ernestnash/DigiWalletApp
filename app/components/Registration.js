@@ -6,13 +6,15 @@ import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'reac
 import ExternalStyles from './ExternalStyles';
 import React from 'react';
 
+import { getApiUrl } from '../APIs/Ips.js'
+
 export default function Registration({ navigation }) {
 
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const urlData = 'http://192.168.100.84:8000';
+  // const urlData = 'http://192.168.100.84:8000';
 
   const onPressSignup = async () => {
     try {
@@ -23,11 +25,14 @@ export default function Registration({ navigation }) {
         console.error('All fields are required.');
         return;
       }
-      console.log('full_name:', fullName);
-      console.log('phone_number:', phoneNumber);
-      console.log('pin:', pin);
+      // console.log('full_name:', fullName);
+      // console.log('phone_number:', phoneNumber);
+      // console.log('pin:', pin);
 
-      const response = await fetch(`${urlData}/api/users`, {
+      const urlData1 = getApiUrl(true);  // Use home IP
+      const urlData2 = getApiUrl(false); // Use work IP
+
+      const response1 = await fetch(urlData1, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -40,28 +45,35 @@ export default function Registration({ navigation }) {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error data:', errorData);
-        throw new Error(`Registration failed with status code ${response.status}`);
+      if (response1.ok) {
+        console.log('Request successful using URL 1');
+      } else {
+        const response2 = await fetch(urlData2, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            full_name: fullName,
+            phone_number: phoneNumber,
+            pin: pin,
+          }),
+        });
+
+        if (response2.ok) {
+          console.log('Request successful using URL 2');
+        } else {
+          throw new Error('Both requests failed');
+        }
       }
 
-      // Handle Navigation to the dashboard
       navigation.navigate('Dashboard');
-
     } catch (error) {
       console.error('Error registering user:', error);
-    
-      if (error instanceof Error) {
-        // This is a standard JavaScript Error object
-        console.error('Standard JavaScript Error:', error.message);
-      } else {
-        // Handle other types of errors
-        console.error('Unknown error type:', typeof error, error);
-      }
-    
+      // Handle errors
     } finally {
-      setIsLoading(false); // Hide loading indicator regardless of success or failure
+      setIsLoading(false);
     }
   };
   const onPressText = () => {
