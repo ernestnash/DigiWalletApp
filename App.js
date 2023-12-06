@@ -1,51 +1,75 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
 
-import Hello from './app/pages/Hello';
-import Login from './app/pages/Login';
-import Register from './app/pages/Register';
-import Dashboard from './app/pages/Dashboard';
+// import AuthNavigator from './app/pages/AuthNavigator';
+// import AppNavigator from './app/pages/AppNavigator';
 
-const Stack = createStackNavigator();
+// export default function App() {
+//   return (
 
-export default function App() {
+//     <NavigationContainer>
+//       {isAuthenticated ? <AppNavigator /> : <AuthNavigator />}
+//     </NavigationContainer>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     // backgroundColor: '#D45',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
+
+import React, { useState, useEffect } from 'react';
+import RootNavigator from './app/pages/RootNavigator';
+
+import AppLoading from 'expo-app-loading';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { CredentialsContext } from './app/components/CredentialsContext';
+
+export default function App () {
+  const [appReady, setAppReady] = useState(false);
+  const [storedCredentials, setStoredCredentials] = useState("");
+
+  const checkLoginCredentials = () => {
+    AsyncStorage
+      .getItem('digiWalletCredentials')
+      .then((result) => {
+        if(result !== null) {
+          setStoredCredentials(JSON.parse(result));
+        } else {
+          setStoredCredentials(null);
+        }
+      })
+      .catch(error => console.log(error))
+  }
+  if(!appReady) {
+    return (
+    <AppLoading
+      startAsync={checkLoginCredentials}
+      onFinish={() =>setAppReady(true)}
+      onError={console.warn}
+    />)
+  }
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // // Check authentication status using AsyncStorage
+  // useEffect(() => {
+  //   // check if the user is authenticated
+  //   const userToken = /* Retrieve user token from storage */;
+  //   setIsAuthenticated(!!userToken);
+  // }, []);
+
   return (
-
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Hello" 
-          component={Hello} 
-          options={{ headerShown: false }} // Hide the header for the Hello screen
-        />
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
-          options={{ headerShown: false }} // Hide the header for the Login screen
-        />
-        <Stack.Screen 
-          name="Register" 
-          component={Register} 
-          options={{ headerShown: false }} // Hide the header for the Register screen
-        />
-        <Stack.Screen 
-          name="Dashboard" 
-          component={Dashboard} 
-          options={{ headerShown: false }} // Hide the header for the Dashboard screen
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <CredentialsContext.Provider value={{storedCredentials, setStoredCredentials}}>
+        <RootNavigator />
+    </CredentialsContext.Provider> 
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#D45',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

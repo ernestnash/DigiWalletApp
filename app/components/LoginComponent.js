@@ -1,7 +1,11 @@
 // components/MyComponent.js
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import React from 'react';
 import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { CredentialsContext } from './CredentialsContext';
 
 import ExternalStyles from './ExternalStyles';
 
@@ -10,8 +14,9 @@ const Login = ({navigation}) => {
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const urlData = 'http://192.168.0.49:8000';
+  const urlData = 'http://192.168.100.84:8000';
 
+  const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 
   const onPressLogin = async () => {
     try {
@@ -45,7 +50,9 @@ const Login = ({navigation}) => {
       
       // Handle Navigation to the dashboard
       navigation.navigate('Dashboard');
-      
+
+      // persistLogin({ phone_number})
+
     } catch (error) {
       console.error('Error Logging in user:', error);
     
@@ -64,6 +71,20 @@ const Login = ({navigation}) => {
   const onPressText = () => {
     navigation.navigate('Register');
   };
+
+  const persistLogin = (credentials, message, status) => {
+    AsyncStorage
+      .setItem('digiWalletCredentials', JSON.stringify(credentials))
+      .then(() => {
+          handleMessage(message, status);
+          setStoredCredentials(credentials);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleMessage('Persisting Login Failed')
+      })
+  }
+
   return (
     <View style={ExternalStyles.Register}>
       <Text style={ExternalStyles.heading}>Log in to DigiWallet</Text>
