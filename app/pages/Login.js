@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {  View } from 'react-native';
 import LoginComponent from '../components/LoginComponent';
 
 import ExternalStyles from '../components/ExternalStyles';

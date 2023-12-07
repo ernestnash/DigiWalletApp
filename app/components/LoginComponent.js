@@ -9,7 +9,7 @@ import { CredentialsContext } from './CredentialsContext';
 
 import ExternalStyles from './ExternalStyles';
 
-const Login = ({navigation}) => {
+export default function Login ({ navigation }) {
 
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
@@ -49,9 +49,9 @@ const Login = ({navigation}) => {
       }
       
       // Handle Navigation to the dashboard
-      navigation.navigate('Dashboard');
+      // navigation.navigate('Dashboard');
 
-      // persistLogin({ phone_number})
+      persistLogin({phone_number})
 
     } catch (error) {
       console.error('Error Logging in user:', error);
@@ -76,7 +76,7 @@ const Login = ({navigation}) => {
     AsyncStorage
       .setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
-          handleMessage(message, status);
+          console.info(message, status);
           setStoredCredentials(credentials);
       })
       .catch((error) => {
@@ -87,7 +87,7 @@ const Login = ({navigation}) => {
 
   return (
     <View style={ExternalStyles.Register}>
-      <Text style={ExternalStyles.heading}>Log in to DigiWallet</Text>
+      <Text style={ExternalStyles.heading}>Sign in to DigiWallet</Text>
       <TextInput
               style={ExternalStyles.textInput}
               placeholder='Account Number'
@@ -104,14 +104,10 @@ const Login = ({navigation}) => {
               underlineColorAndroid={'transparent'}
             />
       <Text style={ExternalStyles.link} onPress={onPressText} >Don't have an account?</Text>
-      {isLoading && <ActivityIndicator size="small" style={ExternalStyles.activity} />}
+      {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={ExternalStyles.activity} />}
       <TouchableOpacity style={ExternalStyles.button} onPress={onPressLogin} >
-            <Text style={ExternalStyles.text}>LogIn</Text>
+            <Text style={ExternalStyles.text}>Sign In</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-
-
-export default Login;

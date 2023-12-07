@@ -63,7 +63,7 @@ const ExternalStyles = StyleSheet.create({
     },
     button: {
       alignItems: 'center',
-      padding: 20,
+      padding: 16,
       marginTop: 20,
       borderRadius: 5,
       backgroundColor: '#4a77aa',
@@ -72,7 +72,7 @@ const ExternalStyles = StyleSheet.create({
     buttonHello: {
       width: 200,
       alignItems: 'center',
-      padding: 20,
+      padding: 16,
       marginTop: 20,
       borderRadius: 5,
       backgroundColor: '#4a77aa',
@@ -80,7 +80,6 @@ const ExternalStyles = StyleSheet.create({
     },
     activity: {
       marginTop: 10,
-      color: '#4a77aa',
     },
     redContainer: {
       // backgroundColor: '#d43',
