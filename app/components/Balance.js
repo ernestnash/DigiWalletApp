@@ -6,12 +6,10 @@ import ExternalStyles from './ExternalStyles';
 const Balance = () => {
   return (
     <View style={ExternalStyles.displayBalance}>
-
         <Text style={ExternalStyles.balance}> 
-          Balance {"\n"}
-          20000
+          Balance
         </Text>
-      
+        <Text style={ExternalStyles.balance}>2000</Text>
     </View>
   );
 };

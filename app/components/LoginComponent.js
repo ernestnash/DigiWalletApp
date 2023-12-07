@@ -25,7 +25,7 @@ export default function Login ({ navigation }) {
 
       if (!phone_number || !pin) {
         console.error('All fields are required.');
-        return;
+        return;  
       }
       console.log('account_number:', phone_number);
       console.log('pin:', pin);
@@ -72,11 +72,11 @@ export default function Login ({ navigation }) {
     navigation.navigate('Register');
   };
 
-  const persistLogin = (credentials, message, status) => {
+  const persistLogin = (credentials) => {
     AsyncStorage
       .setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
-          console.info(message, status);
+          console.info('Logged In successfully');
           setStoredCredentials(credentials);
       })
       .catch((error) => {

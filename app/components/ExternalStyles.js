@@ -89,11 +89,11 @@ const ExternalStyles = StyleSheet.create({
     },
     displayBalance: {
       backgroundColor: '#4a77aa',
-      padding: 10,
+      padding: 5,
       width: width/1,
-      height: height/3,
-      borderBottomEndRadius: 30,
-      borderBottomLeftRadius: 30,
+      height: height/5.5,
+      borderBottomEndRadius: 10,
+      borderBottomLeftRadius: 10,
     },
     displayMenu: {
       backgroundColor: '#4a77aa',
@@ -102,7 +102,7 @@ const ExternalStyles = StyleSheet.create({
       height: height/15,
     },
     balance: {
-      padding: 40,
+      paddingTop: 10,
       fontSize: 30,
       color: '#fff',
       alignSelf: "center",

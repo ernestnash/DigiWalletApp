@@ -7,9 +7,9 @@ const AppStack = createStackNavigator();
 const AppNavigator = () => (
   <AppStack.Navigator>
     <AppStack.Screen 
-        name="Dashboard" 
+        name="Home" 
         component={Dashboard} 
-        options={{ headerShown: false }} />
+        options={{ headerShown: true }} />
   </AppStack.Navigator>
 );
 

@@ -58,9 +58,6 @@ export default function Dashboard({ navigation }) {
             onPress={onPressLogout}>
             <Text>Logout</Text>
           </TouchableOpacity>
-          <View style={ExternalStyles.navbar}>
-              <Navbar />
-          </View>
         </View>
         <StatusBar style="auto" />
       </View>
