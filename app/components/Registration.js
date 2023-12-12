@@ -16,7 +16,7 @@ export default function Registration({ navigation }) {
   const [pin, setPin] = useState('');
   const [pinConfirmation, setPinConfirmation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const urlData = 'http://192.168.0.49:8000';
+  const urlData = 'http://192.168.100.83:8000';
 
   const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 

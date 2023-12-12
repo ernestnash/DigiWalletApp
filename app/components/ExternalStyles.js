@@ -1,10 +1,22 @@
 import { StyleSheet, Dimensions } from "react-native";
 
+// import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
+    
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'JosefinSans-Medium': require('../../assets/Fonts/JosefinSans-Medium.ttf'),
+  })
+}
+
+
 const {height, width} = Dimensions.get("window");
+
+const mainColor = '#5063BF';
 
 const ExternalStyles = StyleSheet.create({
     DisplayImage: {
-      backgroundColor: '#4a77aa',
+      backgroundColor: mainColor,
       padding: 10,
       borderRadius: 50,
     },
@@ -17,9 +29,10 @@ const ExternalStyles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      fontFamily: 'JosefinSans-Medium'
     },
     welcomeText: {
-      color: '#4a77aa',
+      color: mainColor,
       margin: 50,
       fontSize: 30,
       fontWeight: 'bold',
@@ -41,7 +54,7 @@ const ExternalStyles = StyleSheet.create({
       padding: 20,
     },
     link: {
-      color: '#4a77aa',
+      color: mainColor,
       justifyContent: 'center',
       alignSelf: 'center',
       fontSize: 15,
@@ -66,7 +79,7 @@ const ExternalStyles = StyleSheet.create({
       padding: 16,
       marginTop: 20,
       borderRadius: 5,
-      backgroundColor: '#4a77aa',
+      backgroundColor: mainColor,
       color: '#fff',
     },
     buttonHello: {
@@ -75,7 +88,7 @@ const ExternalStyles = StyleSheet.create({
       padding: 16,
       marginTop: 20,
       borderRadius: 5,
-      backgroundColor: '#4a77aa',
+      backgroundColor: mainColor,
       color: '#fff',
     },
     activity: {
@@ -88,7 +101,7 @@ const ExternalStyles = StyleSheet.create({
       flex: 1
     },
     displayBalance: {
-      backgroundColor: '#4a77aa',
+      backgroundColor: mainColor,
       padding: 5,
       width: width/1,
       height: height/5.5,
@@ -96,7 +109,7 @@ const ExternalStyles = StyleSheet.create({
       borderBottomLeftRadius: 10,
     },
     displayMenu: {
-      backgroundColor: '#4a77aa',
+      backgroundColor: mainColor,
       padding: 10,
       width: width/1,
       height: height/15,

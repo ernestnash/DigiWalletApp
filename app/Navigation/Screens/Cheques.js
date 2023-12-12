@@ -3,12 +3,12 @@ import * as React from "react";
 import { View, Text } from "react-native";
 
 
-export default function Reports({navigation}) {
+export default function Cheques({navigation}) {
     return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Text
-                onPress={() => alert('This is the "Reports" Screen')}
-                style={{fontSize: 18, fontWeight: 'bold'}}>Reports Screen</Text>
+                onPress={() => alert('This is the "Cheques" Screen')}
+                style={{fontSize: 28, fontWeight: 'bold'}}>Cheques Screen</Text>
         </View>
     );
 }

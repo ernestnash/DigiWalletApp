@@ -8,7 +8,7 @@ export default function Reports({navigation}) {
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Text
                 onPress={() => alert('This is the "Reports" Screen')}
-                style={{fontSize: 18, fontWeight: 'bold'}}>Reports Screen</Text>
+                style={{fontSize: 28, fontWeight: 'bold'}}>Reports Screen</Text>
         </View>
     );
 }
