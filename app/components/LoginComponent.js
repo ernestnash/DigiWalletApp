@@ -6,12 +6,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from './CredentialsContext';
 
-import Styles from '../styles/Styles';
+import Styles, { mainColor } from '../styles/Styles';
 
 
 import ipAddress from '../api/Api';
 
 export default function Login ({ navigation }) {
+
+  const [isPhoneInputFocused, setIsPhoneInputFocused] = useState(false);
+  const [isPinInputFocused, setIsPinInputFocused] = useState(false);
 
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
@@ -87,28 +90,41 @@ export default function Login ({ navigation }) {
   }
 
   return (
-    <View style={Styes.Register}>
-      <Text style={Styes.heading}>Sign in to DigiWallet</Text>
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Account Number'
-              onChangeText={(value) => setPhoneNumber(value)}
-              value={phone_number}
-              underlineColorAndroid={'transparent'}
-            />
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Pin'
-              onChangeText={(text) => setPin(text)}
-              secureTextEntry={true}
-              value={pin}
-              underlineColorAndroid={'transparent'}
-            />
-      <Text style={Styes.link} onPress={onPressText} >Don't have an account?</Text>
-      {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styes.activity} />}
-      <TouchableOpacity style={Styes.button} onPress={onPressLogin} >
-            <Text style={Styes.text}>Sign In</Text>
-      </TouchableOpacity>
+    <View style={Styles.container}>
+      <View style={Styles.formContainer}>
+        <Text style={Styles.heading}>Sign in to DigiWallet</Text>
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isPhoneInputFocused ? mainColor : 'gray' },
+                ]}
+                placeholder='Account Number'
+                onChangeText={(value) => setPhoneNumber(value)}
+                onFocus={() => setIsPhoneInputFocused(true)}
+                onBlur={() => setIsPhoneInputFocused(false)}
+                value={phone_number}
+                underlineColorAndroid={'transparent'}
+              />
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isPinInputFocused ? mainColor : 'gray' },
+                ]}
+                keyboardType='numeric'
+                placeholder='Pin'
+                onChangeText={(text) => setPin(text)}
+                secureTextEntry={true}
+                onFocus={() => setIsPinInputFocused(true)}
+                onBlur={() => setIsPinInputFocused(false)}
+                value={pin}
+                underlineColorAndroid={'transparent'}
+              />
+        <Text style={Styles.link} onPress={onPressText} >Don't have an account?</Text>
+        {isLoading && <ActivityIndicator size="small" color={mainColor} style={Styles.activity} />}
+        <TouchableOpacity style={Styles.button} onPress={onPressLogin} >
+              <Text style={Styles.buttonText2}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

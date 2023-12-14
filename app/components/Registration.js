@@ -2,7 +2,7 @@
 import { useState, useContext } from 'react';
 import { StatusBar} from 'expo-status-bar';
 import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native';
-
+import { mainColor } from '../styles/Styles';
 import Styles from '../styles/Styles';
 
 import { CredentialsContext } from './CredentialsContext';
@@ -11,6 +11,11 @@ import ipAddress from '../api/Api';
 
 
 export default function Registration({ navigation }) {
+
+  const [isFullNameInputFocused, setIsFullNameInputFocused] = useState(false);
+  const [isPhoneInputFocused, setIsPhoneInputFocused] = useState(false);
+  const [isPinInputFocused, setIsPinInputFocused] = useState(false);
+  const [isConfirmPinInputFocused, setIsConfirmPinInputFocused] = useState(false);
 
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -82,46 +87,68 @@ export default function Registration({ navigation }) {
   }
 
   return (
-    <View style={Styes.Register}>
-      <Text style={Styes.heading}>Sign Up for DigiWallet</Text>
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Enter Full Name'
-              onChangeText={(value) => setFullName(value)}
-              value={fullName}
-              underlineColorAndroid={'transparent'}
-            />
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Enter Phone Number'
-              onChangeText={(value) => setPhoneNumber(value)}
-              value={phoneNumber}
-              underlineColorAndroid={'transparent'}
-            />
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Set Wallet Pin'
-              onChangeText={(value) => setPin(value)}
-              secureTextEntry={true}
-              value={pin}
-              underlineColorAndroid={'transparent'}
-            />
-      <TextInput
-              style={Styes.textInput}
-              placeholder='Confirm Wallet Pin'
-              onChangeText={(value) => setPinConfirmation(value)}
-              secureTextEntry={true}
-              value={pinConfirmation}
-              underlineColorAndroid={'transparent'}
-            />
-      <Text style={Styes.link} onPress={onPressText}>Already have an account?</Text>
-      {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styes.activity} />}
-      <TouchableOpacity 
-        style={Styes.button}
-        onPress={onPressSignup}>
-            <Text style={Styes.text}>Sign Up</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
+    <View style={Styles.container}>
+      <View style={Styles.formContainer}>
+        <Text style={Styles.heading}>Sign Up for DigiWallet</Text>
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isFullNameInputFocused ? mainColor : 'gray' },
+                ]}
+                placeholder='Enter Full Name'
+                onChangeText={(value) => setFullName(value)}
+                onFocus={() => setIsFullNameInputFocused(true)}
+                onBlur={() => setIsFullNameInputFocused(false)}
+                value={fullName}
+                underlineColorAndroid={'transparent'}
+              />
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isPhoneInputFocused ? mainColor : 'gray' },
+                ]}
+                placeholder='Enter Phone Number'
+                onChangeText={(value) => setPhoneNumber(value)}
+                onFocus={() => setIsPhoneInputFocused(true)}
+                onBlur={() => setIsPhoneInputFocused(false)}
+                value={phoneNumber}
+                underlineColorAndroid={'transparent'}
+              />
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isPinInputFocused ? mainColor : 'gray' },
+                ]}
+                placeholder='Set Wallet Pin'
+                onChangeText={(value) => setPin(value)}
+                secureTextEntry={true}
+                onFocus={() => setIsPinInputFocused(true)}
+                onBlur={() => setIsPinInputFocused(false)}
+                value={pin}
+                underlineColorAndroid={'transparent'}
+              />
+        <TextInput
+                style={[
+                  Styles.textInput,
+                  { borderColor: isConfirmPinInputFocused ? mainColor : 'gray' },
+                ]}
+                placeholder='Confirm Wallet Pin'
+                onChangeText={(value) => setPinConfirmation(value)}
+                secureTextEntry={true}
+                onFocus={() => setIsConfirmPinInputFocused(true)}
+                onBlur={() => setIsConfirmPinInputFocused(false)}
+                value={pinConfirmation}
+                underlineColorAndroid={'transparent'}
+              />
+        <Text style={Styles.link} onPress={onPressText}>Already have an account?</Text>
+        {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styles.activity} />}
+        <TouchableOpacity 
+          style={Styles.button}
+          onPress={onPressSignup}>
+              <Text style={Styles.buttonText2}>Sign Up</Text>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
+      </View>
     </View>
   );
 };

@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 
 import Styles from '../styles/Styles';
 
+
 export default function Hello({navigation}) {
 
     const onPressGetStarted = () => {
