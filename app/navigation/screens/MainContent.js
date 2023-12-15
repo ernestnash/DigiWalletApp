@@ -61,7 +61,6 @@ export default function MainContent() {
                     return <FontAwesome name={iconName} size={size} color={color} />
                 }
             })}
-                
             >
 
             <Tab.Screen

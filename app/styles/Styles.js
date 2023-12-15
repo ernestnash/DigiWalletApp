@@ -59,8 +59,8 @@ const Styles = StyleSheet.create({
         width: 320,
         padding: 8,
         margin: 10,
-        borderColor: '#343A40',
-        borderBottomWidth: 1,
+        // borderColor: '#343A40',
+        borderBottomWidth: 2,
         // borderWidth: 1,
         // borderRadius: 5,
       },
@@ -84,7 +84,17 @@ const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         fontSize: 15,
+        marginTop: 20,
       },
+
+      profile: {
+        margin: 20,
+        width: width,
+        height: height/3,
+        // backgroundColor: 'red',
+        borderWidth: 2,
+        borderColor: '#D4D4D4',
+      }
       
     
   })
