@@ -2,6 +2,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import MainContent from './screens/MainContent';
+import LoginScreen from '../components/LoginComponent';
 
 const AppStack = createStackNavigator();
 
