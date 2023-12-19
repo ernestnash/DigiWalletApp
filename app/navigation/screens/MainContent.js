@@ -63,13 +63,15 @@ const CustomDrawerContent = (props) => {
 
     return (
 
-        <View style={{ flex: 1, backgroundColor: mainColor, maxHeight: height}}>
+        <View style={{ flex: 1, backgroundColor: mainColor }}>
             {/* Drawer header */}
             <View style={{ flexDirection: "row", alignItems: "center", padding: 16, height: height/4 }}>
                 {/* Placeholder for profile picture */}
                 <FontAwesome name="user-circle-o" size={60} color="white" />
-                <Text style={{ color: "white", fontSize: 30, marginLeft: 18 }}>User Name</Text>
+                <Text style={{ color: "white", fontSize: 20, marginLeft: 18 }}>User Name</Text>
             </View>
+            {/* Separator */}
+            <View style={{ backgroundColor: "white", height: 1, marginVertical: 8 }} />
             <DrawerContentScrollView {...props}>
                 <DrawerItem
                     label="Close Drawer"

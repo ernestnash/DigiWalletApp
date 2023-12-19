@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, FlatList } from "react-native";
 
 import Styles, { mainColor } from "../../../styles/Styles";
 
@@ -12,27 +12,49 @@ const color = '#fff';
 export default function Home({navigation}) {
 
 const nav = useNavigation();
+
+    const transactionsData = [
+        { id: '1', name: 'John Doe', amount: 100.00, type: 'in' },
+        { id: '2', name: 'Jane Smith', amount: -50.00, type: 'out' },
+        { id: '3', name: 'Alice Johnson', amount: 75.00, type: 'in' },
+        { id: '4', name: 'John Doe', amount: 100.00, type: 'in' },
+        { id: '5', name: 'Jane Smith', amount: -50.00, type: 'out' },
+        { id: '6', name: 'Alice Johnson', amount: 75.00, type: 'in' },
+        { id: '7', name: 'John Doe', amount: 100.00, type: 'in' },
+        { id: '8', name: 'Jane Smith', amount: -50.00, type: 'out' },
+        { id: '9', name: 'Alice Johnson', amount: 75.00, type: 'in' },
+        // Add more transactions as needed
+    ];
+    
+    const TransactionItem = ({ name, amount, type }) => (
+        <View style={Styles.transactionItem}>
+        <Text style={Styles.transactionName}>{name}</Text>
+        <Text style={type === 'in' ? Styles.incomeAmount : Styles.expenseAmount}>
+            {type === 'out' ? '-' : '+'} ${Math.abs(amount).toFixed(2)}
+        </Text>
+        </View>
+    );
     
     return(
-        <ScrollView vertical showsVerticalScrollIndicator={true}>
+        <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
             <View style={Styles.specialContainer}>
                 <View style={Styles.topContainer}>
                     {/* Header Section */}
                     <View style={Styles.header}>
 
-                    <TouchableOpacity style={{ paddingLeft: 20}} onPress={() => nav.openDrawer()}>
-                        <Ionicons name="menu-outline" size={40} color={mainColor} />
-                    </TouchableOpacity>
+                        <TouchableOpacity style={{ paddingLeft: 10}} onPress={() => nav.openDrawer()}>
+                            <Ionicons name="menu-outline" size={40} color={mainColor} />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={{ paddingRight: 20}} onPress={() => navigation.navigate('Notifications')}>
-                        <Ionicons name="notifications-outline" size={40} color={mainColor} />
-                    </TouchableOpacity>
+                        <TouchableOpacity style={{ paddingRight: 10}} onPress={() => navigation.navigate('Notifications')}>
+                            <Ionicons name="notifications-outline" size={40} color={mainColor} />
+                        </TouchableOpacity>
                     </View>
 
                     {/* Balance Section */}
                     <View style={Styles.balanceContainer}>
                         <Text style={Styles.balanceHeading}>Balance</Text>
-                        <Text style={Styles.balanceAmount}>$100,000.00</Text>
+                        <Text style={Styles.balanceAmount}>Ksh. 100,000.00</Text>
                     </View>
 
                     {/* Cards Section */}
@@ -71,17 +93,19 @@ const nav = useNavigation();
                 </View>
                 
 
-                {/* Latest Transactions Section */}
-                <View style={Styles.transactions}>
-                    <Text style={Styles.transactionsHeading}>Latest Transactions</Text>
-                    {/* Transaction List - Placeholder */}
-                    <ScrollView>
-                        <Text>Transaction 1</Text>
-                        <Text>Transaction 2</Text>
-                        <Text>Transaction 3</Text>
-                        {/* Add more transactions as needed */}
-                    </ScrollView>
-                </View>
+                
+            </View>
+            {/* Latest Transactions Section */}
+            <View style={Styles.transactions}>
+                <Text style={Styles.transactionsHeading}>Recent Transactions</Text>
+                <FlatList
+                    data={transactionsData}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                    <TransactionItem name={item.name} amount={item.amount} type={item.type} />
+                    )}
+                    ItemSeparatorComponent={() => <View style={Styles.separator} />}
+                />
             </View>
         </ScrollView>
         

@@ -12,11 +12,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: mainColor,
   },
+  contentContainer: {
+    backgroundColor: primaryText,
+  },
   specialContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: primaryText,
   },
   minorText: {
     color: primaryText,
@@ -101,34 +103,35 @@ const Styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#D4D4D4',
   },
+  // home screen
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 20,
-    paddingHorizontal: 20,
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   balanceContainer: {
     alignItems: 'center',
     marginTop: 0,
   },
   balanceHeading: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '400',
     color: mainColor,
   },
   balanceAmount: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: mainColor,
     marginBottom: 10,
   },
   cardsContainer: {
     width: width,
-    marginTop: 50,
+    marginTop: 5,
     height: 10,
     padding: 10,
-    backgroundColor: 'grey',
+    // backgroundColor: 'grey',
   },
   cardComp: {
     width: width / 2, 
@@ -142,8 +145,8 @@ const Styles = StyleSheet.create({
   quickActionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20,
-    paddingHorizontal: 20,
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   quickActionButton: {
     width: 60,
@@ -155,15 +158,15 @@ const Styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.9,
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 5,
   },
   topContainer: {
     marginTop: 20,
-    height: height / 2,
+    height: height / 2.5,
     top: 0,
   },
   transactions: {
@@ -176,7 +179,37 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  
+  // transactions screen
+  transactions: {
+    flex: 1,
+    padding: 16,
+  },
+  transactionsHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  transactionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  transactionName: {
+    flex: 1,
+  },
+  incomeAmount: {
+    color: 'green',
+  },
+  expenseAmount: {
+    color: 'red',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#ccc',
+    margin: 4
+  },
+  // end transactions screen
 
 
 })
