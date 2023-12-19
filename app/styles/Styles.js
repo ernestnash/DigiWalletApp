@@ -350,12 +350,27 @@ const Styles = StyleSheet.create({
     width: "100%",
     position: "relative",
   },
+  blankCard: {
+    backgroundColor: primaryText,
+    borderRadius: 10,
+    borderColor: mainColor,
+    padding: 16,
+    height: 200,
+    width: "100%",
+    position: "relative",
+  },
   
   bankCardHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 16,
+  },
+  blankCardAdd: {
+    marginTop: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: 'center',
   },
   
   bankCardHeaderText: {
@@ -445,14 +460,15 @@ const Styles = StyleSheet.create({
     padding: 16,
     // backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: 'transparent',
   },
   backButton: {
     marginRight: 16,
   },
   nTitle: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
+    color: mainColor,
   },
   notificationsContainer: {
     flex: 1,

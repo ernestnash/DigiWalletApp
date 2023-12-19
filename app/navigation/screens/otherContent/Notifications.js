@@ -36,7 +36,7 @@ export default function Notifications({ navigation }) {
                 <TouchableOpacity
                     style={Styles.backButton}
                     onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="black" />
+                    <Ionicons name="chevron-back-circle" size={30} color={mainColor} />
                 </TouchableOpacity>
 
                 {/* Title */}
@@ -61,7 +61,7 @@ export default function Notifications({ navigation }) {
 
                         {/* Type Icon (Replace with actual icon based on the type) */}
                         <Ionicons
-                            name="ios-information-circle"
+                            name="chevron-down-circle-outline"
                             size={24}
                             color={mainColor} 
                         />

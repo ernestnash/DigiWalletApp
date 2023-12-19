@@ -76,10 +76,10 @@ export default function Profile({ navigation }) {
                 <Text style={Styles.transactionsHeading}>Quick Settings</Text>
                 <View style={Styles.securityButtonsContainer}>
                     <TouchableOpacity style={Styles.securityButton}>
-                        <Text>Change PIN</Text>
+                        <Text style={Styles.whiteText}>Change PIN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.securityButton}>
-                        <Text>Security Questions</Text>
+                        <Text style={Styles.whiteText}>Security Questions</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -91,7 +91,7 @@ export default function Profile({ navigation }) {
                     style={Styles.button}
                     onPress={onPressLogout}
                 >
-                    <Text>Logout</Text>
+                    <Text style={Styles.whiteText}>Logout</Text>
                 </TouchableOpacity>
 
 

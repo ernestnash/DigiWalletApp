@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, SafeAreaView } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 // import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Styles from "../../../styles/Styles";
+import Styles, { mainColor } from "../../../styles/Styles";
 
 export default function Cards({ navigation }) {
 
@@ -41,7 +41,7 @@ export default function Cards({ navigation }) {
                 <TouchableOpacity
                     style={Styles.backButton}
                     onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="black" />
+                    <Ionicons name="chevron-back-circle" size={30} color={mainColor} />
                 </TouchableOpacity>
 
                 {/* Title */}
@@ -51,6 +51,14 @@ export default function Cards({ navigation }) {
             <SafeAreaView>
                 <BankCard />
                 <BankCard style={{ color: 'green'}}/>
+                <ScrollView vertical showsVerticalScrollIndicator={true} style={{padding: 10}}>
+                <View style={Styles.blankCard}>
+                    <View style={Styles.blankCardAdd}>
+                        <Ionicons name="add-circle-outline" size={60} color={mainColor} />
+                        <Text style={Styles.nTitle}>Add New Card</Text>
+                    </View>
+                </View>
+            </ScrollView>
             </SafeAreaView>
         </View>
     );
