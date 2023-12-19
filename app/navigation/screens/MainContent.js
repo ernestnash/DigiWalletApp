@@ -6,7 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Home, Transactions, Cheques, Profile, Reports, Notifications } from "./otherContent/Index";
+import { Home, Transactions, Cheques, Profile, Reports, Notifications, Cards } from "./otherContent/Index";
 import { mainColor } from "../../styles/Styles";
 import { Dimensions } from "react-native";
 const { height } = Dimensions.get("window");
@@ -196,6 +196,11 @@ export default function DrawerNav() {
             <Drawer.Screen
                 name="Notifications"
                 component={Notifications}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="Cards"
+                component={Cards}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>

@@ -4,6 +4,7 @@ import Transactions from "./Transactions";
 import Cheques from "./Cheques";
 import Home from "./Home";
 import Notifications from "./Notifications";
+import Cards from "./Cards";
 
 export {
     Profile,
@@ -11,5 +12,6 @@ export {
     Transactions,
     Cheques,
     Home,
-    Notifications
+    Notifications,
+    Cards
 }

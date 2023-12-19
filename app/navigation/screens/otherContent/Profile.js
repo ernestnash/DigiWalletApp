@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import { useState, useEffect } from "react";
 import Styles, { mainColor } from "../../../styles/Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Profile({ navigation }) {
     const [userInfo, setUserInfo] = useState({});
@@ -21,8 +22,32 @@ export default function Profile({ navigation }) {
         }
     };
 
+    const BankCard = () => {
+        return (
+            <View style={Styles.bankCard}>
+                <View style={Styles.bankCardHeader}>
+                    <Ionicons name="card-outline" size={24} color="white" />
+                    <Text style={Styles.bankCardHeaderText}>1234 **** **** 5678</Text>
+                </View>
+                <View style={Styles.bankCardBody}>
+                    {/* Logo on the top right */}
+                    <Ionicons name="logo-usd" size={24} color="white" style={Styles.logo} />
+
+                    {/* Card Holder Name */}
+                    <Text style={Styles.bankCardText}>Holder's Name: John Doe</Text>
+
+                    {/* Expiry Date */}
+                    <Text style={Styles.bankCardText}>Expiry Date: 12/23</Text>
+
+                    {/* Account Number at the bottom left */}
+                    <Text style={Styles.bankCardText}>Account: 1234 **** **** 5678</Text>
+                </View>
+            </View>
+        );
+    };
+
     return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
             <Text style={Styles.transactionsHeading}>Profile</Text>
             <Text>Finish Setting up your Profile</Text>
             <SafeAreaView style={Styles.profileContainer}>
@@ -41,14 +66,14 @@ export default function Profile({ navigation }) {
             </SafeAreaView>
 
             <View style={Styles.separator2} />
+
+            <TouchableOpacity style={Styles.halfScreen} onPress={() => navigation.navigate('Cards')}>
+                <BankCard />
+            </TouchableOpacity>
             
-
-            <SafeAreaView style={Styles.halfScreen}>
-
-            </SafeAreaView>
             <View style={Styles.separator2} />
             <SafeAreaView style={Styles.settingsContainer}>
-            <Text style={Styles.transactionsHeading}>Quick Settings</Text>
+                <Text style={Styles.transactionsHeading}>Quick Settings</Text>
                 <View style={Styles.securityButtonsContainer}>
                     <TouchableOpacity style={Styles.securityButton}>
                         <Text>Change PIN</Text>

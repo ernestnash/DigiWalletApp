@@ -60,19 +60,22 @@ const nav = useNavigation();
                     {/* Cards Section */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Styles.cardsContainer}>
                     {/* Card 1 */}
-                    <View style={Styles.cardComp}>
-                        <Text>Card 1</Text>
-                    </View>
+                    <TouchableOpacity style={Styles.cardComp} onPress={() => navigation.navigate('Cards')}>
+                        <Text style={Styles.whiteText}>Card 1</Text>
+                        <Text style={Styles.whiteText}>1234567890</Text>
+                    </TouchableOpacity>
 
                     {/* Card 2 */}
-                    <View style={Styles.cardComp}>
-                        <Text>Card 2</Text>
-                    </View>
+                    <TouchableOpacity style={Styles.cardComp} onPress={() => navigation.navigate('Cards')}>
+                        <Text style={Styles.whiteText}>Card 2</Text>
+                        <Text style={Styles.whiteText}>1234567890</Text>
+                    </TouchableOpacity>
 
                     {/* Card 3 */}
-                    <View style={Styles.cardComp}>
-                        <Text>Card 3</Text>
-                    </View>
+                    <TouchableOpacity style={Styles.cardComp} onPress={() => navigation.navigate('Cards')}>
+                        <Text style={Styles.whiteText}>Card 3</Text>
+                        <Text style={Styles.whiteText}>1234567890</Text>
+                    </TouchableOpacity>
                     </ScrollView>
 
                     {/* Quick Action Buttons */}

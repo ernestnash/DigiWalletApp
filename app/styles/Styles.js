@@ -91,7 +91,6 @@ const Styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 20,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
   },
   link: {
     color: mainColor,
@@ -138,6 +137,9 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'flex-start',
     padding: 20,
+  },
+  whiteText: {
+    color: '#fff'
   },
   quickActionContainer: {
     flexDirection: 'row',
@@ -334,11 +336,51 @@ const Styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 5,
   },
+  // bank card
+  logo: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+  },
+  
+  bankCard: {
+    backgroundColor: mainColor,
+    borderRadius: 10,
+    padding: 16,
+    width: "100%",
+    position: "relative",
+  },
+  
+  bankCardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  
+  bankCardHeaderText: {
+    color: "white",
+    fontSize: 16,
+    marginLeft: 8,
+  },
+  
+  bankCardBody: {
+    position: "relative",
+    padding: 10,
+    width: 300,
+  },
+  
+  bankCardText: {
+    color: "white",
+    marginBottom: 8,
+    fontWeight: "700",
+    fontSize: 15,
+  },
   // end profile screen
 
-  halfScreen: {
-    height: height / 4,
-  },
+  // halfScreen: {
+  //   height: height / 4,
+  // },
 
   // reports screen
   chart: {
@@ -416,6 +458,8 @@ const Styles = StyleSheet.create({
     flex: 1,
     paddingTop: 24,
   },
+
+  
 })
 
 
