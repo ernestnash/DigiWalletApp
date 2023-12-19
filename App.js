@@ -39,6 +39,7 @@ export default function App() {
   return (
     <CredentialsContext.Provider 
         value={{storedCredentials, setStoredCredentials}}>
+        <StatusBar style="auto" />
         <RootNavigator />
     </CredentialsContext.Provider> 
   );

@@ -4,6 +4,7 @@ const { height, width } = Dimensions.get("window");
 
 export const mainColor = '#5063BF';
 const primaryText = '#fff';
+const profileImageSize = 100;
 
 const Styles = StyleSheet.create({
   container: {
@@ -50,7 +51,7 @@ const Styles = StyleSheet.create({
     width: 200,
     alignItems: 'center',
     padding: 16,
-    marginTop: 60,
+    marginTop: 50,
     backgroundColor: primaryText,
     borderRadius: 30,
   },
@@ -61,10 +62,11 @@ const Styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: mainColor,
     color: primaryText,
+    width: "100%",
   },
   textInput: {
     height: 45,
-    width: 320,
+    width: "85%",
     padding: 8,
     margin: 10,
     // borderColor: '#343A40',
@@ -79,13 +81,17 @@ const Styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     padding: 10,
     borderRadius: 10,
+    width: "85%",
+    alignItems: 'center'
   },
   heading: {
-    fontSize: 30,
+    fontSize: 25,
     color: '#333',
     justifyContent: 'center',
     alignSelf: 'center',
     padding: 20,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
   link: {
     color: mainColor,
@@ -93,15 +99,6 @@ const Styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 15,
     marginTop: 20,
-  },
-
-  profile: {
-    margin: 20,
-    width: width,
-    height: height / 3,
-    // backgroundColor: 'red',
-    borderWidth: 2,
-    borderColor: '#D4D4D4',
   },
   // home screen
   header: {
@@ -134,9 +131,9 @@ const Styles = StyleSheet.create({
     // backgroundColor: 'grey',
   },
   cardComp: {
-    width: width / 2, 
-    height: 80, 
-    backgroundColor: mainColor, 
+    width: width / 2,
+    height: 80,
+    backgroundColor: mainColor,
     marginRight: 10,
     borderRadius: 10,
     justifyContent: 'flex-start',
@@ -180,12 +177,20 @@ const Styles = StyleSheet.create({
     marginBottom: 10,
   },
   // transactions screen
+  headerTransactions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    marginTop: 40,
+  },
   transactions: {
     flex: 1,
     padding: 16,
   },
   transactionsHeading: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -207,11 +212,166 @@ const Styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#ccc',
-    margin: 4
+    margin: 10,
+  },
+  quickActionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  quickAction: {
+    alignItems: 'center',
+  },
+  quickActionIcon: {
+    fontSize: 24,
+  },
+  quickActionLabel: {
+    marginBottom: 5,
+    fontSize: 12,
+  },
+  transactionsHeader: {
+    alignItems: 'center',
+    margin: 20,
+  },
+  quickAction: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  quickActionIcon: {
+    fontSize: 24,
+  },
+  quickActionInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+  },
+  quickActionLabel: {
+    marginTop: 5,
+    fontSize: 12,
+    textAlign: 'center',
+    flexWrap: 'wrap',
   },
   // end transactions screen
+  // Profile screen
+  profileContainer: {
+    marginTop: 20,
+    padding: 20,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 2,
+  },
+  userDetailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    width: width / 1.2,
+  },
+  profileImageContainer: {
+    marginRight: 20,
+  },
+  profileImage: {
+    borderRadius: 50,
+    borderWidth: 2,
+    width: 70,
+    height: 70,
+    backgroundColor: mainColor,
+    borderColor: mainColor,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileImageText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  userInfo: {
+    marginLeft: 60,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  accountNumber: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  phoneNumber: {
+    fontSize: 14,
+  },
+  separator2: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#ccc",
+    marginVertical: 15,
+  },
+  settingsContainer: {
+    marginTop: 5,
+    alignItems: "center",
+  },
+  securityButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+    marginBottom: 15,
+  },
+  securityButton: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    backgroundColor: mainColor,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  // end profile screen
 
+  halfScreen: {
+    height: height / 4,
+  },
 
+  // reports screen
+  chart: {
+    width: "95%", // Adjust the width as needed
+    backgroundColor: "#ffffff",
+    backgroundGradientFrom: "#ffffff",
+    backgroundGradientTo: "#ffffff",
+  },
+  chartContainer: {
+    marginTop: 10,
+    paddingHorizontal: 10,
+  },
+  filterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  filterIcon: {
+    marginRight: 10,
+  },
+  dropdownContainer: {
+    flex: 1,
+  },
+  dropdown: {
+    backgroundColor: "#fafafa",
+    borderColor: "#ccc",
+  },
+  dropdownList: {
+    backgroundColor: "#fafafa",
+  },
+  datePickerContainer: {
+    marginTop: 10,
+  },
 })
 
 

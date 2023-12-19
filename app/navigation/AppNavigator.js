@@ -1,4 +1,5 @@
 // AppNavigator.js
+import { StatusBar } from 'expo-status-bar';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import MainContent from './screens/MainContent';

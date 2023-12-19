@@ -30,7 +30,7 @@ const screenOptions = {
     tabBarActiveBackgroundColor: mainColor,
     tabBarItemStyle: { borderRadius: 10 },
     tabBarLabelStyle: { padding: 8, fontSize: 11 },
-    tabBarStyle: { padding: 10, margin: 20, borderRadius: 30, height: 65 },
+    tabBarStyle: [{ padding: 10, margin: 20, borderRadius: 30, height: 65, display: 'flex' }, null],
 };
 
 const Tab = createBottomTabNavigator();
@@ -50,37 +50,39 @@ const CustomDrawerContent = (props) => {
 
     const onPressLogout = async () => {
         try {
-          await AsyncStorage.clear();
-          setUserInfo({});
-          setPhoneNumber("");
-          setPin("");
-          nav.navigate('Login')
-        }catch(error) {
+            await AsyncStorage.clear();
+            setUserInfo({});
+            setPhoneNumber("");
+            setPin("");
+            nav.navigate('Login')
+        } catch (error) {
             console.error('Error clearing AsyncStorage', error)
         }
         // localStorage.clear();
-      };
+    };
 
     return (
 
         <View style={{ flex: 1, backgroundColor: mainColor }}>
-            {/* Drawer header */}
-            <View style={{ flexDirection: "row", alignItems: "center", padding: 16, height: height/4 }}>
-                {/* Placeholder for profile picture */}
-                <FontAwesome name="user-circle-o" size={60} color="white" />
-                <Text style={{ color: "white", fontSize: 20, marginLeft: 18 }}>User Name</Text>
-            </View>
-            {/* Separator */}
-            <View style={{ backgroundColor: "white", height: 1, marginVertical: 8 }} />
+
             <DrawerContentScrollView {...props}>
                 <DrawerItem
                     label="Close Drawer"
                     icon={() => <Ionicons name="close-outline" size={24} color="white" />}
-                    onPress={closeDrawer} 
-                    labelStyle={{ color: "white"}}
+                    onPress={closeDrawer}
+                    labelStyle={{ color: "white" }}
                 />
-
-                <DrawerItemList {...props} labelStyle={{ color: "white" }}/>
+                {/* Separator */}
+                <View style={{ backgroundColor: "white", height: 1, marginVertical: 8 }} />
+                {/* Drawer header */}
+                <View style={{ flexDirection: "row", alignItems: "center", padding: 16, height: height / 4 }}>
+                    {/* Placeholder for profile picture */}
+                    <FontAwesome name="user-circle-o" size={60} color="white" />
+                    <Text style={{ color: "white", fontSize: 20, marginLeft: 18 }}>User Name</Text>
+                </View>
+                {/* Separator */}
+                <View style={{ backgroundColor: "white", height: 1, marginVertical: 8 }} />
+                {/* <DrawerItemList {...props} labelStyle={{ color: "white" }}/> */}
 
                 {/* Placeholder items with icons */}
                 <DrawerItem
@@ -107,7 +109,7 @@ const CustomDrawerContent = (props) => {
 
                 {/* Separator */}
                 <View style={{ backgroundColor: "white", height: 1, marginVertical: 8 }} />
-                
+
                 {/* Logout button */}
                 <DrawerItem
                     label="Logout"
@@ -124,7 +126,7 @@ const CustomDrawerContent = (props) => {
     );
 };
 
-export function MainContent({navigation}) {
+export function MainContent({ navigation }) {
 
 
     return (
@@ -136,22 +138,22 @@ export function MainContent({navigation}) {
                     let rn = route.name;
 
                     if (rn === homeName) {
-                        iconName = focused ? 'home' : 'home'
+                        iconName = focused ? 'home' : 'home-outline'
                     } else if (rn === transactionsName) {
-                        iconName = focused ? 'list-ol' : 'list-ol'
+                        iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline'
                     } else if (rn === chequesName) {
-                        iconName = focused ? 'file-text-o' : 'file-text-o'
+                        iconName = focused ? 'file-tray-full' : 'file-tray-full-outline'
                     } else if (rn === reportsName) {
-                        iconName = focused ? 'line-chart' : 'line-chart'
+                        iconName = focused ? 'stats-chart' : 'stats-chart-outline'
                     } else if (rn === profileName) {
-                        iconName = focused ? 'user-circle-o' : 'user-circle-o'
+                        iconName = focused ? 'person' : 'person-outline'
                     }
 
-                    return <FontAwesome name={iconName} size={size} color={color} />
+                    return <Ionicons name={iconName} size={size} color={color} />
                 }
             })}
+            tabBarOptions={screenOptions}
         >
-
             <Tab.Screen
                 name={homeName}
                 component={Home}
@@ -177,7 +179,6 @@ export function MainContent({navigation}) {
                 component={Profile}
                 options={{ headerShown: false }}
             />
-
         </Tab.Navigator>
 
     );

@@ -43,11 +43,11 @@ const nav = useNavigation();
                     <View style={Styles.header}>
 
                         <TouchableOpacity style={{ paddingLeft: 10}} onPress={() => nav.openDrawer()}>
-                            <Ionicons name="menu-outline" size={40} color={mainColor} />
+                            <Ionicons name="menu-outline" size={30} color={mainColor} />
                         </TouchableOpacity>
 
                         <TouchableOpacity style={{ paddingRight: 10}} onPress={() => navigation.navigate('Notifications')}>
-                            <Ionicons name="notifications-outline" size={40} color={mainColor} />
+                            <Ionicons name="notifications-outline" size={30} color={mainColor} />
                         </TouchableOpacity>
                     </View>
 
@@ -58,7 +58,7 @@ const nav = useNavigation();
                     </View>
 
                     {/* Cards Section */}
-                    <ScrollView horizontal showsHorizontalScrollIndicator={true} style={Styles.cardsContainer}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Styles.cardsContainer}>
                     {/* Card 1 */}
                     <View style={Styles.cardComp}>
                         <Text>Card 1</Text>
