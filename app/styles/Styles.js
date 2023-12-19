@@ -372,6 +372,50 @@ const Styles = StyleSheet.create({
   datePickerContainer: {
     marginTop: 10,
   },
+
+  // notifications screen
+  notificationContainer: {
+    marginBottom: 16,
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: 'transparent',
+    backgroundColor:'#fff',
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  notificationTextContainer: {
+    flex: 1,
+  },
+  notificationHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  unopenedIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'red',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    // backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  backButton: {
+    marginRight: 16,
+  },
+  nTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  notificationsContainer: {
+    flex: 1,
+    paddingTop: 24,
+  },
 })
 
 
