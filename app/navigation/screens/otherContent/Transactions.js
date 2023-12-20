@@ -3,6 +3,7 @@ import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native
 import Styles, { mainColor } from '../../../styles/Styles';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import {TransactionDetails} from '../followUpContent/Index'
 
 
 const transactionsData = [
@@ -18,14 +19,25 @@ const transactionsData = [
     // Add more transactions as needed
 ];
 
-const TransactionItem = ({ name, amount, type }) => (
-    <View style={Styles.transactionItem}>
-        <Text style={Styles.transactionName}>{name}</Text>
-        <Text style={type === 'in' ? Styles.incomeAmount : Styles.expenseAmount}>
+const TransactionItem = ({ name, amount, type }) => {
+    const navigation = useNavigation();
+  
+    const handleTransactionPress = () => {
+      // Navigate to the TransactionDetailsScreen with the transaction details
+      navigation.navigate('TransactionDetails', { transaction: { name, amount, type } });
+    };
+  
+    return (
+      <TouchableOpacity onPress={handleTransactionPress}>
+        <View style={Styles.transactionItem}>
+          <Text style={Styles.transactionName}>{name}</Text>
+          <Text style={type === 'in' ? Styles.incomeAmount : Styles.expenseAmount}>
             {type === 'out' ? '-' : '+'} ${Math.abs(amount).toFixed(2)}
-        </Text>
-    </View>
-);
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
 const QuickAction = ({ label, onPress, icon }) => (
     <TouchableOpacity style={Styles.quickAction} onPress={onPress}>
@@ -37,6 +49,7 @@ const QuickAction = ({ label, onPress, icon }) => (
 );
 
 export default function Transactions({ navigation }) {
+
     const handleQuickAction = (action) => {
         // Implement logic for each quick action
         alert(`Performing ${action} action`);

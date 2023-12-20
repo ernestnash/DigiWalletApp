@@ -104,7 +104,7 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 15,
     paddingHorizontal: 10,
   },
   balanceContainer: {
@@ -474,6 +474,111 @@ const Styles = StyleSheet.create({
     flex: 1,
     paddingTop: 24,
   },
+
+  // transaction details
+
+  DetailsContainer: {
+    flex: 1,
+    maxHeight: height,
+    backgroundColor: 'white',
+  },
+  blueBackground: {
+    height: height/3.5,
+    backgroundColor: mainColor,
+  },
+  cardContainer: {
+    padding: 10,
+  },
+  card: {
+    backgroundColor: 'white',
+    elevation: 4,
+    padding: 16,
+    marginTop: -100, 
+    borderRadius: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  logoContainer: {
+    alignItems: 'center',
+  },
+  detailsContainer: {
+    marginVertical: 8,
+  },
+  detailText: {
+    fontSize: 18,
+    // fontWeight: 'bold',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: 'grey',
+    marginVertical: 8,
+  },
+  readMoreContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  shareIcon: {
+    position: 'absolute',
+    top: 40,
+    right: 30,
+  },
+  innerCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    padding: 20,
+  },
+  profileIcon: {
+    marginRight: 16,
+    marginLeft: 10,
+  },
+  dateText: {
+    marginTop: 16,
+    fontSize: 16,
+  },
+  // new
+
+  transferSuccessfulText: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingVertical: 10,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+  detailLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  detailContent: {
+    fontSize: 18,
+  },
+  innerCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderColor: 'grey', 
+    borderWidth: 1,      
+    borderRadius: 8,     
+  },
+  innerCardDetails: {
+    flex: 1,
+    marginLeft: 8,
+  },
+  innerCardName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  innerCardText: {
+    fontSize: 14,
+  },
+
+
+  // end of transaction details
 
   
 })

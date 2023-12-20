@@ -114,7 +114,7 @@ const CustomDrawerContent = (props) => {
                 {/* Logout button */}
                 <DrawerItem
                     label="Logout"
-                    icon={() => <FontAwesome name="sign-out" size={24} color="white" />}
+                    icon={() => <Ionicons name="log-out-outline" size={24} color="white" />}
                     onPress={onPressLogout}
                     labelStyle={{ color: "white" }}
                 />
@@ -202,6 +202,11 @@ export default function DrawerNav() {
             <Drawer.Screen
                 name="Cards"
                 component={Cards}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="TransactionDetails"
+                component={TransactionDetails}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>
