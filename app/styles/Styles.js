@@ -237,7 +237,7 @@ const Styles = StyleSheet.create({
   },
   quickAction: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 10,
     shadowColor: 'black',

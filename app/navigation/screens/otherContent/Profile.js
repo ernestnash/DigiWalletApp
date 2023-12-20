@@ -16,7 +16,7 @@ export default function Profile({ navigation }) {
             setUserInfo({});
             setPhoneNumber("");
             setPin("");
-            navigation.navigate("AuthNavigator", { screen: 'Login' });
+            navigation.navigate('Hello');
         } catch (error) {
             console.error("Error clearing AsyncStorage", error);
         }
