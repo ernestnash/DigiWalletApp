@@ -342,7 +342,7 @@ const Styles = StyleSheet.create({
     top: 16,
     right: 16,
   },
-  
+
   bankCard: {
     backgroundColor: mainColor,
     borderRadius: 10,
@@ -359,7 +359,7 @@ const Styles = StyleSheet.create({
     width: "100%",
     position: "relative",
   },
-  
+
   bankCardHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -372,19 +372,19 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: 'center',
   },
-  
+
   bankCardHeaderText: {
     color: "white",
     fontSize: 16,
     marginLeft: 8,
   },
-  
+
   bankCardBody: {
     position: "relative",
     padding: 10,
     width: 300,
   },
-  
+
   bankCardText: {
     color: "white",
     marginBottom: 8,
@@ -436,7 +436,7 @@ const Styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: 'transparent',
-    backgroundColor:'#fff',
+    backgroundColor: '#fff',
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -483,7 +483,7 @@ const Styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   blueBackground: {
-    height: height/3.5,
+    height: height / 3.5,
     backgroundColor: mainColor,
   },
   cardContainer: {
@@ -493,7 +493,7 @@ const Styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 4,
     padding: 16,
-    marginTop: -100, 
+    marginTop: -100,
     borderRadius: 20,
     marginLeft: 20,
     marginRight: 20,
@@ -561,9 +561,9 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 8,
-    borderColor: 'grey', 
-    borderWidth: 1,      
-    borderRadius: 8,     
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   innerCardDetails: {
     flex: 1,
@@ -580,7 +580,40 @@ const Styles = StyleSheet.create({
 
   // end of transaction details
 
+
+  // dialPad screen
+
+  dialPadContainer: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  dialPadButton: {
+    width: 70,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 40,
+    borderColor: 'black',
+    borderHeight: 2,
+  },
+  buttonPressed: {
+    backgroundColor: mainColor,
+  },
+  buttonText: {
+    fontSize: 20,
+  },
   
+
 })
 
 

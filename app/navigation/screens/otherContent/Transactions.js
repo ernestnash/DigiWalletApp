@@ -3,7 +3,8 @@ import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native
 import Styles, { mainColor } from '../../../styles/Styles';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import {TransactionDetails} from '../followUpContent/Index'
+import {TransactionDetails} from '../followUpContent/Index';
+import { useState } from 'react';
 
 
 const transactionsData = [
@@ -50,9 +51,23 @@ const QuickAction = ({ label, onPress, icon }) => (
 
 export default function Transactions({ navigation }) {
 
+    const [heading, setHeading] = useState('Transactions');
+
+    const updateHeading = (value) => {
+        setHeading(value);
+    };
+
     const handleQuickAction = (action) => {
         // Implement logic for each quick action
         alert(`Performing ${action} action`);
+    };
+    const handleTransferMoney = () => {
+        // Navigate to the DialPad screen and pass the updateHeading function
+        navigation.navigate('Dialpad', {
+            updateHeading: (value) => {
+                return "New Heading";
+            },
+        });
     };
 
     const nav = useNavigation();
@@ -83,7 +98,7 @@ export default function Transactions({ navigation }) {
                     </View>
 
                     <View style={Styles.quickActionsContainer}>
-                        <QuickAction label="Transfer Money" onPress={() => handleQuickAction('Transfer Money')} icon="swap-horizontal-outline" />
+                        <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
                         <QuickAction label="Send Money" onPress={() => handleQuickAction('Send Money')} icon="send-outline" />
                         <QuickAction label="Buy Airtime" onPress={() => handleQuickAction('Buy Airtime')} icon="phone-portrait-outline" />
                         {/* Add more QuickAction components as needed */}

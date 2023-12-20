@@ -14,6 +14,8 @@ const { height } = Dimensions.get("window");
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Dialpad from "../../components/Dialpad";
+
 
 // screen names
 const homeName = "Home";
@@ -207,6 +209,11 @@ export default function DrawerNav() {
             <Drawer.Screen
                 name="TransactionDetails"
                 component={TransactionDetails}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="Dialpad"
+                component={Dialpad}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>
