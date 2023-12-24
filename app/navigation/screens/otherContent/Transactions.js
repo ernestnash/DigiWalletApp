@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import {TransactionDetails} from '../followUpContent/Index';
 import { useState } from 'react';
 
+import Balance from '../../../components/Balance';
+
 
 const transactionsData = [
     { id: '1', name: 'John Doe', amount: 100.00, type: 'in' },
@@ -51,6 +53,8 @@ const QuickAction = ({ label, onPress, icon }) => (
 
 export default function Transactions({ navigation }) {
 
+    const userId = 2;
+
     const [heading, setHeading] = useState('Transactions');
 
     const updateHeading = (value) => {
@@ -92,10 +96,7 @@ export default function Transactions({ navigation }) {
                     </View>
 
                     {/* Balance Section */}
-                    <View style={Styles.balanceContainer}>
-                        <Text style={Styles.balanceHeading}>Balance</Text>
-                        <Text style={Styles.balanceAmount}>Ksh. 100,000.00</Text>
-                    </View>
+                    <Balance userId={userId} />
 
                     <View style={Styles.quickActionsContainer}>
                         <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
