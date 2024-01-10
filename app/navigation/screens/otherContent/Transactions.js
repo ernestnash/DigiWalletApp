@@ -1,6 +1,6 @@
 
 import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
-import Styles, { mainColor } from '../../../styles/Styles';
+import Styles, { lightGray, mainColor } from '../../../styles/Styles';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { TransactionDetails } from '../followUpContent/Index';
@@ -32,13 +32,22 @@ export default function Transactions({ navigation }) {
     // Retrieve the user ID from the CredentialsContext
     const userId = storedCredentials ? storedCredentials.user_id : null;
 
+    // useEffect to fetch user transactions when the component mounts or userId changes
+    useEffect(() => {
+        if (userId) {
+            fetchUserTransactions(userId);
+        }
+    }, [userId]);
+
     const fetchUserTransactions = async (userId) => {
         try {
             setIsLoading(true);
             // Make an API request to your server to get user transactions based on userId
-            const response = await fetch(`${ipAddress}/user/transactions`);
+            const response = await fetch(`${ipAddress}/user/${userId}/transactions`);
             const data = await response.json();
-    
+            console.log('API Response:', data);
+
+
             if (response.ok) {
                 // Check if the response contains an error message
                 if (data.error) {
@@ -57,7 +66,55 @@ export default function Transactions({ navigation }) {
             setIsLoading(false);
         };
     };
-    
+
+    // Function to handle viewing transaction details
+    const viewTransactionDetails = (transaction) => {
+        console.log('Viewing Transaction Details:', transaction);
+    };
+
+    // TransactionItem component with styles
+    const TransactionItem = ({ item, onPress }) => (
+        <TouchableOpacity style={Styles.transactionItem} onPress={() => onPress(item)}>
+            {/* Transaction Type Icon */}
+            <Ionicons
+                name={getTransactionTypeIcon(item.transaction_type)}  
+                size={24}
+                color={getTransactionTypeColor(item.transaction_type)}  
+                style={Styles.transactionTypeIcon}
+            />
+
+            {/* Transaction Type */}
+            <Text style={Styles.transactionType}>{item.transaction_type}</Text>
+
+            {/* Amount */}
+            <Text style={Styles.transactionAmount}>{`Ksh.${item.amount}`}</Text>
+        </TouchableOpacity>
+    );
+
+    // Function to get transaction type icon
+    const getTransactionTypeIcon = (transactionType) => {
+
+        if (transactionType === 'deposit') {
+            return 'arrow-up-outline';
+        } else if (transactionType === 'withdrawal') {
+            return 'arrow-down-outline';
+        }
+        
+        return 'information-circle-outline'; // Default icon if no match
+    };
+
+    // Function to get transaction type color
+    const getTransactionTypeColor = (transactionType) => {
+
+        if (transactionType === 'deposit') {
+            return 'green';
+        } else if (transactionType === 'withdrawal') {
+            return 'red';
+        }
+
+        return 'black'; // Default color if no match
+    };
+
 
     const updateHeading = (value) => {
         setHeading(value);
@@ -122,14 +179,22 @@ export default function Transactions({ navigation }) {
 
             <View style={Styles.transactions}>
                 <Text style={Styles.transactionsHeading}>Recent Transactions</Text>
-                <FlatList
-                    data={transactions}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                        <TransactionItem name={item.name} amount={item.amount} type={item.type} />
-                    )}
-                    ItemSeparatorComponent={() => <View style={Styles.separator} />}
-                />
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) : transactions.length === 0 ? (
+                    <View style={Styles.noTransactionsContainer}>
+                        {/* ... No transactions UI ... */}
+                    </View>
+                ) : (
+                    <FlatList
+                        data={transactions}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => (
+                            <TransactionItem item={item} onPress={viewTransactionDetails} />
+                        )}
+                        ItemSeparatorComponent={() => <View style={Styles.separator} />}
+                    />
+                )}
             </View>
             {/* </View> */}
         </ScrollView>

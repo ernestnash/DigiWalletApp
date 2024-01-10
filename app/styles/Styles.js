@@ -3,6 +3,7 @@ const { height, width } = Dimensions.get("window");
 
 
 export const mainColor = '#5063BF';
+export const lightGray = '#d3d3d3';
 const primaryText = '#fff';
 const profileImageSize = 100;
 
@@ -612,7 +613,56 @@ const Styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
   },
-  
+
+  // No Transactions styles begining
+
+  noTransactionsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+
+  noTransactionsIcon: {
+    marginBottom: 10,
+  },
+
+  noTransactionsText: {
+    color: lightGray,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+
+  // end of no transactions styles
+
+  //transaction items styles
+
+  transactionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'white', // Adjust the background color as needed
+    // borderBottomWidth: 1,
+  },
+
+  transactionTypeIcon: {
+    marginRight: 10,
+  },
+
+  transactionType: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333', // Adjust the text color as needed
+  },
+
+  transactionAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333', // Adjust the text color as needed
+  },
+
+  //transaction items end of styles
 
 })
 
