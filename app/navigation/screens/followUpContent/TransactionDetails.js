@@ -41,7 +41,7 @@ export default function TransactionDetails({ route }) {
                         {/* Transaction details */}
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Name:</Text>
-                            <Text style={Styles.detailContent}>{transaction.name}</Text>
+                            <Text style={Styles.detailContent}>{/*{transaction.name}*/} Self</Text>
                         </View>
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Amount:</Text>
@@ -49,7 +49,7 @@ export default function TransactionDetails({ route }) {
                         </View>
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Type:</Text>
-                            <Text style={Styles.detailContent}>{transaction.type}</Text>
+                            <Text style={Styles.detailContent}>{transaction.transaction_type}</Text>
                         </View>
                     </View>
 

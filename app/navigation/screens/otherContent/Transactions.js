@@ -69,7 +69,8 @@ export default function Transactions({ navigation }) {
 
     // Function to handle viewing transaction details
     const viewTransactionDetails = (transaction) => {
-        console.log('Viewing Transaction Details:', transaction);
+        // Navigate to the TransactionDetails screen and pass the selected transaction as a route parameter
+        navigation.navigate('TransactionDetails', { transaction });
     };
 
     // TransactionItem component with styles
@@ -133,6 +134,11 @@ export default function Transactions({ navigation }) {
         });
     };
 
+    const handleDepositMoney = () => {
+        // Navigate to the AgentPage and pass the transactionType
+        navigation.navigate('Agent', { transactionType: 'Deposit' });
+      };
+
     const nav = useNavigation();
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
@@ -165,7 +171,7 @@ export default function Transactions({ navigation }) {
             </View>
             {/* Add new quick actions here */}
             <View style={Styles.quickActionsContainer}>
-                <QuickAction label="Deposit Money" onPress={() => handleQuickAction('Deposit Money')} icon="arrow-up-outline" />
+                <QuickAction label="Deposit Money" onPress={handleDepositMoney} icon="arrow-up-outline" />
                 <QuickAction label="Cheques" onPress={() => handleQuickAction('Cheques')} icon="cash-outline" />
                 <QuickAction label="Withdraw Money" onPress={() => handleQuickAction('Withdraw Money')} icon="arrow-down-outline" />
                 {/* Add more QuickAction components as needed */}

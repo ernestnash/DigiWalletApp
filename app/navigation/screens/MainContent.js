@@ -16,6 +16,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Dialpad from "../../components/Dialpad";
 
+import Amount from "./followUpContent/componentPages/Amount";
+import Agent from "./followUpContent/componentPages/Agent";
+import ConfirmationPage from "./followUpContent/componentPages/ConfirmationPage";
+
 
 // screen names
 const homeName = "Home";
@@ -211,9 +215,25 @@ export default function DrawerNav() {
                 component={TransactionDetails}
                 options={{ headerShown: false }}
             />
+            
             <Drawer.Screen
                 name="Dialpad"
                 component={Dialpad}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="Agent"
+                component={Agent}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="Amount"
+                component={Amount}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="ConfirmationPage"
+                component={ConfirmationPage}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>
