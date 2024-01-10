@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
+
+import { CredentialsContext } from "../../../components/CredentialsContext";
 
 import { View, Text, TouchableOpacity, ScrollView, FlatList } from "react-native";
 
@@ -18,7 +20,9 @@ export default function Home({ navigation }) {
 
     const nav = useNavigation();
 
-    const userId = 2;
+    // Retrieve the user ID from the CredentialsContext
+    const { storedCredentials } = useContext(CredentialsContext);
+    const userId = storedCredentials ? storedCredentials.user_id : null;
 
     const transactionsData = [
         { id: '1', name: 'John Doe', amount: 100.00, type: 'in' },

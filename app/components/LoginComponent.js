@@ -11,38 +11,33 @@ import Styles, { mainColor } from '../styles/Styles';
 
 import ipAddress from '../api/Api';
 
-export default function Login ({ navigation }) {
-
+export default function Login({ navigation }) {
   const [isPhoneInputFocused, setIsPhoneInputFocused] = useState(false);
   const [isPinInputFocused, setIsPinInputFocused] = useState(false);
-
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
+  const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
   const onPressLogin = async () => {
     try {
-
-      setIsLoading(true); // Show loading indicator when the button is pressed
+      setIsLoading(true);
 
       if (!phone_number || !pin) {
         console.error('All fields are required.');
-        return;  
+        return;
       }
-      console.log('account_number:', phone_number);
-      console.log('pin:', pin);
 
-      const response = await fetch(`${ipAddress}/api/users/login`, {
+      const response = await fetch(`${ipAddress}/users/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "phone_number": phone_number,
-          "pin": pin,
+          phone_number: phone_number,
+          pin: pin,
         }),
       });
 
@@ -51,43 +46,47 @@ export default function Login ({ navigation }) {
         console.error('Error data:', errorData);
         throw new Error(`Logging in failed with status code ${response.status}`);
       }
-      
-      // Handle Navigation to the dashboard
-      // navigation.navigate('Dashboard');
 
-      persistLogin({phone_number})
+      const responseData = await response.json();
+
+      // Make sure 'user' exists in the response
+      if (responseData.user && responseData.user.id) {
+        const userData = responseData.user;
+        persistLogin({ phone_number, user_id: userData.id, user_data: userData });
+      } else {
+        console.error('Invalid response data:', responseData);
+      }
 
     } catch (error) {
       console.error('Error Logging in user:', error);
-    
+
       if (error instanceof Error) {
-        // This is a standard JavaScript Error object
         console.error('Standard JavaScript Error:', error.message);
       } else {
-        // Handle other types of errors
         console.error('Unknown error type:', typeof error, error);
       }
-    
+
     } finally {
-      setIsLoading(false); // Hide loading indicator regardless of success or failure
+      setIsLoading(false);
     }
   };
+
   const onPressText = () => {
     navigation.navigate('Register');
   };
 
-  const persistLogin = (credentials) => {
-    AsyncStorage
-      .setItem('digiWalletCredentials', JSON.stringify(credentials))
+  const persistLogin = ({ phone_number, user_id, user_data }) => {
+    const credentials = { phone_number, user_id, user_data };
+    AsyncStorage.setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
-          console.info('Logged In successfully');
-          setStoredCredentials(credentials);
+        console.info('Logged In successfully');
+        setStoredCredentials(credentials);
       })
       .catch((error) => {
         console.log(error);
-        handleMessage('Persisting Login Failed')
-      })
-  }
+        handleMessage('Persisting Login Failed');
+      });
+  };
 
   return (
     <View style={Styles.container}>

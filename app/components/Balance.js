@@ -4,21 +4,22 @@ import { View, Text } from "react-native";
 
 import Styles from "../styles/Styles";
 
+import ipAddress from "../api/Api";
+
 export default function Balance({ userId }) {
     const [balance, setBalance] = useState(0);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch the balance when the component mounts
-        fetch(`http://192.168.106.76:8000/api/account/${userId}/balance`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("API Response:", data);
-
-                if (data && data.balance !== undefined) {
-                    setBalance(parseFloat(data.balance));
+        fetch(`${ipAddress}/account/${userId}/balance`)
+            .then((response) => response.json())  // Use response.json() to parse the JSON automatically
+            .then((jsonData) => {
+                console.log("Parsed JSON Data:", jsonData);
+    
+                if (jsonData && jsonData.balance !== undefined) {
+                    setBalance(parseFloat(jsonData.balance));
                 } else {
-                    console.error("Balance not found or is undefined in API response:", data);
+                    console.error("Balance not found or is undefined in API response:", jsonData);
                 }
             })
             .catch((error) => {

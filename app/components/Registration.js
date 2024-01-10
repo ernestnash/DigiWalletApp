@@ -1,9 +1,11 @@
 // components/MyComponent.js
 import { useState, useContext } from 'react';
-import { StatusBar} from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 import { View, Text, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native';
 import { mainColor } from '../styles/Styles';
 import Styles from '../styles/Styles';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CredentialsContext } from './CredentialsContext';
 
@@ -23,25 +25,23 @@ export default function Registration({ navigation }) {
   const [pinConfirmation, setPinConfirmation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
+  const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
   const onPressSignup = async () => {
     try {
-
-      setIsLoading(true); // Show loading indicator when the button is pressed
-
+      setIsLoading(true);
+  
       if (!fullName || !phoneNumber || !pin || !pinConfirmation) {
         console.error('All fields are required.');
         return;
       }
-
-      if(pin !== pinConfirmation) {
+  
+      if (pin !== pinConfirmation) {
         console.error('Pins must match');
         return;
       }
-
-
-      const response = await fetch(`${ipAddress}/api/users`, {
+  
+      const response = await fetch(`${ipAddress}/users`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -53,14 +53,27 @@ export default function Registration({ navigation }) {
           pin: pin,
         }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Error data:', errorData);
         throw new Error(`Registering user failed with status code ${response.status}`);
       }
-
-      persistSignUp({phone_number});
+  
+      const responseData = await response.json();
+  
+      // Make sure 'user_data' exists in the response
+      if (responseData.user_data && responseData.user_data.id) {
+        const userId = responseData.user_data.id;
+  
+        persistSignUp({
+          phone_number: phoneNumber,
+          user_id: userId,
+        });
+      } else {
+        console.error('Invalid response data:', responseData);
+      }
+  
       // navigation.navigate('Dashboard');
     } catch (error) {
       console.error('Error registering user:', error);
@@ -73,79 +86,82 @@ export default function Registration({ navigation }) {
     navigation.navigate('Login');
   };
 
-  const persistSignUp = (credentials, message, status) => {
-    AsyncStorage
-      .setItem('digiWalletCredentials', JSON.stringify(credentials))
+  const persistSignUp = (credentials) => {
+    AsyncStorage.setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
-          console.info(message, status);
-          setStoredCredentials(credentials);
+        console.info('Persisted Login Successfully');
+        setStoredCredentials(credentials);
+
+        // Log the contents of the CredentialsContext
+        console.log('CredentialsContext after signup:', credentials);
       })
       .catch((error) => {
-        console.log(error);
-        handleMessage('Persisting Login Failed')
-      })
-  }
+        console.error(error);
+        handleMessage('Persisting Login Failed');
+      });
+  };
+
 
   return (
     <View style={Styles.container}>
       <View style={Styles.formContainer}>
         <Text style={Styles.heading}>Sign Up for DigiWallet</Text>
         <TextInput
-                style={[
-                  Styles.textInput,
-                  { borderColor: isFullNameInputFocused ? mainColor : 'gray' },
-                ]}
-                placeholder='Enter Full Name'
-                onChangeText={(value) => setFullName(value)}
-                onFocus={() => setIsFullNameInputFocused(true)}
-                onBlur={() => setIsFullNameInputFocused(false)}
-                value={fullName}
-                underlineColorAndroid={'transparent'}
-              />
+          style={[
+            Styles.textInput,
+            { borderColor: isFullNameInputFocused ? mainColor : 'gray' },
+          ]}
+          placeholder='Enter Full Name'
+          onChangeText={(value) => setFullName(value)}
+          onFocus={() => setIsFullNameInputFocused(true)}
+          onBlur={() => setIsFullNameInputFocused(false)}
+          value={fullName}
+          underlineColorAndroid={'transparent'}
+        />
         <TextInput
-                style={[
-                  Styles.textInput,
-                  { borderColor: isPhoneInputFocused ? mainColor : 'gray' },
-                ]}
-                placeholder='Enter Phone Number'
-                onChangeText={(value) => setPhoneNumber(value)}
-                onFocus={() => setIsPhoneInputFocused(true)}
-                onBlur={() => setIsPhoneInputFocused(false)}
-                value={phoneNumber}
-                underlineColorAndroid={'transparent'}
-              />
+          style={[
+            Styles.textInput,
+            { borderColor: isPhoneInputFocused ? mainColor : 'gray' },
+          ]}
+          placeholder='Enter Phone Number'
+          onChangeText={(value) => setPhoneNumber(value)}
+          onFocus={() => setIsPhoneInputFocused(true)}
+          onBlur={() => setIsPhoneInputFocused(false)}
+          value={phoneNumber}
+          underlineColorAndroid={'transparent'}
+        />
         <TextInput
-                style={[
-                  Styles.textInput,
-                  { borderColor: isPinInputFocused ? mainColor : 'gray' },
-                ]}
-                placeholder='Set Wallet Pin'
-                onChangeText={(value) => setPin(value)}
-                secureTextEntry={true}
-                onFocus={() => setIsPinInputFocused(true)}
-                onBlur={() => setIsPinInputFocused(false)}
-                value={pin}
-                underlineColorAndroid={'transparent'}
-              />
+          style={[
+            Styles.textInput,
+            { borderColor: isPinInputFocused ? mainColor : 'gray' },
+          ]}
+          placeholder='Set Wallet Pin'
+          onChangeText={(value) => setPin(value)}
+          secureTextEntry={true}
+          onFocus={() => setIsPinInputFocused(true)}
+          onBlur={() => setIsPinInputFocused(false)}
+          value={pin}
+          underlineColorAndroid={'transparent'}
+        />
         <TextInput
-                style={[
-                  Styles.textInput,
-                  { borderColor: isConfirmPinInputFocused ? mainColor : 'gray' },
-                ]}
-                placeholder='Confirm Wallet Pin'
-                onChangeText={(value) => setPinConfirmation(value)}
-                secureTextEntry={true}
-                onFocus={() => setIsConfirmPinInputFocused(true)}
-                onBlur={() => setIsConfirmPinInputFocused(false)}
-                value={pinConfirmation}
-                underlineColorAndroid={'transparent'}
-              />
+          style={[
+            Styles.textInput,
+            { borderColor: isConfirmPinInputFocused ? mainColor : 'gray' },
+          ]}
+          placeholder='Confirm Wallet Pin'
+          onChangeText={(value) => setPinConfirmation(value)}
+          secureTextEntry={true}
+          onFocus={() => setIsConfirmPinInputFocused(true)}
+          onBlur={() => setIsConfirmPinInputFocused(false)}
+          value={pinConfirmation}
+          underlineColorAndroid={'transparent'}
+        />
         <Text style={Styles.link} onPress={onPressText}>Already have an account?</Text>
         {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styles.activity} />}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={Styles.button}
           onPress={onPressSignup}>
-              <Text style={Styles.buttonText2}>Sign Up</Text>
+          <Text style={Styles.buttonText2}>Sign Up</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
       </View>
