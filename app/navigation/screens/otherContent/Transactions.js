@@ -1,10 +1,12 @@
 
-import { View, Text, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import React, { View, Text, FlatList, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Styles, { lightGray, mainColor } from '../../../styles/Styles';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { TransactionDetails } from '../followUpContent/Index';
 import { useState, useContext, useEffect } from 'react';
+
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 import { CredentialsContext } from '../../../components/CredentialsContext';
 
@@ -29,15 +31,39 @@ export default function Transactions({ navigation }) {
     const [heading, setHeading] = useState('Transactions');
     const [isLoading, setIsLoading] = useState(false);
 
+    const isFocused = useIsFocused(); // Use useIsFocused hook to determine if the screen is focused
+
     // Retrieve the user ID from the CredentialsContext
     const userId = storedCredentials ? storedCredentials.user_id : null;
 
+    const [refreshBalance, setRefreshBalance] = useState(0);
+
     // useEffect to fetch user transactions when the component mounts or userId changes
     useEffect(() => {
-        if (userId) {
-            fetchUserTransactions(userId);
-        }
-    }, [userId]);
+        let timeout;
+    
+        const fetchTransactions = () => {
+            if (userId) {
+                fetchUserTransactions(userId);
+            }
+        };
+    
+        const focusListener = navigation.addListener('focus', () => {
+            fetchTransactions();
+            setRefreshBalance((prev) => prev + 1);
+    
+            // Introduce a delay (e.g., 5000 milliseconds) before allowing the next API call
+            timeout = setTimeout(() => {
+                clearTimeout(timeout);
+            }, 5000);  // Adjust the delay as needed
+        });
+    
+        return () => {
+            focusListener();
+            clearTimeout(timeout); // Clear the timeout if the component unmounts
+        };
+    }, [navigation, userId, refreshBalance]);
+    
 
     const fetchUserTransactions = async (userId) => {
         try {
@@ -78,9 +104,9 @@ export default function Transactions({ navigation }) {
         <TouchableOpacity style={Styles.transactionItem} onPress={() => onPress(item)}>
             {/* Transaction Type Icon */}
             <Ionicons
-                name={getTransactionTypeIcon(item.transaction_type)}  
+                name={getTransactionTypeIcon(item.transaction_type)}
                 size={24}
-                color={getTransactionTypeColor(item.transaction_type)}  
+                color={getTransactionTypeColor(item.transaction_type)}
                 style={Styles.transactionTypeIcon}
             />
 
@@ -95,21 +121,21 @@ export default function Transactions({ navigation }) {
     // Function to get transaction type icon
     const getTransactionTypeIcon = (transactionType) => {
 
-        if (transactionType === 'deposit') {
+        if (transactionType === 'Deposit') {
             return 'arrow-up-outline';
-        } else if (transactionType === 'withdrawal') {
+        } else if (transactionType === 'Withdrawal') {
             return 'arrow-down-outline';
         }
-        
+
         return 'information-circle-outline'; // Default icon if no match
     };
 
     // Function to get transaction type color
     const getTransactionTypeColor = (transactionType) => {
 
-        if (transactionType === 'deposit') {
+        if (transactionType === 'Deposit') {
             return 'green';
-        } else if (transactionType === 'withdrawal') {
+        } else if (transactionType === 'Withdrawal') {
             return 'red';
         }
 
@@ -136,8 +162,13 @@ export default function Transactions({ navigation }) {
 
     const handleDepositMoney = () => {
         // Navigate to the AgentPage and pass the transactionType
-        navigation.navigate('Agent', { transactionType: 'Deposit' });
-      };
+        navigation.navigate('Agent', { transactionType: 'Deposit', account_number: userId });
+    };
+
+    const handleWithdrawMoney = () => {
+        // Navigate to the AgentPage and pass the transactionType
+        navigation.navigate('Agent', { transactionType: 'Withdrawal', account_number: userId });
+    };
 
     const nav = useNavigation();
     return (
@@ -161,7 +192,8 @@ export default function Transactions({ navigation }) {
             </View>
 
             {/* Balance Section */}
-            <Balance userId={userId} />
+            {/* <Balance userId={userId} /> */}
+            <Balance userId={userId} refreshBalance={refreshBalance} />
 
             <View style={Styles.quickActionsContainer}>
                 <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
@@ -173,7 +205,7 @@ export default function Transactions({ navigation }) {
             <View style={Styles.quickActionsContainer}>
                 <QuickAction label="Deposit Money" onPress={handleDepositMoney} icon="arrow-up-outline" />
                 <QuickAction label="Cheques" onPress={() => handleQuickAction('Cheques')} icon="cash-outline" />
-                <QuickAction label="Withdraw Money" onPress={() => handleQuickAction('Withdraw Money')} icon="arrow-down-outline" />
+                <QuickAction label="Withdraw Money" onPress={handleWithdrawMoney} icon="arrow-down-outline" />
                 {/* Add more QuickAction components as needed */}
             </View>
             <View style={Styles.quickActionsContainer}>
@@ -186,7 +218,7 @@ export default function Transactions({ navigation }) {
             <View style={Styles.transactions}>
                 <Text style={Styles.transactionsHeading}>Recent Transactions</Text>
                 {isLoading ? (
-                    <Text>Loading...</Text>
+                    <ActivityIndicator size="large" color={mainColor} />
                 ) : transactions.length === 0 ? (
                     <View style={Styles.noTransactionsContainer}>
                         {/* ... No transactions UI ... */}

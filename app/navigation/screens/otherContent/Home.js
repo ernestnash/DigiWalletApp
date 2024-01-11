@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { CredentialsContext } from "../../../components/CredentialsContext";
 import { View, Text, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import Styles, { mainColor } from "../../../styles/Styles";
@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Balance from "../../../components/Balance";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused, useFocusEffect } from "@react-navigation/native";
 
 import ipAddress from "../../../api/Api";
 
@@ -16,6 +16,8 @@ export default function Home({ navigation }) {
 
     const nav = useNavigation();
 
+    const isFocused = useIsFocused(); // Use useIsFocused hook to determine if the screen is focused
+
     // Retrieve the user ID from the CredentialsContext
     const { storedCredentials } = useContext(CredentialsContext);
     const [transactions, setTransactions] = useState([]);
@@ -23,12 +25,34 @@ export default function Home({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
     const userId = storedCredentials ? storedCredentials.user_id : null;
 
-     // useEffect to fetch user transactions when the component mounts or userId changes
-     useEffect(() => {
-        if (userId) {
-            fetchUserTransactions(userId);
-        }
-    }, [userId]);
+    const [refreshBalance, setRefreshBalance] = useState(0);
+
+
+    // useEffect to fetch user transactions when the component mounts or userId changes
+    useEffect(() => {
+        let timeout;
+    
+        const fetchTransactions = () => {
+            if (userId) {
+                fetchUserTransactions(userId);
+            }
+        };
+    
+        const focusListener = navigation.addListener('focus', () => {
+            fetchTransactions();
+            setRefreshBalance((prev) => prev + 1);
+    
+            // Introduce a delay (e.g., 5000 milliseconds) before allowing the next API call
+            timeout = setTimeout(() => {
+                clearTimeout(timeout);
+            }, 5000);  // Adjust the delay as needed
+        });
+    
+        return () => {
+            focusListener();
+            clearTimeout(timeout); // Clear the timeout if the component unmounts
+        };
+    }, [navigation, userId, refreshBalance]);
 
     const fetchUserTransactions = async (userId) => {
         try {
@@ -68,9 +92,9 @@ export default function Home({ navigation }) {
         <TouchableOpacity style={Styles.transactionItem} onPress={() => onPress(item)}>
             {/* Transaction Type Icon */}
             <Ionicons
-                name={getTransactionTypeIcon(item.transaction_type)}  
+                name={getTransactionTypeIcon(item.transaction_type)}
                 size={24}
-                color={getTransactionTypeColor(item.transaction_type)}  
+                color={getTransactionTypeColor(item.transaction_type)}
                 style={Styles.transactionTypeIcon}
             />
 
@@ -85,21 +109,21 @@ export default function Home({ navigation }) {
     // Function to get transaction type icon
     const getTransactionTypeIcon = (transactionType) => {
 
-        if (transactionType === 'deposit') {
+        if (transactionType === 'Deposit') {
             return 'arrow-up-outline';
-        } else if (transactionType === 'withdrawal') {
+        } else if (transactionType === 'Withdrawal') {
             return 'arrow-down-outline';
         }
-        
+
         return 'information-circle-outline'; // Default icon if no match
     };
 
     // Function to get transaction type color
     const getTransactionTypeColor = (transactionType) => {
 
-        if (transactionType === 'deposit') {
+        if (transactionType === 'Deposit') {
             return 'green';
-        } else if (transactionType === 'withdrawal') {
+        } else if (transactionType === 'Withdrawal') {
             return 'red';
         }
 
@@ -123,7 +147,8 @@ export default function Home({ navigation }) {
                     </View>
 
                     {/* Balance Section */}
-                    <Balance userId={userId} />
+                    {/* <Balance userId={userId} /> */}
+                    <Balance userId={userId} refreshBalance={refreshBalance} />
 
                     {/* Cards Section */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Styles.cardsContainer}>

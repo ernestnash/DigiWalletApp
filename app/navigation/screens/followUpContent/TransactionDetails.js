@@ -31,7 +31,7 @@ export default function TransactionDetails({ route }) {
                     
                     {/* Transfer Successful text centered with bigger font and padding */}
                     <Text style={Styles.transferSuccessfulText}>
-                        Transfer Successful
+                        {transaction.transaction_type === 'Deposit' ? 'Deposit Successful' : 'Withdrawal Successful'}
                     </Text>
 
                     {/* Separator */}

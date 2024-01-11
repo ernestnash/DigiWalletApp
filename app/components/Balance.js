@@ -1,43 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import Styles from '../styles/Styles';
+import ipAddress from '../api/Api';
 
-import { View, Text } from "react-native";
+import { mainColor } from '../styles/Styles';
 
-import Styles from "../styles/Styles";
+export default function Balance({ userId, onBalanceChange, refreshBalance }) {
+  const [balance, setBalance] = useState(0);
+  const [isLoading, setLoading] = useState(true);
 
-import ipAddress from "../api/Api";
+  const fetchBalance = async () => {
+    try {
+      const response = await fetch(`${ipAddress}/account/${userId}/balance`);
+      const jsonData = await response.json();
+  
+      if (jsonData && jsonData.balance !== undefined) {
+        setBalance(parseFloat(jsonData.balance));
+        if (onBalanceChange) {
+          onBalanceChange(parseFloat(jsonData.balance));
+        }
+      } else {
+        console.error('Balance not found or is undefined in API response:', jsonData);
+      }
+    } catch (error) {
+      console.error('Error fetching balance:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default function Balance({ userId }) {
-    const [balance, setBalance] = useState(0);
-    const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    fetchBalance();
+  }, [userId, refreshBalance]); 
 
-    useEffect(() => {
-        fetch(`${ipAddress}/account/${userId}/balance`)
-            .then((response) => response.json())  // Use response.json() to parse the JSON automatically
-            .then((jsonData) => {
-                console.log("Parsed JSON Data:", jsonData);
-    
-                if (jsonData && jsonData.balance !== undefined) {
-                    setBalance(parseFloat(jsonData.balance));
-                } else {
-                    console.error("Balance not found or is undefined in API response:", jsonData);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching balance:", error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [userId]);
-
-    return (
-        <View style={Styles.balanceContainer}>
-            <Text style={Styles.balanceHeading}>Balance</Text>
-            {isLoading ? (
-                <Text>Loading...</Text>
-            ) : (
-                <Text style={Styles.balanceAmount}>Ksh. {balance !== undefined ? balance.toFixed(2) : 'N/A'}</Text>
-            )}
-        </View>
-    );
+  return (
+    <View style={Styles.balanceContainer}>
+      <Text style={Styles.balanceHeading}>Balance</Text>
+      {isLoading ? (
+        <ActivityIndicator size="large" color={mainColor} />
+      ) : (
+        <Text style={Styles.balanceAmount}>Ksh. {balance.toFixed(2)}</Text>
+      )}
+    </View>
+  );
 }

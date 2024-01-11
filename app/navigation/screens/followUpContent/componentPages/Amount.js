@@ -1,7 +1,7 @@
 // AmountPage.js
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -17,6 +17,7 @@ const AmountPage = ({ navigation, route }) => {
             agent: route.params.agent,
             amount,
             transactionType: route.params.transactionType,
+            account_number: route.params.account_number,
         });
     };
 
@@ -28,7 +29,7 @@ const AmountPage = ({ navigation, route }) => {
                     placeholder="Enter amount"
                     value={amount}
                     onChangeText={(text) => setAmount(text)}
-                    keyboardType="numeric"
+                    keyboardType="none"
                 />
             </View>
             <View style={styles.dialpadContainer}>
@@ -79,20 +80,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     amountContainer: {
-        marginBottom: 20,
+        marginBottom: 40,
     },
     input: {
         width: 200,
         borderBottomWidth: 1,
     },
     button: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         borderRadius: 30,
         backgroundColor: '#3498db',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 5,
+        margin: 15,
     },
     buttonText: {
         color: 'white',
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     dialpadContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 20,
+        marginBottom: 10,
     },
 });
 

@@ -9,8 +9,9 @@ const AgentPage = ({ navigation, route }) => {
   const transactionType = route.params?.transactionType || 'Unknown';
 
   const handleNext = () => {
-    navigation.navigate('Amount', { agent, transactionType });
-  };
+    const { agent, account_number, transactionType } = route.params;
+    navigation.navigate('Amount', { agent, transactionType, account_number });
+};
   
 
   return (
