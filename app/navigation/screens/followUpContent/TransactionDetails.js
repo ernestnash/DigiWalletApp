@@ -6,6 +6,29 @@ import Styles, { mainColor } from '../../../styles/Styles';
 export default function TransactionDetails({ route }) {
     const { transaction } = route.params;
 
+    // Function to render recipient details based on transaction type
+    const renderRecipientDetails = () => {
+        if (transaction.transaction_type === 'Transfer') {
+            return (
+                <View style={Styles.innerCard}>
+                    {/* Placeholder icon for profile picture */}
+                    <Ionicons
+                        name="person-circle-outline"
+                        size={40}
+                        color={mainColor}
+                        style={Styles.profileIcon}
+                    />
+                    <View style={Styles.innerCardDetails}>
+                        <Text style={Styles.innerCardName}>Recipient: {transaction.recipientName}</Text>
+                        <Text style={Styles.innerCardText}>Account Number: {transaction.recipientAccountNumber}</Text>
+                    </View>
+                </View>
+            );
+        }
+        // If the transaction type is not a transfer, return null
+        return null;
+    };
+
     return (
         <View style={Styles.DetailsContainer}>
             <View style={Styles.blueBackground}>
@@ -53,26 +76,14 @@ export default function TransactionDetails({ route }) {
                         </View>
                     </View>
 
-                    {/* New card for profile picture, recipient's name, account number, and date */}
-                    <View style={Styles.innerCard}>
-                        {/* Placeholder icon for profile picture */}
-                        <Ionicons
-                            name="person-circle-outline"
-                            size={40}
-                            color={mainColor}
-                            style={Styles.profileIcon}
-                        />
-                        <View style={Styles.innerCardDetails}>
-                            <Text style={Styles.innerCardName}>Recipient: John Doe</Text>
-                            <Text style={Styles.innerCardText}>Account Number: 1234567890</Text>
-                        </View>
-                    </View>
+                    {/* Conditionally render recipient details */}
+                    {renderRecipientDetails()}
 
                     {/* Separator */}
                     <View style={Styles.separator} />
 
                     {/* Date of the transfer */}
-                    <Text style={Styles.dateText}>Date: {new Date().toLocaleDateString()}</Text>
+                    <Text style={Styles.dateText}>Date: {new Date(transaction.created_at).toLocaleDateString()}</Text>
                 </View>
             </View>
         </View>
