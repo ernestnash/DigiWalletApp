@@ -24,6 +24,7 @@ export default function Registration({ navigation }) {
   const [pin, setPin] = useState('');
   const [pinConfirmation, setPinConfirmation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
@@ -32,12 +33,12 @@ export default function Registration({ navigation }) {
       setIsLoading(true);
   
       if (!fullName || !phoneNumber || !pin || !pinConfirmation) {
-        console.error('All fields are required.');
+        setErrorMessage('All fields are required.');
         return;
       }
   
       if (pin !== pinConfirmation) {
-        console.error('Pins must match');
+        setErrorMessage('Pins must match');
         return;
       }
   
@@ -56,7 +57,7 @@ export default function Registration({ navigation }) {
   
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Error data:', errorData);
+        setErrorMessage('Error data: ' + JSON.stringify(errorData));
         throw new Error(`Registering user failed with status code ${response.status}`);
       }
   
@@ -76,7 +77,7 @@ export default function Registration({ navigation }) {
   
       // navigation.navigate('Dashboard');
     } catch (error) {
-      console.error('Error registering user:', error);
+      setErrorMessage('Error registering user:', error);
       // Handle errors
     } finally {
       setIsLoading(false);
@@ -157,6 +158,7 @@ export default function Registration({ navigation }) {
           underlineColorAndroid={'transparent'}
         />
         <Text style={Styles.link} onPress={onPressText}>Already have an account?</Text>
+        {errorMessage !== '' && <Text style={Styles.errorText}>{errorMessage}</Text>}
         {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styles.activity} />}
         <TouchableOpacity
           style={Styles.button}

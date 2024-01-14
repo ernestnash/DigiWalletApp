@@ -69,7 +69,7 @@ export default function Home({ navigation }) {
                     console.error('Error fetching transactions:', data.error);
                 } else {
                     // Set transactions if there is no error
-                    setTransactions(data.transactions);
+                    setTransactions(data.transactions || []);
                 }
             } else {
                 // Handle error, show a message, or perform other actions
@@ -199,6 +199,7 @@ export default function Home({ navigation }) {
                 ) : transactions.length === 0 ? (
                     <View style={Styles.noTransactionsContainer}>
                         {/* ... No transactions UI ... */}
+                        <Text>No transactions to display for the user.</Text>
                     </View>
                 ) : (
                     <FlatList

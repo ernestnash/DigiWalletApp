@@ -41,29 +41,29 @@ export default function Transactions({ navigation }) {
     // useEffect to fetch user transactions when the component mounts or userId changes
     useEffect(() => {
         let timeout;
-    
+
         const fetchTransactions = () => {
             if (userId) {
                 fetchUserTransactions(userId);
             }
         };
-    
+
         const focusListener = navigation.addListener('focus', () => {
             fetchTransactions();
             setRefreshBalance((prev) => prev + 1);
-    
+
             // Introduce a delay (e.g., 5000 milliseconds) before allowing the next API call
             timeout = setTimeout(() => {
                 clearTimeout(timeout);
-            }, 5000);  // Adjust the delay as needed
+            }, 5000);
         });
-    
+
         return () => {
             focusListener();
             clearTimeout(timeout); // Clear the timeout if the component unmounts
         };
     }, [navigation, userId, refreshBalance]);
-    
+
 
     const fetchUserTransactions = async (userId) => {
         try {
@@ -80,7 +80,7 @@ export default function Transactions({ navigation }) {
                     console.error('Error fetching transactions:', data.error);
                 } else {
                     // Set transactions if there is no error
-                    setTransactions(data.transactions);
+                    setTransactions(data.transactions || []);
                 }
             } else {
                 // Handle error, show a message, or perform other actions
@@ -119,45 +119,46 @@ export default function Transactions({ navigation }) {
     );
 
     // Function to get transaction type icon
-    const getTransactionTypeIcon = (transactionType) => {
-
-        if (transactionType === 'Deposit') {
+const getTransactionTypeIcon = (transactionType) => {
+    switch (transactionType) {
+        case 'Deposit':
             return 'arrow-up-outline';
-        } else if (transactionType === 'Withdrawal') {
+        case 'Withdrawal':
             return 'arrow-down-outline';
-        }
+        case 'Sent':
+            return 'arrow-forward-outline'; 
+        case 'Received':
+            return 'arrow-back-outline'; 
+        default:
+            return 'information-circle-outline'; // Default icon if no match
+    }
+};
 
-        return 'information-circle-outline'; // Default icon if no match
-    };
-
-    // Function to get transaction type color
-    const getTransactionTypeColor = (transactionType) => {
-
-        if (transactionType === 'Deposit') {
+// Function to get transaction type color
+const getTransactionTypeColor = (transactionType) => {
+    switch (transactionType) {
+        case 'Deposit':
             return 'green';
-        } else if (transactionType === 'Withdrawal') {
+        case 'Withdrawal':
             return 'red';
-        }
+        case 'Sent':
+            return 'blue'; 
+        case 'Received':
+            return 'purple'; 
+        default:
+            return 'black'; // Default color if no match
+    }
+};
 
-        return 'black'; // Default color if no match
-    };
 
-
-    const updateHeading = (value) => {
-        setHeading(value);
-    };
 
     const handleQuickAction = (action) => {
         // Implement logic for each quick action
         alert(`Performing ${action} action`);
     };
     const handleTransferMoney = () => {
-        // Navigate to the DialPad screen and pass the updateHeading function
-        navigation.navigate('Dialpad', {
-            updateHeading: (value) => {
-                return "New Heading";
-            },
-        });
+        // Navigate to the AccountNumber screen and pass the originAccount parameter
+        navigation.navigate('AccountNumber', { originAccount: userId });
     };
 
     const handleDepositMoney = () => {
@@ -222,6 +223,7 @@ export default function Transactions({ navigation }) {
                 ) : transactions.length === 0 ? (
                     <View style={Styles.noTransactionsContainer}>
                         {/* ... No transactions UI ... */}
+                        <Text>No transactions to display for the user.</Text>
                     </View>
                 ) : (
                     <FlatList

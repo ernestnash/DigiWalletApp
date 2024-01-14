@@ -15,11 +15,10 @@ const AmountPage = ({ navigation, route }) => {
 
     const handleConfirm = () => {
         console.log('Route Params in AmountPage:', route.params);
-        navigation.navigate('ConfirmationPage', {
-            agent: route.params.agent,
+        navigation.navigate('Confirmation', {
             amount,
-            transactionType: route.params.transactionType,
-            account_number: route.params.account_number,
+            originAccount: route.params.originAccount,
+            destinationAccount: route.params.destinationAccount,
         });
     };
 

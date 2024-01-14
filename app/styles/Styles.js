@@ -409,14 +409,17 @@ const Styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 10,
   },
-  filterContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-  },
   filterIcon: {
     marginRight: 10,
   },
+  filterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    flex: 1,
+    marginTop: 40,
+  },
+  
   dropdownContainer: {
     flex: 1,
   },
@@ -427,8 +430,32 @@ const Styles = StyleSheet.create({
   dropdownList: {
     backgroundColor: "#fafafa",
   },
+  // datetimepicker
+
+  dateContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  dateInput: {
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 8,
+    flex: 1,
+  },
+  updateChartButton: {
+    backgroundColor: mainColor,
+    padding: 10,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  updateChartButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
   datePickerContainer: {
-    marginTop: 10,
+    marginBottom: 20,
   },
 
   // notifications screen
@@ -663,6 +690,16 @@ const Styles = StyleSheet.create({
   },
 
   //transaction items end of styles
+
+  //error messages styling
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+
+  
 
 })
 

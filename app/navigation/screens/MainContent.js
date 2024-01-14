@@ -17,8 +17,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Dialpad from "../../components/Dialpad";
 
 import Amount from "./followUpContent/componentPages/Amount";
+import AmountPage from "./followUpContent/transferSequence/Amount";
 import Agent from "./followUpContent/componentPages/Agent";
 import ConfirmationPage from "./followUpContent/componentPages/ConfirmationPage";
+import Confirmation from "./followUpContent/transferSequence/Confirmation";
+import AccountNumber from "./followUpContent/transferSequence/AccountNumber";
 
 
 // screen names
@@ -232,8 +235,23 @@ export default function DrawerNav() {
                 options={{ headerShown: false }}
             />
             <Drawer.Screen
+                name="AmountPage"
+                component={AmountPage}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
                 name="ConfirmationPage"
                 component={ConfirmationPage}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="Confirmation"
+                component={Confirmation}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="AccountNumber"
+                component={AccountNumber}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>

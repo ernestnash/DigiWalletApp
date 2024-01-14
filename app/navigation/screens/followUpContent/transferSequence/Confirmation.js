@@ -9,28 +9,24 @@ import ipAddress from '../../../../api/Api';
 
 import Styles, { mainColor } from '../../../../styles/Styles';
 
-const ConfirmationPage = ({ route }) => {
-    const { agent, amount, transactionType, account_number } = route.params;
+const Confirmation = ({ route }) => {
+    const { amount, originAccount, destinationAccount } = route.params;
 
     const navigation = useNavigation();
 
     const handleConfirm = async () => {
         try {
-            console.log(`${transactionType} confirmed!`);
-            console.log('Transaction Type:', transactionType);
-            console.log('Agent:', agent);
+            console.log(`Transfer confirmed!`);
+            console.log('Origin Account:', originAccount);
             console.log('Amount:', amount);
-            console.log('Account:', account_number);
+            console.log('Destination Account:', destinationAccount);
 
             // Prepare data for the POST request
             const postData = {
-                transaction_type: transactionType,
                 amount: amount,
-                account_number: account_number,
             };
 
-            // Make a POST request to your API endpoint
-            const response = await fetch(`${ipAddress}/transactions/new`, {
+            const response = await fetch(`${ipAddress}/transactions/${originAccount}/transfer/${destinationAccount}`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -45,10 +41,10 @@ const ConfirmationPage = ({ route }) => {
 
             if (response.ok) {
                 // Handle success
-                console.log('Transaction successfully posted:', data);
+                console.log('Transfer successfully posted:', data);
             } else {
                 // Handle error
-                console.error('Error posting transaction:', data.error);
+                console.error('Error posting transfer:', data.error);
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -69,12 +65,12 @@ const ConfirmationPage = ({ route }) => {
 
                     <View style={Styles.detailsContainer}>
                         <View style={Styles.detailRow}>
-                            <Text style={Styles.transferSuccessfulText}>{`Confirm ${transactionType}`}</Text>
+                            <Text style={Styles.transferSuccessfulText}>{`Confirm Transfer`}</Text>
                             {/* <Text>{`Confirm ${transactionType}`}</Text> */}
                         </View>
                         <View style={Styles.detailRow}>
-                            <Text style={Styles.detailLabel}>{`${transactionType === 'Deposit' ? 'Agent Number' : 'ATM No'}:`}</Text>
-                            <Text style={Styles.detailText}>{agent}</Text>
+                            <Text style={Styles.detailLabel}>Sent To: </Text>
+                            <Text style={Styles.detailText}>{destinationAccount}</Text>
                         </View>
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Amount:</Text>
@@ -106,4 +102,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ConfirmationPage;
+export default Confirmation;

@@ -1,14 +1,23 @@
-
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView} from "react-native";
 import { useState, useEffect } from "react";
 import Styles, { mainColor } from "../../../styles/Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from '@expo/vector-icons';
+import { CredentialsContext } from "../../../components/CredentialsContext";
+
+import { useContext } from "react";
 
 export default function Profile({ navigation }) {
+    const { storedCredentials } = useContext(CredentialsContext);
     const [userInfo, setUserInfo] = useState({});
     const [phone_number, setPhoneNumber] = useState("");
     const [pin, setPin] = useState("");
+
+    useEffect(() => {
+        setUserInfo(storedCredentials.user_data || {});
+        setPhoneNumber(storedCredentials.phone_number || "");
+        setPin(storedCredentials.pin || "");
+    }, [storedCredentials]);
 
     const onPressLogout = async () => {
         try {
@@ -16,7 +25,7 @@ export default function Profile({ navigation }) {
             setUserInfo({});
             setPhoneNumber("");
             setPin("");
-            navigation.navigate('Hello');
+            navigation.navigate('GetStarted');
         } catch (error) {
             console.error("Error clearing AsyncStorage", error);
         }
@@ -34,13 +43,13 @@ export default function Profile({ navigation }) {
                     <Ionicons name="logo-usd" size={24} color="white" style={Styles.logo} />
 
                     {/* Card Holder Name */}
-                    <Text style={Styles.bankCardText}>Holder's Name: John Doe</Text>
+                    <Text style={Styles.bankCardText}>Holder's Name: {userInfo.full_name || ''}</Text>
 
                     {/* Expiry Date */}
-                    <Text style={Styles.bankCardText}>Expiry Date: 12/23</Text>
+                    <Text style={Styles.bankCardText}>Expiry Date: 12/25</Text>
 
                     {/* Account Number at the bottom left */}
-                    <Text style={Styles.bankCardText}>Account: 1234 **** **** 5678</Text>
+                    <Text style={Styles.bankCardText}>Account: {userInfo.id || ''}</Text>
                 </View>
             </View>
         );
@@ -54,13 +63,13 @@ export default function Profile({ navigation }) {
                 <View style={Styles.userDetailsContainer}>
                     <View style={Styles.profileImageContainer}>
                         <View style={Styles.profileImage}>
-                            <Text style={Styles.profileImageText}>T</Text>
+                            <Text style={Styles.profileImageText}>{userInfo.full_name ? userInfo.full_name[0] : 'T'}</Text>
                         </View>
                     </View>
                     <View style={Styles.userInfo}>
-                        <Text style={Styles.userName}>John Doe</Text>
-                        <Text style={Styles.accountNumber}>Account: 123456789</Text>
-                        <Text style={Styles.phoneNumber}>Phone: +123 456 789</Text>
+                        <Text style={Styles.userName}>{userInfo.full_name || 'John Doe'}</Text>
+                        <Text style={Styles.accountNumber}>Account: {userInfo.id || '123456789'}</Text>
+                        <Text style={Styles.phoneNumber}>Phone: {userInfo.phone_number || '+123 456 789'}</Text>
                     </View>
                 </View>
             </SafeAreaView>
@@ -83,9 +92,7 @@ export default function Profile({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-
                 <View style={Styles.separator2} />
-
 
                 <TouchableOpacity
                     style={Styles.button}
@@ -93,8 +100,6 @@ export default function Profile({ navigation }) {
                 >
                     <Text style={Styles.whiteText}>Logout</Text>
                 </TouchableOpacity>
-
-
             </SafeAreaView>
         </View>
     );

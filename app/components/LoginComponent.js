@@ -17,6 +17,7 @@ export default function Login({ navigation }) {
   const [phone_number, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
@@ -25,7 +26,7 @@ export default function Login({ navigation }) {
       setIsLoading(true);
 
       if (!phone_number || !pin) {
-        console.error('All fields are required.');
+        setErrorMessage('All fields are required.');
         return;
       }
 
@@ -43,8 +44,9 @@ export default function Login({ navigation }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Error data:', errorData);
-        throw new Error(`Logging in failed with status code ${response.status}`);
+        setErrorMessage(`Error: ${errorData.message}`);
+        // throw new Error(`Logging in failed with status code ${response.status}`);
+        throw new Error(`Logging in failed check your credentials`);
       }
 
       const responseData = await response.json();
@@ -61,9 +63,9 @@ export default function Login({ navigation }) {
       console.error('Error Logging in user:', error);
 
       if (error instanceof Error) {
-        console.error('Standard JavaScript Error:', error.message);
+        setErrorMessage(`Error: ${error.message}`);
       } else {
-        console.error('Unknown error type:', typeof error, error);
+        setErrorMessage('Unknown error occurred.');
       }
 
     } finally {
@@ -80,6 +82,7 @@ export default function Login({ navigation }) {
     AsyncStorage.setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
         console.info('Logged In successfully');
+        console.log('User Data:', user_data);
         setStoredCredentials(credentials);
       })
       .catch((error) => {
@@ -119,6 +122,7 @@ export default function Login({ navigation }) {
                 underlineColorAndroid={'transparent'}
               />
         <Text style={Styles.link} onPress={onPressText} >Don't have an account?</Text>
+        {errorMessage !== '' && <Text style={Styles.errorText}>{errorMessage}</Text>}
         {isLoading && <ActivityIndicator size="small" color={mainColor} style={Styles.activity} />}
         <TouchableOpacity style={Styles.button} onPress={onPressLogin} >
               <Text style={Styles.buttonText2}>Sign In</Text>

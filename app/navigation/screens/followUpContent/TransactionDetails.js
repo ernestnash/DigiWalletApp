@@ -29,6 +29,23 @@ export default function TransactionDetails({ route }) {
         return null;
     };
 
+    // Function to get transaction success message based on transaction type
+const getTransactionSuccessMessage = (transactionType) => {
+    switch (transactionType) {
+        case 'Deposit':
+            return 'Deposit Successful';
+        case 'Withdrawal':
+            return 'Withdrawal Successful';
+        case 'Sent':
+            return 'Money Sent Successfully';
+        case 'Received':
+            return 'Money Received Successfully';
+        default:
+            return 'Transaction Successful';
+    }
+};
+
+
     return (
         <View style={Styles.DetailsContainer}>
             <View style={Styles.blueBackground}>
@@ -54,8 +71,8 @@ export default function TransactionDetails({ route }) {
                     
                     {/* Transfer Successful text centered with bigger font and padding */}
                     <Text style={Styles.transferSuccessfulText}>
-                        {transaction.transaction_type === 'Deposit' ? 'Deposit Successful' : 'Withdrawal Successful'}
-                    </Text>
+    {getTransactionSuccessMessage(transaction.transaction_type)}
+</Text>
 
                     {/* Separator */}
                     <View style={Styles.separator} />
