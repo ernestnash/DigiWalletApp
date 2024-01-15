@@ -126,11 +126,12 @@ const Styles = StyleSheet.create({
   cardsContainer: {
     width: width,
     marginTop: 5,
-    height: 10,
+    // height: 10,
     padding: 10,
     // backgroundColor: 'grey',
   },
   cardComp: {
+    flex: 1,
     width: width / 2,
     height: 80,
     backgroundColor: mainColor,
@@ -145,7 +146,7 @@ const Styles = StyleSheet.create({
   quickActionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 5,
     paddingHorizontal: 10,
   },
   quickActionButton: {
@@ -166,7 +167,8 @@ const Styles = StyleSheet.create({
   },
   topContainer: {
     marginTop: 20,
-    height: height / 2.5,
+    // height: height / 2.5,
+    height: 'auto',
     top: 0,
   },
   transactions: {
@@ -419,7 +421,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     marginTop: 40,
   },
-  
+
   dropdownContainer: {
     flex: 1,
   },
@@ -699,7 +701,28 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  
+  // buttons
+
+  confirmButton: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: mainColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    marginTop: 50,
+  },
+  confirmButtonText: {
+    color: 'white',
+    fontSize: 18,
+  },
+// dialpad
+  dialpadContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+},
 
 })
 

@@ -30,20 +30,36 @@ export default function TransactionDetails({ route }) {
     };
 
     // Function to get transaction success message based on transaction type
-const getTransactionSuccessMessage = (transactionType) => {
-    switch (transactionType) {
-        case 'Deposit':
-            return 'Deposit Successful';
-        case 'Withdrawal':
-            return 'Withdrawal Successful';
-        case 'Sent':
-            return 'Money Sent Successfully';
-        case 'Received':
-            return 'Money Received Successfully';
-        default:
-            return 'Transaction Successful';
-    }
-};
+    const getTransactionSuccessMessage = (transactionType) => {
+        switch (transactionType) {
+            case 'Deposit':
+                return 'Deposit Successful';
+            case 'Withdrawal':
+                return 'Withdrawal Successful';
+            case 'Sent':
+                return 'Money Sent Successfully';
+            case 'Received':
+                return 'Money Received Successfully';
+            default:
+                return 'Transaction Successful';
+        }
+    };
+
+    // Function to get the display name based on transaction type
+    const getDisplayName = () => {
+        switch (transaction.transaction_type) {
+            case 'Sent':
+                return transaction.destination_account || 'Unknown Recipient';
+            case 'Received':
+                return transaction.origin_account || 'Unknown Sender';
+            case 'Deposit':
+            case 'Withdrawal':
+                return 'Self';
+            default:
+                return 'Unknown';
+        }
+    };
+
 
 
     return (
@@ -68,11 +84,11 @@ const getTransactionSuccessMessage = (transactionType) => {
                             color={mainColor}
                         />
                     </View>
-                    
+
                     {/* Transfer Successful text centered with bigger font and padding */}
                     <Text style={Styles.transferSuccessfulText}>
-    {getTransactionSuccessMessage(transaction.transaction_type)}
-</Text>
+                        {getTransactionSuccessMessage(transaction.transaction_type)}
+                    </Text>
 
                     {/* Separator */}
                     <View style={Styles.separator} />
@@ -81,7 +97,7 @@ const getTransactionSuccessMessage = (transactionType) => {
                         {/* Transaction details */}
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Name:</Text>
-                            <Text style={Styles.detailContent}>{/*{transaction.name}*/} Self</Text>
+                            <Text style={Styles.detailContent}>{getDisplayName()}</Text>
                         </View>
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Amount:</Text>

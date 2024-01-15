@@ -171,6 +171,10 @@ const getTransactionTypeColor = (transactionType) => {
         navigation.navigate('Agent', { transactionType: 'Withdrawal', account_number: userId });
     };
 
+    const handleFinancialTips = () => {
+        navigation.navigate('FinancialTips');
+    };
+
     const nav = useNavigation();
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
@@ -210,7 +214,7 @@ const getTransactionTypeColor = (transactionType) => {
                 {/* Add more QuickAction components as needed */}
             </View>
             <View style={Styles.quickActionsContainer}>
-                <QuickAction label="Financial Tips" onPress={() => handleQuickAction('Financial Tips')} icon="bulb-outline" />
+                <QuickAction label="Financial Tips" onPress={handleFinancialTips} icon="bulb-outline" />
                 <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
                 <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
             </View>

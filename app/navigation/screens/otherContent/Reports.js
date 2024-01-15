@@ -127,14 +127,14 @@ export default function Reports({ navigation }) {
                 {/* Header Section */}
                 <View style={Styles.header}>
                     <TouchableOpacity
-                        style={{ flex: 1, paddingLeft: 10 }}
+                        style={{ flex: 1, paddingLeft: 10, marginTop: 30 }}
                         onPress={() => navigation.openDrawer()}
                     >
                         <Ionicons name="menu-outline" size={30} color={mainColor} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}
+                        style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 , marginTop: 30}}
                         onPress={() => navigation.navigate("Notifications")}
                     >
                         <Ionicons
@@ -198,7 +198,7 @@ export default function Reports({ navigation }) {
 
                 {/* Chart Section */}
                 <View style={Styles.chartContainer}>
-                    <Text>In</Text>
+                    {/* <Text>In</Text> */}
                     <LineChart
                         data={chartData}
                         width={390}
@@ -229,7 +229,7 @@ export default function Reports({ navigation }) {
                             },
                             showGridLines: false,
                         }}
-                        bezier // Enable smooth lines
+                        bezier
                         style={{
                             marginVertical: 8,
                             borderRadius: 16,
@@ -242,7 +242,7 @@ export default function Reports({ navigation }) {
 
                     />
                 </View>
-                <View style={Styles.chartContainer}>
+                {/* <View style={Styles.chartContainer}>
                     <Text>Out</Text>
                     <LineChart
                         data={chartData}
@@ -286,7 +286,7 @@ export default function Reports({ navigation }) {
                         }}
 
                     />
-                </View>
+                </View> */}
             </View>
         </ScrollView>
     );

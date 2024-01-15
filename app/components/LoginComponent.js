@@ -105,6 +105,7 @@ export default function Login({ navigation }) {
                 onFocus={() => setIsPhoneInputFocused(true)}
                 onBlur={() => setIsPhoneInputFocused(false)}
                 value={phone_number}
+                keyboardType='numeric'
                 underlineColorAndroid={'transparent'}
               />
         <TextInput

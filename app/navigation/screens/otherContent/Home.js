@@ -31,23 +31,23 @@ export default function Home({ navigation }) {
     // useEffect to fetch user transactions when the component mounts or userId changes
     useEffect(() => {
         let timeout;
-    
+
         const fetchTransactions = () => {
             if (userId) {
                 fetchUserTransactions(userId);
             }
         };
-    
+
         const focusListener = navigation.addListener('focus', () => {
             fetchTransactions();
             setRefreshBalance((prev) => prev + 1);
-    
+
             // Introduce a delay (e.g., 5000 milliseconds) before allowing the next API call
             timeout = setTimeout(() => {
                 clearTimeout(timeout);
             }, 5000);  // Adjust the delay as needed
         });
-    
+
         return () => {
             focusListener();
             clearTimeout(timeout); // Clear the timeout if the component unmounts
@@ -108,26 +108,34 @@ export default function Home({ navigation }) {
 
     // Function to get transaction type icon
     const getTransactionTypeIcon = (transactionType) => {
-
-        if (transactionType === 'Deposit') {
-            return 'arrow-up-outline';
-        } else if (transactionType === 'Withdrawal') {
-            return 'arrow-down-outline';
+        switch (transactionType) {
+            case 'Deposit':
+                return 'arrow-up-outline';
+            case 'Withdrawal':
+                return 'arrow-down-outline';
+            case 'Sent':
+                return 'arrow-forward-outline';
+            case 'Received':
+                return 'arrow-back-outline';
+            default:
+                return 'information-circle-outline'; // Default icon if no match
         }
-
-        return 'information-circle-outline'; // Default icon if no match
     };
 
     // Function to get transaction type color
     const getTransactionTypeColor = (transactionType) => {
-
-        if (transactionType === 'Deposit') {
-            return 'green';
-        } else if (transactionType === 'Withdrawal') {
-            return 'red';
+        switch (transactionType) {
+            case 'Deposit':
+                return 'green';
+            case 'Withdrawal':
+                return 'red';
+            case 'Sent':
+                return 'blue';
+            case 'Received':
+                return 'purple';
+            default:
+                return 'black'; // Default color if no match
         }
-
-        return 'black'; // Default color if no match
     };
 
     return (
@@ -147,7 +155,6 @@ export default function Home({ navigation }) {
                     </View>
 
                     {/* Balance Section */}
-                    {/* <Balance userId={userId} /> */}
                     <Balance userId={userId} refreshBalance={refreshBalance} />
 
                     {/* Cards Section */}

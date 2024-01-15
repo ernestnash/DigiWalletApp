@@ -22,6 +22,7 @@ import Agent from "./followUpContent/componentPages/Agent";
 import ConfirmationPage from "./followUpContent/componentPages/ConfirmationPage";
 import Confirmation from "./followUpContent/transferSequence/Confirmation";
 import AccountNumber from "./followUpContent/transferSequence/AccountNumber";
+import FinancialTips from "./followUpContent/financialTips/FinancialTips";
 
 
 // screen names
@@ -252,6 +253,11 @@ export default function DrawerNav() {
             <Drawer.Screen
                 name="AccountNumber"
                 component={AccountNumber}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="FinancialTips"
+                component={FinancialTips}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>

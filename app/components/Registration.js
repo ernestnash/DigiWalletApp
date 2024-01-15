@@ -22,7 +22,8 @@ export default function Registration({ navigation }) {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [pin, setPin] = useState('');
-  const [pinConfirmation, setPinConfirmation] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  // const [pinConfirmation, setPinConfirmation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -32,12 +33,12 @@ export default function Registration({ navigation }) {
     try {
       setIsLoading(true);
   
-      if (!fullName || !phoneNumber || !pin || !pinConfirmation) {
+      if (!fullName || !phoneNumber || !pin || !confirmPin) {
         setErrorMessage('All fields are required.');
         return;
       }
   
-      if (pin !== pinConfirmation) {
+      if (pin !== confirmPin) {
         setErrorMessage('Pins must match');
         return;
       }
@@ -52,6 +53,7 @@ export default function Registration({ navigation }) {
           full_name: fullName,
           phone_number: phoneNumber,
           pin: pin,
+          confirm_pin: confirmPin,
         }),
       });
   
@@ -63,7 +65,7 @@ export default function Registration({ navigation }) {
   
       const responseData = await response.json();
   
-      // Make sure 'user_data' exists in the response
+      // Make sure 'user_data' exist in the response
       if (responseData.user_data && responseData.user_data.id) {
         const userId = responseData.user_data.id;
   
@@ -74,11 +76,9 @@ export default function Registration({ navigation }) {
       } else {
         console.error('Invalid response data:', responseData);
       }
-  
-      // navigation.navigate('Dashboard');
+
     } catch (error) {
       setErrorMessage('Error registering user:', error);
-      // Handle errors
     } finally {
       setIsLoading(false);
     }
@@ -129,6 +129,7 @@ export default function Registration({ navigation }) {
           onFocus={() => setIsPhoneInputFocused(true)}
           onBlur={() => setIsPhoneInputFocused(false)}
           value={phoneNumber}
+          keyboardType='numeric'
           underlineColorAndroid={'transparent'}
         />
         <TextInput
@@ -142,6 +143,7 @@ export default function Registration({ navigation }) {
           onFocus={() => setIsPinInputFocused(true)}
           onBlur={() => setIsPinInputFocused(false)}
           value={pin}
+          keyboardType='numeric'
           underlineColorAndroid={'transparent'}
         />
         <TextInput
@@ -150,11 +152,12 @@ export default function Registration({ navigation }) {
             { borderColor: isConfirmPinInputFocused ? mainColor : 'gray' },
           ]}
           placeholder='Confirm Wallet Pin'
-          onChangeText={(value) => setPinConfirmation(value)}
+          onChangeText={(value) => setConfirmPin(value)}
           secureTextEntry={true}
           onFocus={() => setIsConfirmPinInputFocused(true)}
           onBlur={() => setIsConfirmPinInputFocused(false)}
-          value={pinConfirmation}
+          value={confirmPin}
+          keyboardType='numeric'
           underlineColorAndroid={'transparent'}
         />
         <Text style={Styles.link} onPress={onPressText}>Already have an account?</Text>
