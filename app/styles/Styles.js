@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-const { height, width } = Dimensions.get("window");
+export const { height, width } = Dimensions.get("window");
 
 
 export const mainColor = '#5063BF';
@@ -110,15 +110,20 @@ const Styles = StyleSheet.create({
   },
   balanceContainer: {
     alignItems: 'center',
-    marginTop: 0,
+    marginTop: 20,
+    backgroundColor: '#ccc',
+    padding: 10,
+    width: 300,
+    borderRadius: 10,
+    marginLeft: width/5.8,
   },
   balanceHeading: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: '400',
     color: mainColor,
   },
   balanceAmount: {
-    fontSize: 25,
+    fontSize: 35,
     fontWeight: 'bold',
     color: mainColor,
     marginBottom: 10,
@@ -126,14 +131,12 @@ const Styles = StyleSheet.create({
   cardsContainer: {
     width: width,
     marginTop: 5,
-    // height: 10,
     padding: 10,
-    // backgroundColor: 'grey',
   },
   cardComp: {
     flex: 1,
     width: width / 2,
-    height: 80,
+    height: 100,
     backgroundColor: mainColor,
     marginRight: 10,
     borderRadius: 10,
@@ -164,10 +167,16 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 2,
     elevation: 5,
+    marginBottom: 5,
+  },
+  quickActionColumn: {
+    alignItems: 'center',
+  },
+  quickActionLabel: {
+    textAlign: 'center',
+    marginTop: 5,
   },
   topContainer: {
-    marginTop: 20,
-    // height: height / 2.5,
     height: 'auto',
     top: 0,
   },
@@ -219,10 +228,16 @@ const Styles = StyleSheet.create({
     backgroundColor: '#ccc',
     margin: 10,
   },
-  quickActionsContainer: {
+  quickActionsContainerTrans: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 20,
+  },
+  quickActionsContainerTransLeft: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginTop: 20,
+    marginLeft: 25,
   },
   quickAction: {
     alignItems: 'center',
@@ -717,12 +732,30 @@ const Styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
-// dialpad
+  // dialpad
   dialpadContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10,
-},
+  },
+
+  // cheques screen
+  addAndFilterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    width: width-20,
+    padding: 10,
+    elevation: 0,
+  },
+  addButton: {
+
+  },
+  filterButton: {
+
+  },
 
 })
 

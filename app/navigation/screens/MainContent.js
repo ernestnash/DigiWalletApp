@@ -13,6 +13,7 @@ import { Dimensions } from "react-native";
 const { height } = Dimensions.get("window");
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { BlurView } from 'expo-blur';
 
 import Dialpad from "../../components/Dialpad";
 
@@ -161,7 +162,22 @@ export function MainContent({ navigation }) {
                     }
 
                     return <Ionicons name={iconName} size={size} color={color} />
-                }
+                },
+                tabBarActiveTintColor: mainColor,
+                tabBarLabelStyle: { padding: 8, fontSize: 11 },
+                tabBarStyle: [{ 
+                    position: 'absolute', 
+                    marginBottom: 15,
+                    marginLeft: 10, 
+                    marginRight: 10, 
+                    borderRadius: 30,
+                    borderWidth: 1,
+                    borderColor: mainColor, 
+                    height: 75,
+                    "display": "flex",
+                    elevation: 0,
+
+                }, null],
             })}
             tabBarOptions={screenOptions}
         >
@@ -219,7 +235,7 @@ export default function DrawerNav() {
                 component={TransactionDetails}
                 options={{ headerShown: false }}
             />
-            
+
             <Drawer.Screen
                 name="Dialpad"
                 component={Dialpad}

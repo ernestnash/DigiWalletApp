@@ -70,10 +70,10 @@ const AgentPage = ({ navigation, route }) => {
       </View>
 
       <TextInput
+        showSoftInputOnFocus={false}
         style={styles.input}
         placeholder={`Enter ${transactionType === 'Deposit' ? 'Agent' : 'ATM'} number`}
         value={agent}
-        keyboardType='none'
         onChangeText={(text) => setAgent(text)}
       />
 

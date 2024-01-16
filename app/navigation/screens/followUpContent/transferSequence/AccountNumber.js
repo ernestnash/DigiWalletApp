@@ -69,6 +69,7 @@ const AccountNumber = ({ navigation, route }) => {
 
 
             <TextInput
+            showSoftInputOnFocus={false}
                 style={styles.input}
                 placeholder={`Enter Account Number`}
                 value={destinationAccount}

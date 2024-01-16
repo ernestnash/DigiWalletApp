@@ -68,7 +68,7 @@ export default function Profile({ navigation }) {
                     </View>
                     <View style={Styles.userInfo}>
                         <Text style={Styles.userName}>{userInfo.full_name || 'John Doe'}</Text>
-                        <Text style={Styles.accountNumber}>Account: {userInfo.id || '123456789'}</Text>
+                        <Text style={Styles.accountNumber}>Account Number: {userInfo.id || '123456789'}</Text>
                         <Text style={Styles.phoneNumber}>Phone: {userInfo.phone_number || '+123 456 789'}</Text>
                     </View>
                 </View>

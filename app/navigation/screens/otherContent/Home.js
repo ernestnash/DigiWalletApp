@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CredentialsContext } from "../../../components/CredentialsContext";
-import { View, Text, TouchableOpacity, ScrollView, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, FlatList, ActivityIndicator } from "react-native";
 import Styles, { mainColor } from "../../../styles/Styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -9,6 +9,7 @@ import Balance from "../../../components/Balance";
 import { useNavigation, useIsFocused, useFocusEffect } from "@react-navigation/native";
 
 import ipAddress from "../../../api/Api";
+import Header from "../../../components/Header";
 
 const color = '#fff';
 
@@ -69,7 +70,7 @@ export default function Home({ navigation }) {
                     console.error('Error fetching transactions:', data.error);
                 } else {
                     // Set transactions if there is no error
-                    setTransactions(data.transactions || []);
+                    setTransactions(data.transactions.slice(0, 5) || []);
                 }
             } else {
                 // Handle error, show a message, or perform other actions
@@ -138,21 +139,25 @@ export default function Home({ navigation }) {
         }
     };
 
+    // Function to determine the greeting based on the time of day
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+
+        if (hour >= 5 && hour < 12) {
+            return 'Good Morning';
+        } else if (hour >= 12 && hour < 16) {
+            return 'Good Afternoon';
+        } else {
+            return 'Good Evening';
+        }
+    };
+
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
-            <View style={Styles.specialContainer}>
+            {/* <View style={Styles.specialContainer}> */}
                 <View style={Styles.topContainer}>
-                    {/* Header Section */}
-                    <View style={Styles.header}>
-
-                        <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => nav.openDrawer()}>
-                            <Ionicons name="menu-outline" size={30} color={mainColor} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={{ paddingRight: 10 }} onPress={() => navigation.navigate('Notifications')}>
-                            <Ionicons name="notifications-outline" size={30} color={mainColor} />
-                        </TouchableOpacity>
-                    </View>
+                
+                    <Header/>
 
                     {/* Balance Section */}
                     <Balance userId={userId} refreshBalance={refreshBalance} />
@@ -161,8 +166,9 @@ export default function Home({ navigation }) {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Styles.cardsContainer}>
                         {/* Card 1 */}
                         <TouchableOpacity style={Styles.cardComp} onPress={() => navigation.navigate('Cards')}>
-                            <Text style={Styles.whiteText}>Card 1</Text>
-                            <Text style={Styles.whiteText}>1234567890</Text>
+                            <Text style={Styles.whiteText}>{storedCredentials.user_data.full_name}</Text>
+                            <Text style={Styles.whiteText}>{storedCredentials.user_id}</Text>
+                            <Text style={Styles.whiteText}>{storedCredentials.phone_number}</Text>
                         </TouchableOpacity>
 
                         {/* Card 2 */}
@@ -180,29 +186,45 @@ export default function Home({ navigation }) {
 
                     {/* Quick Action Buttons */}
                     <View style={Styles.quickActionContainer}>
-                        <TouchableOpacity style={Styles.quickActionButton}>
-                            <Ionicons name="add" size={24} color={mainColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={Styles.quickActionButton}>
-                            <Ionicons name="remove" size={24} color={mainColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={Styles.quickActionButton}>
-                            <Ionicons name="refresh" size={24} color={mainColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={Styles.quickActionButton}>
-                            <Ionicons name="settings" size={24} color={mainColor} />
-                        </TouchableOpacity>
+                        <View style={Styles.quickActionColumn}>
+                            <TouchableOpacity style={Styles.quickActionButton}>
+                                <Ionicons name="swap-horizontal-sharp" size={24} color={mainColor} />
+                            </TouchableOpacity>
+                            <Text style={Styles.quickActionLabel}>Transfer</Text>
+                        </View>
+
+                        <View style={Styles.quickActionColumn}>
+                            <TouchableOpacity style={Styles.quickActionButton}>
+                                <Ionicons name="cash-outline" size={24} color={mainColor} />
+                            </TouchableOpacity>
+                            <Text style={Styles.quickActionLabel}>Make Payment</Text>
+                        </View>
+
+                        <View style={Styles.quickActionColumn}>
+                            <TouchableOpacity style={Styles.quickActionButton}>
+                                <Ionicons name="document-text-outline" size={24} color={mainColor} />
+                            </TouchableOpacity>
+                            <Text style={Styles.quickActionLabel}>Quick Cheque</Text>
+                        </View>
+
+                        <View style={Styles.quickActionColumn}>
+                            <TouchableOpacity style={Styles.quickActionButton}>
+                                <Ionicons name="phone-portrait-outline" size={24} color={mainColor} />
+                            </TouchableOpacity>
+                            <Text style={Styles.quickActionLabel}>Topup</Text>
+                        </View>
                     </View>
+
                 </View>
 
 
 
-            </View>
+            {/* </View> */}
             {/* Latest Transactions Section */}
             <View style={Styles.transactions}>
                 <Text style={Styles.transactionsHeading}>Recent Transactions</Text>
                 {isLoading ? (
-                    <Text>Loading...</Text>
+                    <ActivityIndicator size="large" color={mainColor} />
                 ) : transactions.length === 0 ? (
                     <View style={Styles.noTransactionsContainer}>
                         {/* ... No transactions UI ... */}

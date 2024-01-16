@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { height, width } from '../../../../styles/Styles';
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { mainColor } from '../../../../styles/Styles';
@@ -58,7 +59,7 @@ const AmountPage = ({ navigation, route }) => {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={{ ...Styles.headerContainer, width: 400 }}>
+            <View style={{ ...Styles.headerContainer, width: width }}>
                 {/* Back Button */}
                 <TouchableOpacity
                     style={{ ...Styles.backButton, marginLeft: 0 }}
@@ -71,6 +72,7 @@ const AmountPage = ({ navigation, route }) => {
             </View>
             <View style={styles.amountContainer}>
                 <TextInput
+                showSoftInputOnFocus={false}
                     style={styles.input}
                     placeholder="Enter amount"
                     value={amount}

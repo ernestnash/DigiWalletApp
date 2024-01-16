@@ -8,10 +8,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Platform } from 'react-native';
 import { CredentialsContext } from "../../../components/CredentialsContext";
+import { Dimensions } from "react-native";
 
 import { useContext } from "react";
 
 import ipAddress from "../../../api/Api";
+import Header from "../../../components/Header";
 
 export default function Reports({ navigation }) {
     const [startDate, setStartDate] = useState(new Date());
@@ -74,13 +76,28 @@ export default function Reports({ navigation }) {
     }, [transactions]);
 
     const transformTransactions = (transactions) => {
-        // Implement logic to transform transactions into the format needed for the chart
-        // Example logic: map through transactions and create arrays for labels and data
-        const labels = transactions.map(transaction => transaction.created_at);
-        const data = transactions.map(transaction => parseFloat(transaction.amount));
+        const last30Days = new Date();
+        last30Days.setDate(last30Days.getDate() - 30);
+
+        const filteredTransactions = transactions.filter(
+            (transaction) => new Date(transaction.created_at) >= last30Days
+        );
+
+        const groupedTransactions = {};
+        filteredTransactions.forEach((transaction) => {
+            const date = new Date(transaction.created_at).toISOString().split('T')[0];
+            if (!groupedTransactions[date]) {
+                groupedTransactions[date] = 0;
+            }
+            groupedTransactions[date] += parseFloat(transaction.amount);
+        });
+
+        const sortedDates = Object.keys(groupedTransactions).sort();
+        const labels = sortedDates.map((date) => new Date(date).getTime());
+        const data = sortedDates.map((date) => groupedTransactions[date]);
 
         return {
-            labels,
+            labels: labels.map((timestamp) => new Date(timestamp).toISOString()), // Convert timestamps back to ISO strings
             datasets: [
                 {
                     data,
@@ -89,8 +106,10 @@ export default function Reports({ navigation }) {
         };
     };
 
+
+
+
     const updateChart = () => {
-        // Implement logic to update the chart based on startDate and endDate
         console.log("Selected Start Date:", startDate);
         console.log("Selected End Date:", endDate);
     };
@@ -104,46 +123,36 @@ export default function Reports({ navigation }) {
     };
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(Platform.OS === 'ios'); // Close date picker for iOS immediately
+        // setShowStartDatePicker(Platform.OS === 'ios');
         if (selectedDate) {
             setStartDate(selectedDate);
         }
     };
 
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(Platform.OS === 'ios'); // Close date picker for iOS immediately
+        // setShowEndDatePicker(Platform.OS === 'ios');
         if (selectedDate) {
             setEndDate(selectedDate);
         }
     };
 
-    return (
-        <ScrollView
-            vertical
-            showsVerticalScrollIndicator={true}
-            style={Styles.contentContainer}
-        >
-            <View style={Styles.specialContainer}>
-                {/* Header Section */}
-                <View style={Styles.header}>
-                    <TouchableOpacity
-                        style={{ flex: 1, paddingLeft: 10, marginTop: 30 }}
-                        onPress={() => navigation.openDrawer()}
-                    >
-                        <Ionicons name="menu-outline" size={30} color={mainColor} />
-                    </TouchableOpacity>
+     // Function to determine the greeting based on the time of day
+     const getGreeting = () => {
+        const hour = new Date().getHours();
 
-                    <TouchableOpacity
-                        style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 , marginTop: 30}}
-                        onPress={() => navigation.navigate("Notifications")}
-                    >
-                        <Ionicons
-                            name="notifications-outline"
-                            size={30}
-                            color={mainColor}
-                        />
-                    </TouchableOpacity>
-                </View>
+        if (hour >= 5 && hour < 12) {
+            return 'Good Morning';
+        } else if (hour >= 12 && hour < 16) {
+            return 'Good Afternoon';
+        } else {
+            return 'Good Evening';
+        }
+    };
+
+    return (
+        <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
+                
+                <Header/>
 
                 {/* Filter and Date Picker Section */}
                 <View style={Styles.filterContainer}>
@@ -201,8 +210,9 @@ export default function Reports({ navigation }) {
                     {/* <Text>In</Text> */}
                     <LineChart
                         data={chartData}
-                        width={390}
-                        height={220}
+                        width={Dimensions.get('window').width}
+                        height={320}
+                        withInnerLines={false}
                         yAxisLabel="Ksh"
                         chartConfig={{
                             backgroundColor: '#fff',
@@ -234,60 +244,28 @@ export default function Reports({ navigation }) {
                             marginVertical: 8,
                             borderRadius: 16,
                         }}
-                        formatXLabel={(value) => {
-                            // Use the Intl.DateTimeFormat API to format the date and month
-                            const date = new Date(value);
-                            return `${date.getDate()}/${date.getMonth() + 1}`;
+                        formatXLabel={(value, index, labels) => {
+                            if (chartData.labels && chartData.labels.length > 0) {
+                                const totalDataPoints = chartData.labels.length;
+                                const chartWidth = 390; // Adjust this based on your chart width
+
+                                // Calculate the interval to display labels evenly
+                                const interval = Math.ceil(totalDataPoints / (chartWidth / 50)); // Assuming 50 is the approximate width of each label
+
+                                if (index % interval === 0) {
+                                    const date = new Date(value);
+                                    return `${date.getDate()}/${date.getMonth() + 1}`;
+                                }
+                            }
+
+                            return ""; // Return an empty string when the condition is not met or labels are undefined
                         }}
+
+
+
 
                     />
                 </View>
-                {/* <View style={Styles.chartContainer}>
-                    <Text>Out</Text>
-                    <LineChart
-                        data={chartData}
-                        width={390}
-                        height={220}
-                        yAxisLabel="Ksh"
-                        chartConfig={{
-                            backgroundColor: '#fff',
-                            backgroundGradientFrom: "#fff",
-                            backgroundGradientTo: "#fff",
-                            decimalPlaces: 2,
-                            color: (opacity = 1) => mainColor,
-                            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                            style: {
-                                borderRadius: 16,
-                            },
-                            propsForDots: {
-                                r: "2",
-                                strokeWidth: "2",
-                                stroke: mainColor,
-                            },
-                            propsForVerticalLabels: {
-                                fontSize: 10,
-                                fill: mainColor,
-                            },
-                            propsForHorizontalLabels: {
-                                fontSize: 10,
-                                fill: mainColor,
-                            },
-                            showGridLines: false,
-                        }}
-                        bezier // Enable smooth lines
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 16,
-                        }}
-                        formatXLabel={(value) => {
-                            // Use the Intl.DateTimeFormat API to format the date and month
-                            const date = new Date(value);
-                            return `${date.getDate()}/${date.getMonth() + 1}`;
-                        }}
-
-                    />
-                </View> */}
-            </View>
         </ScrollView>
     );
 }

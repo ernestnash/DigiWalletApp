@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Styles from '../styles/Styles';
 import ipAddress from '../api/Api';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { mainColor } from '../styles/Styles';
 
 export default function Balance({ userId, onBalanceChange, refreshBalance }) {
   const [balance, setBalance] = useState(0);
   const [isLoading, setLoading] = useState(true);
+  const [showBalance, setShowBalance] = useState(true);
 
   const fetchBalance = async () => {
     try {
       const response = await fetch(`${ipAddress}/account/${userId}/balance`);
       const jsonData = await response.json();
-  
+
       if (jsonData && jsonData.balance !== undefined) {
         setBalance(parseFloat(jsonData.balance));
         if (onBalanceChange) {
@@ -31,15 +34,28 @@ export default function Balance({ userId, onBalanceChange, refreshBalance }) {
 
   useEffect(() => {
     fetchBalance();
-  }, [userId, refreshBalance]); 
+  }, [userId, refreshBalance]);
+
+  const toggleBalanceVisibility = () => {
+    setShowBalance(!showBalance);
+  };
 
   return (
     <View style={Styles.balanceContainer}>
-      <Text style={Styles.balanceHeading}>Balance</Text>
+      <Text style={Styles.balanceHeading}>Available Balance</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color={mainColor} />
       ) : (
-        <Text style={Styles.balanceAmount}>Ksh. {balance.toFixed(2)}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {showBalance ? (
+            <Text style={Styles.balanceAmount}>Ksh. {balance.toFixed(2)}</Text>
+          ) : (
+            <Text style={Styles.balanceAmount}>Ksh. ******</Text>
+          )}
+          <TouchableOpacity onPress={toggleBalanceVisibility} style={Styles.profileIcon}>
+            <Ionicons name={showBalance ? 'eye-off' : 'eye'} size={28} color={mainColor} />
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );

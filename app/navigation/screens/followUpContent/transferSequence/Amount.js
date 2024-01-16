@@ -65,6 +65,7 @@ const AmountPage = ({ navigation, route }) => {
             </View>
             <View style={styles.amountContainer}>
                 <TextInput
+                showSoftInputOnFocus={false}
                     style={styles.input}
                     placeholder="Enter amount"
                     value={amount}

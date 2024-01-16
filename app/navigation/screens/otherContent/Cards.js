@@ -64,7 +64,7 @@ export default function Cards({ navigation }) {
 
             <SafeAreaView>
                 <BankCard />
-                <BankCard style={{ color: 'green' }} />
+                {/* <BankCard style={{ color: 'green' }} /> */}
                 <ScrollView vertical showsVerticalScrollIndicator={true} style={{ padding: 10 }}>
                     <View style={Styles.blankCard}>
                         <View style={Styles.blankCardAdd}>

@@ -13,7 +13,7 @@ import { CredentialsContext } from '../../../components/CredentialsContext';
 import Balance from '../../../components/Balance';
 
 import ipAddress from '../../../api/Api';
-
+import Header from '../../../components/Header';
 
 const QuickAction = ({ label, onPress, icon }) => (
     <TouchableOpacity style={Styles.quickAction} onPress={onPress}>
@@ -119,36 +119,36 @@ export default function Transactions({ navigation }) {
     );
 
     // Function to get transaction type icon
-const getTransactionTypeIcon = (transactionType) => {
-    switch (transactionType) {
-        case 'Deposit':
-            return 'arrow-up-outline';
-        case 'Withdrawal':
-            return 'arrow-down-outline';
-        case 'Sent':
-            return 'arrow-forward-outline'; 
-        case 'Received':
-            return 'arrow-back-outline'; 
-        default:
-            return 'information-circle-outline'; // Default icon if no match
-    }
-};
+    const getTransactionTypeIcon = (transactionType) => {
+        switch (transactionType) {
+            case 'Deposit':
+                return 'arrow-up-outline';
+            case 'Withdrawal':
+                return 'arrow-down-outline';
+            case 'Sent':
+                return 'arrow-forward-outline';
+            case 'Received':
+                return 'arrow-back-outline';
+            default:
+                return 'information-circle-outline'; // Default icon if no match
+        }
+    };
 
-// Function to get transaction type color
-const getTransactionTypeColor = (transactionType) => {
-    switch (transactionType) {
-        case 'Deposit':
-            return 'green';
-        case 'Withdrawal':
-            return 'red';
-        case 'Sent':
-            return 'blue'; 
-        case 'Received':
-            return 'purple'; 
-        default:
-            return 'black'; // Default color if no match
-    }
-};
+    // Function to get transaction type color
+    const getTransactionTypeColor = (transactionType) => {
+        switch (transactionType) {
+            case 'Deposit':
+                return 'green';
+            case 'Withdrawal':
+                return 'red';
+            case 'Sent':
+                return 'blue';
+            case 'Received':
+                return 'purple';
+            default:
+                return 'black'; // Default color if no match
+        }
+    };
 
 
 
@@ -175,49 +175,45 @@ const getTransactionTypeColor = (transactionType) => {
         navigation.navigate('FinancialTips');
     };
 
+    // Function to determine the greeting based on the time of day
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+
+        if (hour >= 5 && hour < 12) {
+            return 'Good Morning';
+        } else if (hour >= 12 && hour < 16) {
+            return 'Good Afternoon';
+        } else {
+            return 'Good Evening';
+        }
+    };
+
     const nav = useNavigation();
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
-            {/* <View style={Styles.specialContainer}>
-                <View style={Styles.topContainer}> */}
-            {/* Header Section */}
-            <View style={Styles.headerTransactions}>
 
-                <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => nav.openDrawer()}>
-                    <Ionicons name="menu-outline" size={30} color={mainColor} />
-                </TouchableOpacity>
-
-                {/* <View style={Styles.transactionsHeader}>
-                    <Text style={Styles.transactionsHeading}>Transactions</Text>
-                </View> */}
-
-                <TouchableOpacity style={{ paddingRight: 10 }} onPress={() => navigation.navigate('Notifications')}>
-                    <Ionicons name="notifications-outline" size={30} color={mainColor} />
-                </TouchableOpacity>
-            </View>
+            <Header/>
 
             {/* Balance Section */}
             {/* <Balance userId={userId} /> */}
             <Balance userId={userId} refreshBalance={refreshBalance} />
 
-            <View style={Styles.quickActionsContainer}>
-                <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
-                <QuickAction label="Send Money" onPress={() => handleQuickAction('Send Money')} icon="send-outline" />
-                <QuickAction label="Buy Airtime" onPress={() => handleQuickAction('Buy Airtime')} icon="phone-portrait-outline" />
-                {/* Add more QuickAction components as needed */}
+            <View>
+                <View style={Styles.quickActionsContainerTrans}>
+                    <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
+                    <QuickAction label="Send Money" onPress={() => handleQuickAction('Send Money')} icon="paper-plane-outline" />
+                    <QuickAction label="Buy Airtime" onPress={() => handleQuickAction('Buy Airtime')} icon="phone-portrait-outline" />
+                </View>
+                <View style={Styles.quickActionsContainerTrans}>
+                    <QuickAction label="Deposit Money" onPress={handleDepositMoney} icon="arrow-up-outline" />
+                    <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
+                    <QuickAction label="Withdraw Money" onPress={handleWithdrawMoney} icon="arrow-down-outline" />
+                </View>
+                <View style={Styles.quickActionsContainerTransLeft}>
+                    <QuickAction label="Financial Tips" onPress={handleFinancialTips} icon="bulb-outline" />
+                </View>
             </View>
-            {/* Add new quick actions here */}
-            <View style={Styles.quickActionsContainer}>
-                <QuickAction label="Deposit Money" onPress={handleDepositMoney} icon="arrow-up-outline" />
-                <QuickAction label="Cheques" onPress={() => handleQuickAction('Cheques')} icon="cash-outline" />
-                <QuickAction label="Withdraw Money" onPress={handleWithdrawMoney} icon="arrow-down-outline" />
-                {/* Add more QuickAction components as needed */}
-            </View>
-            <View style={Styles.quickActionsContainer}>
-                <QuickAction label="Financial Tips" onPress={handleFinancialTips} icon="bulb-outline" />
-                <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
-                <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
-            </View>
+
             {/* </View> */}
 
             <View style={Styles.transactions}>
