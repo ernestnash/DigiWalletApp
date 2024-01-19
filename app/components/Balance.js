@@ -36,6 +36,11 @@ export default function Balance({ userId, onBalanceChange, refreshBalance }) {
     fetchBalance();
   }, [userId, refreshBalance]);
 
+  const formattedBalance = balance.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   const toggleBalanceVisibility = () => {
     setShowBalance(!showBalance);
   };
@@ -48,7 +53,7 @@ export default function Balance({ userId, onBalanceChange, refreshBalance }) {
       ) : (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {showBalance ? (
-            <Text style={Styles.balanceAmount}>Ksh. {balance.toFixed(2)}</Text>
+            <Text style={Styles.balanceAmount}>Ksh. {formattedBalance}</Text>
           ) : (
             <Text style={Styles.balanceAmount}>Ksh. ******</Text>
           )}

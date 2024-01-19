@@ -20,12 +20,13 @@ export default function ChooseBank({ route }) {
     const { expenditureType, account_number } = route.params;
     const { storedCredentials } = useContext(CredentialsContext);
     const [transactions, setTransactions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
     const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(false);
 
     // Define options based on transactionType
     let options;
-    if (expenditureType === 'Send Money') {
+    if (expenditureType === 'Send To Phone') {
         // Options for sending money
         options = [
             { label: 'Mpesa', value: 'Mpesa' },
@@ -55,6 +56,8 @@ export default function ChooseBank({ route }) {
     const handleOptionSelection = (selectedOption) => {
         console.log(`Selected option for ${expenditureType}:`, selectedOption.label);
       
+        setSelectedOption(selectedOption);
+        
         if (selectedOption.label === 'Pay Bill') {
           navigation.navigate('PayBill', {
             expenditureType: expenditureType,
@@ -71,12 +74,19 @@ export default function ChooseBank({ route }) {
         }
       };
 
+      useEffect(() => {
+        // Fetch transactions when the component mounts or selectedOption changes
+        if (selectedOption) {
+            fetchUserTransactions(userId, selectedOption);
+        }
+    }, [selectedOption]);
+
     
-    const fetchUserTransactions = async (userId) => {
+    const fetchUserTransactions = async (userId, selectedOption) => {
         try {
             setIsLoading(true);
             // Make an API request to your server to get user transactions based on userId
-            const response = await fetch(`${ipAddress}/user/${userId}/transactions`);
+            const response = await fetch(`${ipAddress}/transactions/expenses/${userId}/${selectedOption.label}`);
             const data = await response.json();
             console.log('API Response:', data);
 
@@ -148,7 +158,7 @@ export default function ChooseBank({ route }) {
                         <QuickAction
                             label={option.label}
                             onPress={() => handleOptionSelection(option)}
-                            icon="arrow-down-outline"
+                            icon="cart-outline"
                         />
                     ))}
                 </View>

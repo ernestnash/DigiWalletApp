@@ -112,6 +112,8 @@ export default function Reports({ navigation }) {
     const updateChart = () => {
         console.log("Selected Start Date:", startDate);
         console.log("Selected End Date:", endDate);
+        console.log("Chart Data:", chartData);
+
     };
 
     const showStartDatepicker = () => {
@@ -136,8 +138,8 @@ export default function Reports({ navigation }) {
         }
     };
 
-     // Function to determine the greeting based on the time of day
-     const getGreeting = () => {
+    // Function to determine the greeting based on the time of day
+    const getGreeting = () => {
         const hour = new Date().getHours();
 
         if (hour >= 5 && hour < 12) {
@@ -151,121 +153,113 @@ export default function Reports({ navigation }) {
 
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
-                
-                <Header/>
 
-                {/* Filter and Date Picker Section */}
-                <View style={Styles.filterContainer}>
-                    <TouchableWithoutFeedback onPress={showStartDatepicker}>
-                        <View style={[Styles.dateInput, { flex: 0.8, marginLeft: 5 }]}>
-                            <Text>From: {startDate.toISOString().split('T')[0]}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+            <Header />
 
-                    <TouchableWithoutFeedback onPress={showEndDatepicker}>
-                        <View style={[Styles.dateInput, { flex: 0.8, marginLeft: 5 }]}>
-                            <Text>To: {endDate.toISOString().split('T')[0]}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
+            {/* Filter and Date Picker Section */}
+            <View style={Styles.filterContainer}>
+                <TouchableWithoutFeedback onPress={showStartDatepicker}>
+                    <View style={[Styles.dateInput, { flex: 0.8, marginLeft: 5 }]}>
+                        <Text>From: {startDate.toISOString().split('T')[0]}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
 
-                    <TouchableOpacity
-                        style={[Styles.filterIcon, { marginLeft: 5, marginRight: 5 }]}
-                        onPress={() => console.log("Filter icon pressed")}
-                    >
-                        <Ionicons name="options-outline" size={25} color={mainColor} />
-                    </TouchableOpacity>
-                </View>
+                <TouchableWithoutFeedback onPress={showEndDatepicker}>
+                    <View style={[Styles.dateInput, { flex: 0.8, marginLeft: 5 }]}>
+                        <Text>To: {endDate.toISOString().split('T')[0]}</Text>
+                    </View>
+                </TouchableWithoutFeedback>
 
-                {/* DateTimePickers */}
-                {showStartDatePicker && (
-                    <DateTimePicker
-                        value={startDate}
-                        mode="date"
-                        is24Hour={true}
-                        display="default"
-                        onChange={handleStartDateChange}
-                    />
-                )}
-
-                {showEndDatePicker && (
-                    <DateTimePicker
-                        value={endDate}
-                        mode="date"
-                        is24Hour={true}
-                        display="default"
-                        onChange={handleEndDateChange}
-                    />
-                )}
-
-                {/* Update Chart Button */}
                 <TouchableOpacity
-                    style={[Styles.updateChartButton, { alignSelf: 'center', marginTop: 10 }]}
-                    onPress={updateChart}
+                    style={[Styles.filterIcon, { marginLeft: 5, marginRight: 5 }]}
+                    onPress={() => console.log("Filter icon pressed")}
                 >
-                    <Text style={Styles.updateChartButtonText}>Update Chart</Text>
+                    <Ionicons name="options-outline" size={25} color={mainColor} />
                 </TouchableOpacity>
+            </View>
 
-                {/* Chart Section */}
-                <View style={Styles.chartContainer}>
-                    {/* <Text>In</Text> */}
-                    <LineChart
-                        data={chartData}
-                        width={Dimensions.get('window').width}
-                        height={320}
-                        withInnerLines={false}
-                        yAxisLabel="Ksh"
-                        chartConfig={{
-                            backgroundColor: '#fff',
-                            backgroundGradientFrom: "#fff",
-                            backgroundGradientTo: "#fff",
-                            decimalPlaces: 2,
-                            color: (opacity = 1) => mainColor,
-                            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                            style: {
-                                borderRadius: 16,
-                            },
-                            propsForDots: {
-                                r: "2",
-                                strokeWidth: "2",
-                                stroke: mainColor,
-                            },
-                            propsForVerticalLabels: {
-                                fontSize: 10,
-                                fill: mainColor,
-                            },
-                            propsForHorizontalLabels: {
-                                fontSize: 10,
-                                fill: mainColor,
-                            },
-                            showGridLines: false,
-                        }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
+            {/* DateTimePickers */}
+            {showStartDatePicker && (
+                <DateTimePicker
+                    value={startDate}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={handleStartDateChange}
+                />
+            )}
+
+            {showEndDatePicker && (
+                <DateTimePicker
+                    value={endDate}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={handleEndDateChange}
+                />
+            )}
+
+            {/* Update Chart Button */}
+            <TouchableOpacity
+                style={[Styles.updateChartButton, { alignSelf: 'center', marginTop: 10 }]}
+                onPress={updateChart}
+            >
+                <Text style={Styles.updateChartButtonText}>Update Chart</Text>
+            </TouchableOpacity>
+
+            {/* Chart Section */}
+            <View style={Styles.chartContainer}>
+                {/* <Text>In</Text> */}
+                <LineChart
+                    data={chartData}
+                    width={Dimensions.get('window').width}
+                    height={320}
+                    withInnerLines={false}
+                    yAxisLabel="Ksh"
+                    chartConfig={{
+                        backgroundColor: '#fff',
+                        backgroundGradientFrom: "#fff",
+                        backgroundGradientTo: "#fff",
+                        decimalPlaces: 2,
+                        color: (opacity = 1) => mainColor,
+                        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                        style: {
                             borderRadius: 16,
-                        }}
-                        formatXLabel={(value, index, labels) => {
-                            if (chartData.labels && chartData.labels.length > 0) {
-                                const totalDataPoints = chartData.labels.length;
-                                const chartWidth = 390; // Adjust this based on your chart width
+                        },
+                        propsForDots: {
+                            r: "2",
+                            strokeWidth: "2",
+                            stroke: mainColor,
+                        },
+                        propsForVerticalLabels: {
+                            fontSize: 10,
+                            fill: mainColor,
+                        },
+                        propsForHorizontalLabels: {
+                            fontSize: 10,
+                            fill: mainColor,
+                        },
+                        showGridLines: false,
+                    }}
+                    bezier
+                    style={{
+                        marginVertical: 8,
+                        borderRadius: 16,
+                    }}
+                    formatXLabel={(value, index, labels) => {
+                        if (labels && labels.length > 0) {
+                            const date = new Date(value);
+                            return `${date.getDate()}/${date.getMonth() + 1}`;
+                        }
+                        return "";
+                    }}
 
-                                // Calculate the interval to display labels evenly
-                                const interval = Math.ceil(totalDataPoints / (chartWidth / 50)); // Assuming 50 is the approximate width of each label
-
-                                if (index % interval === 0) {
-                                    const date = new Date(value);
-                                    return `${date.getDate()}/${date.getMonth() + 1}`;
-                                }
-                            }
-
-                            return ""; // Return an empty string when the condition is not met or labels are undefined
-                        }}
 
 
 
 
-                    />
-                </View>
+                />
+            </View>
         </ScrollView>
     );
 }

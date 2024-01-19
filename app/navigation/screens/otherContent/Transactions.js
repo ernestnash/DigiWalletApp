@@ -129,7 +129,7 @@ export default function Transactions({ navigation }) {
             case 'Received':
                 return 'arrow-back-outline';
             default:
-                return 'information-circle-outline'; // Default icon if no match
+                return 'checkmark'; // Default icon if no match
         }
     };
 
@@ -145,7 +145,7 @@ export default function Transactions({ navigation }) {
             case 'Received':
                 return 'purple';
             default:
-                return 'black'; // Default color if no match
+                return 'brown'; // Default color if no match
         }
     };
 
@@ -167,7 +167,7 @@ export default function Transactions({ navigation }) {
     };
 
     const handleSendMoney = () => {
-        navigation.navigate('ChooseBank', { expenditureType: 'Send Money', account_number: userId } )
+        navigation.navigate('ChooseBank', { expenditureType: 'Send To Phone', account_number: userId } )
     }
     const handlePayBil = () => {
         navigation.navigate('ChooseBank', { expenditureType: 'PayBill', account_number: userId } )
@@ -206,7 +206,7 @@ export default function Transactions({ navigation }) {
             <View>
                 <View style={Styles.quickActionsContainerTrans}>
                     <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
-                    <QuickAction label="Send Money" onPress={handleSendMoney} icon="paper-plane-outline" />
+                    <QuickAction label="Send To Phone" onPress={handleSendMoney} icon="paper-plane-outline" />
                     <QuickAction label="Buy Airtime" onPress={handleBuyAirtime} icon="phone-portrait-outline" />
                 </View>
                 <View style={Styles.quickActionsContainerTrans}>

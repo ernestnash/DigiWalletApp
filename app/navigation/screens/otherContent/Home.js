@@ -119,7 +119,7 @@ export default function Home({ navigation }) {
             case 'Received':
                 return 'arrow-back-outline';
             default:
-                return 'information-circle-outline'; // Default icon if no match
+                return 'checkmark'; // Default icon if no match
         }
     };
 
@@ -135,7 +135,7 @@ export default function Home({ navigation }) {
             case 'Received':
                 return 'purple';
             default:
-                return 'black'; // Default color if no match
+                return 'brown'; // Default color if no match
         }
     };
 

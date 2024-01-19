@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { mainColor } from '../../../../styles/Styles';
+import { mainColor, width } from '../../../../styles/Styles';
+import Balance from '../../../../components/Balance';
 
 import Styles from '../../../../styles/Styles';
 
@@ -52,7 +53,7 @@ const AmountPage = ({ navigation, route }) => {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={{ ...Styles.headerContainer, width: 400 }}>
+            <View style={{ ...Styles.headerContainer, width: width }}>
                 {/* Back Button */}
                 <TouchableOpacity
                     style={{ ...Styles.backButton, marginLeft: 0 }}
@@ -63,6 +64,9 @@ const AmountPage = ({ navigation, route }) => {
                 {/* Title */}
                 <Text style={Styles.nTitle}>Enter Amount</Text>
             </View>
+
+            {/* <Balance style={{ marginTop: 0 }} userId={route.params.originAccount} /> */}
+
             <View style={styles.amountContainer}>
                 <TextInput
                 showSoftInputOnFocus={false}
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     amountContainer: {
-        marginBottom: 40,
+        marginBottom: 30,
     },
     input: {
         width: 300,

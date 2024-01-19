@@ -353,7 +353,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
-    backgroundColor: primaryText,
+    backgroundColor: mainColor,
     borderRadius: 5,
     marginHorizontal: 5,
   },
