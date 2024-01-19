@@ -7,23 +7,27 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Home, Transactions, Cheques, Profile, Reports, Notifications, Cards } from "./otherContent/Index";
-import { TransactionDetails, NewCard, CardDetails } from "./followUpContent/Index";
-import { mainColor } from "../../styles/Styles";
+import { TransactionDetails, NewCard, CardDetails, ChequeDetails } from "./followUpContent/Index";
+import { lightGray, mainColor, primaryText } from "../../styles/Styles";
 import { Dimensions } from "react-native";
 const { height } = Dimensions.get("window");
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { BlurView } from 'expo-blur';
 
 import Dialpad from "../../components/Dialpad";
 
 import Amount from "./followUpContent/componentPages/Amount";
 import AmountPage from "./followUpContent/transferSequence/Amount";
+import AmountPageConsumable from "./followUpContent/consumable/Amount";
 import Agent from "./followUpContent/componentPages/Agent";
 import ConfirmationPage from "./followUpContent/componentPages/ConfirmationPage";
 import Confirmation from "./followUpContent/transferSequence/Confirmation";
+import ConfirmConsumable from "./followUpContent/consumable/Confirmation";
 import AccountNumber from "./followUpContent/transferSequence/AccountNumber";
+import AccountNumberPage from "./followUpContent/consumable/AccountNumber";
 import FinancialTips from "./followUpContent/financialTips/FinancialTips";
+import ChooseBank from "./followUpContent/consumable/ChooseBank";
+import PayBill from "./followUpContent/consumable/PayBill";
 
 
 // screen names
@@ -164,18 +168,18 @@ export function MainContent({ navigation }) {
                     return <Ionicons name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: mainColor,
-                tabBarLabelStyle: { padding: 8, fontSize: 11 },
+                // tabBarInactiveTintColor: lightGray,
+                tabBarLabelStyle: { padding: 8, fontSize: 11, },
                 tabBarStyle: [{ 
                     position: 'absolute', 
                     marginBottom: 15,
                     marginLeft: 10, 
                     marginRight: 10, 
                     borderRadius: 30,
-                    borderWidth: 1,
-                    borderColor: mainColor, 
                     height: 75,
                     "display": "flex",
-                    elevation: 0,
+                    elevation: 10,
+                    backgroundColor: '#f5f5f5',
 
                 }, null],
             })}
@@ -257,6 +261,11 @@ export default function DrawerNav() {
                 options={{ headerShown: false }}
             />
             <Drawer.Screen
+                name="AmountPageConsumable"
+                component={AmountPageConsumable}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
                 name="ConfirmationPage"
                 component={ConfirmationPage}
                 options={{ headerShown: false }}
@@ -267,13 +276,38 @@ export default function DrawerNav() {
                 options={{ headerShown: false }}
             />
             <Drawer.Screen
+                name="ConfirmConsumable"
+                component={ConfirmConsumable}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
                 name="AccountNumber"
                 component={AccountNumber}
                 options={{ headerShown: false }}
             />
             <Drawer.Screen
+                name="AccountNumberPage"
+                component={AccountNumberPage}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
                 name="FinancialTips"
                 component={FinancialTips}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="ChequeDetails"
+                component={ChequeDetails}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="ChooseBank"
+                component={ChooseBank}
+                options={{ headerShown: false }}
+            />
+            <Drawer.Screen
+                name="PayBill"
+                component={PayBill}
                 options={{ headerShown: false }}
             />
         </Drawer.Navigator>

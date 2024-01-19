@@ -28,7 +28,6 @@ export default function Transactions({ navigation }) {
 
     const { storedCredentials } = useContext(CredentialsContext);
     const [transactions, setTransactions] = useState([]);
-    const [heading, setHeading] = useState('Transactions');
     const [isLoading, setIsLoading] = useState(false);
 
     const isFocused = useIsFocused(); // Use useIsFocused hook to determine if the screen is focused
@@ -152,10 +151,6 @@ export default function Transactions({ navigation }) {
 
 
 
-    const handleQuickAction = (action) => {
-        // Implement logic for each quick action
-        alert(`Performing ${action} action`);
-    };
     const handleTransferMoney = () => {
         // Navigate to the AccountNumber screen and pass the originAccount parameter
         navigation.navigate('AccountNumber', { originAccount: userId });
@@ -170,6 +165,16 @@ export default function Transactions({ navigation }) {
         // Navigate to the AgentPage and pass the transactionType
         navigation.navigate('Agent', { transactionType: 'Withdrawal', account_number: userId });
     };
+
+    const handleSendMoney = () => {
+        navigation.navigate('ChooseBank', { expenditureType: 'Send Money', account_number: userId } )
+    }
+    const handlePayBil = () => {
+        navigation.navigate('ChooseBank', { expenditureType: 'PayBill', account_number: userId } )
+    }
+    const handleBuyAirtime = () => {
+        navigation.navigate('ChooseBank', { expenditureType: 'Buy Airtime', account_number: userId } )
+    }
 
     const handleFinancialTips = () => {
         navigation.navigate('FinancialTips');
@@ -201,12 +206,12 @@ export default function Transactions({ navigation }) {
             <View>
                 <View style={Styles.quickActionsContainerTrans}>
                     <QuickAction label="Transfer Money" onPress={handleTransferMoney} icon="swap-horizontal-outline" />
-                    <QuickAction label="Send Money" onPress={() => handleQuickAction('Send Money')} icon="paper-plane-outline" />
-                    <QuickAction label="Buy Airtime" onPress={() => handleQuickAction('Buy Airtime')} icon="phone-portrait-outline" />
+                    <QuickAction label="Send Money" onPress={handleSendMoney} icon="paper-plane-outline" />
+                    <QuickAction label="Buy Airtime" onPress={handleBuyAirtime} icon="phone-portrait-outline" />
                 </View>
                 <View style={Styles.quickActionsContainerTrans}>
                     <QuickAction label="Deposit Money" onPress={handleDepositMoney} icon="arrow-up-outline" />
-                    <QuickAction label="Pay Bills" onPress={() => handleQuickAction('Pay Bills')} icon="card-outline" />
+                    <QuickAction label="Pay Bills" onPress={handlePayBil} icon="card-outline" />
                     <QuickAction label="Withdraw Money" onPress={handleWithdrawMoney} icon="arrow-down-outline" />
                 </View>
                 <View style={Styles.quickActionsContainerTransLeft}>

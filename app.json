@@ -4,7 +4,7 @@
     "slug": "DigiWallet",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/DigiWallet.png",
+    "icon": "./assets/DigiIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/digiSplash.png",

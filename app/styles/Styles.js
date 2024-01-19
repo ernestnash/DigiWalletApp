@@ -3,8 +3,11 @@ export const { height, width } = Dimensions.get("window");
 
 
 export const mainColor = '#5063BF';
+
+export const primaryText = '#fff';
+// export const primaryText = '#fff';
 export const lightGray = '#d3d3d3';
-const primaryText = '#fff';
+// const mainColor = '#d6212a';
 const profileImageSize = 100;
 
 const Styles = StyleSheet.create({
@@ -12,7 +15,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: mainColor,
+    backgroundColor: primaryText,
   },
   contentContainer: {
     backgroundColor: primaryText,
@@ -23,13 +26,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
   },
   minorText: {
-    color: primaryText,
+    color: mainColor,
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 15,
   },
   buttonText: {
-    color: mainColor,
+    color: primaryText,
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 20,
@@ -43,7 +46,7 @@ const Styles = StyleSheet.create({
     fontWeight: "bold",
   },
   heroText: {
-    color: primaryText,
+    color: mainColor,
     margin: 50,
     fontSize: 30,
     fontWeight: 'bold',
@@ -53,7 +56,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     marginTop: 50,
-    backgroundColor: primaryText,
+    backgroundColor: mainColor,
     borderRadius: 30,
   },
   button: {
@@ -303,7 +306,7 @@ const Styles = StyleSheet.create({
     width: 70,
     height: 70,
     backgroundColor: mainColor,
-    borderColor: mainColor,
+    borderColor: primaryText,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -350,7 +353,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
-    backgroundColor: mainColor,
+    backgroundColor: primaryText,
     borderRadius: 5,
     marginHorizontal: 5,
   },
@@ -371,7 +374,7 @@ const Styles = StyleSheet.create({
   blankCard: {
     backgroundColor: primaryText,
     borderRadius: 10,
-    borderColor: mainColor,
+    borderColor: primaryText,
     padding: 16,
     height: 200,
     width: "100%",
@@ -462,7 +465,7 @@ const Styles = StyleSheet.create({
     flex: 1,
   },
   updateChartButton: {
-    backgroundColor: mainColor,
+    backgroundColor: primaryText,
     padding: 10,
     borderRadius: 8,
     alignItems: "center",
@@ -652,7 +655,7 @@ const Styles = StyleSheet.create({
     borderHeight: 2,
   },
   buttonPressed: {
-    backgroundColor: mainColor,
+    backgroundColor: primaryText,
   },
   buttonText: {
     fontSize: 20,
@@ -722,7 +725,7 @@ const Styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: mainColor,
+    backgroundColor: primaryText,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5,

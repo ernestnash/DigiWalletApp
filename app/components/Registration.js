@@ -29,6 +29,18 @@ export default function Registration({ navigation }) {
 
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
 
+  const [pinError, setPinError] = useState('');
+
+  const onChangeTextPin = (value) => {
+    // Check for minimum and maximum pin length
+    if (value.length >= 4 && value.length <= 6) {
+      setPin(value);
+      setPinError(''); // Clear any previous error message
+    } else {
+      setPinError('Pin must be between 4 and 6 digits');
+    }
+  };
+
   const onPressSignup = async () => {
     try {
       setIsLoading(true);
@@ -139,12 +151,14 @@ export default function Registration({ navigation }) {
           ]}
           placeholder='Set Wallet Pin'
           onChangeText={(value) => setPin(value)}
+          // onChangeText={(value) => onChangeTextPin(value)}
           secureTextEntry={true}
           onFocus={() => setIsPinInputFocused(true)}
           onBlur={() => setIsPinInputFocused(false)}
           value={pin}
           keyboardType='numeric'
           underlineColorAndroid={'transparent'}
+          maxLength={6}
         />
         <TextInput
           style={[
@@ -153,13 +167,18 @@ export default function Registration({ navigation }) {
           ]}
           placeholder='Confirm Wallet Pin'
           onChangeText={(value) => setConfirmPin(value)}
+          // onChangeText={(value) => onChangeTextPin(value)}
           secureTextEntry={true}
           onFocus={() => setIsConfirmPinInputFocused(true)}
           onBlur={() => setIsConfirmPinInputFocused(false)}
           value={confirmPin}
           keyboardType='numeric'
           underlineColorAndroid={'transparent'}
+          maxLength={6}
         />
+         {/* Display pin error message */}
+         {pinError !== '' && <Text style={Styles.errorText}>{pinError}</Text>}
+
         <Text style={Styles.link} onPress={onPressText}>Already have an account?</Text>
         {errorMessage !== '' && <Text style={Styles.errorText}>{errorMessage}</Text>}
         {isLoading && <ActivityIndicator size="small" color={'#4a77aa'} style={Styles.activity} />}

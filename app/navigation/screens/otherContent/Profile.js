@@ -56,7 +56,7 @@ export default function Profile({ navigation }) {
     };
 
     return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", top: 0,}}>
             <Text style={Styles.transactionsHeading}>Profile</Text>
             <Text>Finish Setting up your Profile</Text>
             <SafeAreaView style={Styles.profileContainer}>
