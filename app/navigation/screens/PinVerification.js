@@ -18,7 +18,7 @@ const PinVerification = ({ navigation }) => {
     try {
       setIsLoading(true);
 
-      const phone_number = storedCredentials.phone_number;
+      const phone_number = storedCredentials.user_data.phone_number;
 
       if (!pin) {
         setErrorMessage('Please Enter Pin');
@@ -43,6 +43,7 @@ const PinVerification = ({ navigation }) => {
         throw new Error(`Pin Verification failed try again`);
       }
 
+
       // PIN verification successful, navigate to the homepage
       navigation.navigate('AppNavigator');
 
@@ -64,6 +65,7 @@ const PinVerification = ({ navigation }) => {
           placeholder='Enter your PIN'
           onChangeText={(text) => setPin(text)}
           secureTextEntry={true}
+          maxLength={6}
           value={pin}
           underlineColorAndroid={'transparent'}
         />

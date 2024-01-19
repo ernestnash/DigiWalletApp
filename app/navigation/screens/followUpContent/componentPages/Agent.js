@@ -6,7 +6,7 @@ import { mainColor } from '../../../../styles/Styles';
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import Styles from '../../../../styles/Styles';
+import Styles, {height, width} from '../../../../styles/Styles';
 
 const AgentPage = ({ navigation, route }) => {
   const [agent, setAgent] = useState('');
@@ -54,10 +54,10 @@ const AgentPage = ({ navigation, route }) => {
   const isNextButtonDisabled = agent.trim() === '';
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, marginTop: 5, marginBottom: 20}}>
 
       {/* Header */}
-      <View style={{...Styles.headerContainer, width: 400}}>
+      <View style={{...Styles.headerContainer, width: width/1.09}}>
         {/* Back Button */}
         <TouchableOpacity
           style={{...Styles.backButton, marginLeft: 0}}
@@ -128,17 +128,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: height,
   },
   input: {
-    width: 300,
+    width: width/1.5,
     borderBottomWidth: 1,
-    marginBottom: 50,
-    marginTop: 180,
+    marginBottom: 10,
+    marginTop: height/6,
     fontSize: 20,
   },
   button: {
-    width: 80,
-    height: 80,
+    width: width/6.05,
+    height: height/12.05,
     borderRadius: 40,
     backgroundColor: 'white',
     borderColor: mainColor,
@@ -152,8 +153,8 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   iconButton: {
-    width: 80,
-    height: 80,
+    width: width/6.05,
+    height: height/12.05,
     borderRadius: 40,
     borderWidth: 1,
     borderColor: '#e74c3c',
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   dialpadContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 10,
+    marginBottom: 0,
   },
 });
 

@@ -33,7 +33,7 @@ export default function Transactions({ navigation }) {
     const isFocused = useIsFocused(); // Use useIsFocused hook to determine if the screen is focused
 
     // Retrieve the user ID from the CredentialsContext
-    const userId = storedCredentials ? storedCredentials.user_id : null;
+    const userId = storedCredentials ? storedCredentials.user_data.id : null;
 
     const [refreshBalance, setRefreshBalance] = useState(0);
 
@@ -167,13 +167,13 @@ export default function Transactions({ navigation }) {
     };
 
     const handleSendMoney = () => {
-        navigation.navigate('ChooseBank', { expenditureType: 'Send To Phone', account_number: userId } )
+        navigation.navigate('ChooseBank', { expenditureType: 'Send To Phone', account_number: userId })
     }
     const handlePayBil = () => {
-        navigation.navigate('ChooseBank', { expenditureType: 'PayBill', account_number: userId } )
+        navigation.navigate('ChooseBank', { expenditureType: 'PayBill', account_number: userId })
     }
     const handleBuyAirtime = () => {
-        navigation.navigate('ChooseBank', { expenditureType: 'Buy Airtime', account_number: userId } )
+        navigation.navigate('ChooseBank', { expenditureType: 'Buy Airtime', account_number: userId })
     }
 
     const handleFinancialTips = () => {
@@ -197,11 +197,12 @@ export default function Transactions({ navigation }) {
     return (
         <ScrollView vertical showsVerticalScrollIndicator={true} style={Styles.contentContainer}>
 
-            <Header/>
+            <Header />
 
             {/* Balance Section */}
-            {/* <Balance userId={userId} /> */}
-            <Balance userId={userId} refreshBalance={refreshBalance} />
+            <View style={Styles.balanceContent}>
+                <Balance userId={userId} refreshBalance={refreshBalance} />
+            </View>
 
             <View>
                 <View style={Styles.quickActionsContainerTrans}>

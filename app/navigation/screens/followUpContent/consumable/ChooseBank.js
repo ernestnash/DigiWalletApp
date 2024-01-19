@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Styles, { mainColor, lightGray, width } from '../../../../styles/Styles';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { height } from '../../../../styles/Styles';
-
+import ipAddress from '../../../../api/Api';
 import { CredentialsContext } from '../../../../components/CredentialsContext';
 
 const QuickAction = ({ label, onPress, icon }) => (
@@ -23,6 +23,9 @@ export default function ChooseBank({ route }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(false);
+
+    // Retrieve the user ID from the CredentialsContext
+    const userId = storedCredentials ? storedCredentials.user_data.id : null;
 
     // Define options based on transactionType
     let options;

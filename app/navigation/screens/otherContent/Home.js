@@ -24,7 +24,7 @@ export default function Home({ navigation }) {
     const [transactions, setTransactions] = useState([]);
     const [heading, setHeading] = useState('Transactions');
     const [isLoading, setIsLoading] = useState(false);
-    const userId = storedCredentials ? storedCredentials.user_id : null;
+    const userId = storedCredentials ? storedCredentials.user_data.id : null;
 
     const [refreshBalance, setRefreshBalance] = useState(0);
 
@@ -159,16 +159,22 @@ export default function Home({ navigation }) {
                 
                     <Header/>
 
+                    <View style={Styles.balanceContent}>
+
                     {/* Balance Section */}
                     <Balance userId={userId} refreshBalance={refreshBalance} />
+
+                    </View>
+
+                    
 
                     {/* Cards Section */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Styles.cardsContainer}>
                         {/* Card 1 */}
                         <TouchableOpacity style={Styles.cardComp} onPress={() => navigation.navigate('Cards')}>
                             <Text style={Styles.whiteText}>{storedCredentials.user_data.full_name}</Text>
-                            <Text style={Styles.whiteText}>{storedCredentials.user_id}</Text>
-                            <Text style={Styles.whiteText}>{storedCredentials.phone_number}</Text>
+                            <Text style={Styles.whiteText}>{storedCredentials.user_data.id}</Text>
+                            <Text style={Styles.whiteText}>{storedCredentials.user_data.phone_number}</Text>
                         </TouchableOpacity>
 
                         {/* Card 2 */}

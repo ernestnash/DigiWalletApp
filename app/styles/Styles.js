@@ -111,14 +111,20 @@ const Styles = StyleSheet.create({
     marginTop: 15,
     paddingHorizontal: 10,
   },
+  balanceContent: {
+    flex:1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   balanceContainer: {
     alignItems: 'center',
     marginTop: 20,
     backgroundColor: '#ccc',
     padding: 10,
-    width: 300,
+    width: width/1.3,
     borderRadius: 10,
-    marginLeft: width/5.8,
   },
   balanceHeading: {
     fontSize: 15,
@@ -201,6 +207,7 @@ const Styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 10,
     marginTop: 40,
+    width: width,
   },
   transactions: {
     flex: 1,
@@ -319,11 +326,14 @@ const Styles = StyleSheet.create({
     marginLeft: 60,
     alignItems: 'center',
     justifyContent: 'flex-end',
+    flex: 1,
   },
   userName: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+    flexWrap: "wrap",
+    maxWidth: width / 1.5,
   },
   accountNumber: {
     fontSize: 14,
@@ -739,7 +749,7 @@ const Styles = StyleSheet.create({
   dialpadContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 10,
+    marginBottom: 0,
   },
 
   // cheques screen

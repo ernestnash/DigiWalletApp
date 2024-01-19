@@ -49,12 +49,12 @@ export default function Registration({ navigation }) {
         setErrorMessage('All fields are required.');
         return;
       }
-  
+
       if (pin !== confirmPin) {
         setErrorMessage('Pins must match');
         return;
       }
-  
+      
       const response = await fetch(`${ipAddress}/users`, {
         method: 'POST',
         headers: {
@@ -68,6 +68,8 @@ export default function Registration({ navigation }) {
           confirm_pin: confirmPin,
         }),
       });
+
+      
   
       if (!response.ok) {
         const errorData = await response.json();
@@ -76,15 +78,12 @@ export default function Registration({ navigation }) {
       }
   
       const responseData = await response.json();
-  
+
+      console.log('error');
+
       // Make sure 'user_data' exist in the response
-      if (responseData.user_data && responseData.user_data.id) {
-        const userId = responseData.user_data.id;
-  
-        persistSignUp({
-          phone_number: phoneNumber,
-          user_id: userId,
-        });
+      if (responseData.user_data) {
+        persistSignUp(responseData.user_data);
       } else {
         console.error('Invalid response data:', responseData);
       }
@@ -98,13 +97,16 @@ export default function Registration({ navigation }) {
   const onPressText = () => {
     navigation.navigate('Login');
   };
-
-  const persistSignUp = (credentials) => {
+  const persistSignUp = (userData) => {
+    const credentials = {
+      user_data: userData,
+    };
+  
     AsyncStorage.setItem('digiWalletCredentials', JSON.stringify(credentials))
       .then(() => {
         console.info('Persisted Login Successfully');
         setStoredCredentials(credentials);
-
+  
         // Log the contents of the CredentialsContext
         console.log('CredentialsContext after signup:', credentials);
       })

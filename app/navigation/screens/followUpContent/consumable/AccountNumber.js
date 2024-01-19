@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import Styles, { mainColor, width } from '../../../../styles/Styles';
+import Styles, { height, mainColor, width } from '../../../../styles/Styles';
 import { useIsFocused } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const AccountNumber = ({ navigation, route }) => {
   const [expenditureAccount, setExpenditureAccount] = useState('');
@@ -57,7 +58,7 @@ const AccountNumber = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={{ ...Styles.headerContainer, width: width }}>
+      <View style={{ ...Styles.headerContainer}}>
         {/* Back Button */}
         <TouchableOpacity style={{ ...Styles.backButton, marginLeft: 0 }} onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back-circle" size={30} color={mainColor} />
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: height,
   },
   input: {
     width: 300,

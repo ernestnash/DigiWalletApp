@@ -36,16 +36,16 @@ const AmountPage = ({ navigation, route }) => {
 
     // clear Amount state when component unmounts
     useEffect(() => {
-        if(!isFocused) {
+        if (!isFocused) {
             console.log('Amount Page unmounted');
             setAmount('');
         }
     }, [isFocused]);
 
     // check if the clearAmount flag is set in the route.param, then clear the amount state
-    useEffect(()=> {
+    useEffect(() => {
         console.log('Route Params Changed:', route.params)
-        if(route.params?.clearAmount) {
+        if (route.params?.clearAmount) {
             console.log('Clearing amount in Confirmation Page')
             setAmount('');
         }
@@ -56,10 +56,10 @@ const AmountPage = ({ navigation, route }) => {
     const isNextButtonDisabled = amount.trim() === '';
 
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, marginTop: 5, marginBottom: 20 }}>
 
             {/* Header */}
-            <View style={{ ...Styles.headerContainer, width: width }}>
+            <View style={{ ...Styles.headerContainer, width: width / 1.09, marginTop: 0 }}>
                 {/* Back Button */}
                 <TouchableOpacity
                     style={{ ...Styles.backButton, marginLeft: 0 }}
@@ -72,7 +72,7 @@ const AmountPage = ({ navigation, route }) => {
             </View>
             <View style={styles.amountContainer}>
                 <TextInput
-                showSoftInputOnFocus={false}
+                    showSoftInputOnFocus={false}
                     style={styles.input}
                     placeholder="Enter amount"
                     value={amount}
@@ -131,20 +131,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        height: height,
     },
     amountContainer: {
-        marginBottom: 40,
+        marginBottom: 20,
     },
     input: {
-        width: 300,
+        width: width / 1.5,
         borderBottomWidth: 1,
-        marginBottom: 50,
-        marginTop: 180,
+        marginBottom: 10,
+        marginTop: height / 6,
         fontSize: 20,
     },
     button: {
-        width: 80,
-        height: 80,
+        width: width / 6.05,
+        height: height / 12.05,
         borderRadius: 40,
         backgroundColor: 'white',
         borderColor: mainColor,
@@ -158,8 +159,8 @@ const styles = StyleSheet.create({
         fontSize: 28,
     },
     iconButton: {
-        width: 80,
-        height: 80,
+        width: width / 6.05,
+        height: height / 12.05,
         borderRadius: 40,
         borderWidth: 1,
         borderColor: '#e74c3c',
