@@ -76,6 +76,9 @@ export default function Login({ navigation }) {
   const onPressText = () => {
     navigation.navigate('Register');
   };
+  const onPressForgotPassword = () => {
+    navigation.navigate('OtpRequest');
+  };
 
   const persistLogin = ({ phone_number, user_id, user_data }) => {
     const credentials = { phone_number, user_id, user_data };
@@ -122,12 +125,13 @@ export default function Login({ navigation }) {
                 value={pin}
                 underlineColorAndroid={'transparent'}
               />
-        <Text style={Styles.link} onPress={onPressText} >Don't have an account?</Text>
+        <Text style={Styles.link} onPress={onPressForgotPassword} >Forgot Password?</Text>
         {errorMessage !== '' && <Text style={Styles.errorText}>{errorMessage}</Text>}
         {isLoading && <ActivityIndicator size="small" color={mainColor} style={Styles.activity} />}
         <TouchableOpacity style={Styles.button} onPress={onPressLogin} >
               <Text style={Styles.buttonText2}>Sign In</Text>
         </TouchableOpacity>
+        <Text style={Styles.link} onPress={onPressText} >Don't have an account?</Text>
       </View>
     </View>
   );
