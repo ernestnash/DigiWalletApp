@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, SafeAreaView} from "react-native";
 import { useState, useEffect } from "react";
-import Styles, { mainColor } from "../../../styles/Styles";
+import Styles, { height, mainColor, width } from "../../../styles/Styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from '@expo/vector-icons';
 import { CredentialsContext } from "../../../components/CredentialsContext";
@@ -56,7 +56,7 @@ export default function Profile({ navigation }) {
     };
 
     return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", top: 0,}}>
+        <View style={{ marginTop: height/15, alignItems: "center", width: width, position: 'absolute',height: height}}>
             <Text style={Styles.transactionsHeading}>Profile</Text>
             <Text>Finish Setting up your Profile</Text>
             <SafeAreaView style={Styles.profileContainer}>
@@ -81,6 +81,7 @@ export default function Profile({ navigation }) {
             </TouchableOpacity>
             
             <View style={Styles.separator2} />
+
             <SafeAreaView style={Styles.settingsContainer}>
                 <Text style={Styles.transactionsHeading}>Quick Settings</Text>
                 <View style={Styles.securityButtonsContainer}>
@@ -92,7 +93,6 @@ export default function Profile({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-                <View style={Styles.separator2} />
 
                 <TouchableOpacity
                     style={Styles.button}

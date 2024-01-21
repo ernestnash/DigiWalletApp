@@ -58,30 +58,34 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation, route }) => {
 
       if (verificationCode != otp) {
         setErrorMessage('Invalid OTP. Please try again.');
-      }
-
-      const response = await fetch(`${ipAddress}/user/verify/otp`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          otp: verificationCode,
-        }),
-      });
-
-      // Check if the response indicates success
-      if (response.ok) {
-        console.log('OTP Verification Successful');
       } else {
-        // If verification fails, set an error message
-        setErrorMessage('Invalid OTP. Please try again.');
+
+        const response = await fetch(`${ipAddress}/user/verify/otp`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            otp: verificationCode,
+          }),
+        });
+  
+        // Check if the response indicates success
+        if (response.ok) {
+          console.log('OTP Verification Successful');
+        } else {
+          // If verification fails, set an error message
+          setErrorMessage('Invalid OTP. Please try again.');
+        }
+  
+        // OTP verification successful, navigate to the next screen (e.g., ChangePassword)
+        navigation.navigate('ChangePassword', { phoneNumber });
+
       }
 
-      // OTP verification successful, navigate to the next screen (e.g., ChangePassword)
-      navigation.navigate('ChangePassword', { phoneNumber });
+
 
     } catch (error) {
       console.error('Error verifying OTP:', error);

@@ -62,7 +62,7 @@ const Styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     padding: 16,
-    marginTop: 20,
+    marginTop: 0,
     borderRadius: 5,
     backgroundColor: mainColor,
     color: primaryText,
@@ -245,13 +245,15 @@ const Styles = StyleSheet.create({
   },
   quickActionsContainerTransLeft: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
     marginTop: 20,
-    marginLeft: 25,
+    marginRight: (width/3)*2,
   },
-  quickAction: {
-    alignItems: 'center',
-  },
+  // quickAction: {
+  //   alignItems: 'center',
+  // },
   quickActionIcon: {
     fontSize: 24,
   },
