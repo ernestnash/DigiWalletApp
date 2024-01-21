@@ -200,11 +200,11 @@ export function MainContent({ navigation }) {
                 component={Cheques}
                 options={{ headerShown: false }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name={reportsName}
                 component={Reports}
                 options={{ headerShown: false }}
-            />
+            /> */}
             <Tab.Screen
                 name={profileName}
                 component={Profile}

@@ -1,8 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+import PropTypes from 'prop-types';
 import Styles, { mainColor, primaryText, width, height } from '../styles/Styles';
 
-const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
+import ipAddress from '../api/Api';
+
+
+const OtpEntry = ({ length, value, disabled, onChange, navigation, route }) => {
   length = 4;
 
   const [code, setCode] = useState(['', '', '', '']);
@@ -10,8 +22,16 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const inputRefs = useRef([]);
 
+  const { phoneNumber, userData, email, otp } = route.params;
+
+  console.log('Phone Number:', phoneNumber);
+  console.log('User Data:', userData);
+  console.log('Email:', email);
+  console.log('OTP:', otp);
+
+
   useEffect(() => {
-    inputRefs.current[0].focus();
+    inputRefs.current[0]?.focus();
   }, []);
 
   const handleInputChange = (text, index) => {
@@ -21,23 +41,64 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
 
     if (text === '' && index > 0) {
       // Move focus to the previous input field when deleting
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[index - 1]?.focus();
     } else if (text.length === 1 && index < length - 1) {
       // Move focus to the next input field when entering
-      inputRefs.current[index + 1].focus();
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const onPressVerify = async () => {
     try {
       setIsLoading(true);
-      alert('Sending Otp to ');
-      navigation.navigate('ChangePassword');
+
+      // Combine the OTP digits into a single string
+      const verificationCode = code.join('');
+      console.log('Entered Code: ', verificationCode);
+
+      if (verificationCode != otp) {
+        setErrorMessage('Invalid OTP. Please try again.');
+      }
+
+      const response = await fetch(`${ipAddress}/user/verify/otp`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          otp: verificationCode,
+        }),
+      });
+
+      // Check if the response indicates success
+      if (response.ok) {
+        console.log('OTP Verification Successful');
+      } else {
+        // If verification fails, set an error message
+        setErrorMessage('Invalid OTP. Please try again.');
+      }
+
+      // OTP verification successful, navigate to the next screen (e.g., ChangePassword)
+      navigation.navigate('ChangePassword', { phoneNumber });
+
     } catch (error) {
       console.error('Error verifying OTP:', error);
-      setErrorMessage('Unknown error occurred.');
+      setErrorMessage('Invalid OTP. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const onPressResend = async () => {
+    try {
+      // Add your logic for resending OTP here
+
+      Alert.alert('Otp Verification Successful');
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      // Handle error (e.g., display an error message)
     }
   };
 
@@ -45,9 +106,9 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
     <View style={styles.formContainer}>
       <View style={styles.container}>
         <Text style={styles.heading}>Verify OTP to change pin</Text>
-        <Text style={styles.marginB}>We have sent an OTP to your phone number +254 *** *** 388</Text>
+        <Text style={styles.marginB}>We have sent an OTP to {email}</Text>
         <View style={styles.inputContainer}>
-          {[...new Array(length)].map((item, index) => (
+          {[...new Array(length)].map((_, index) => (
             <TextInput
               key={index}
               style={styles.input}
@@ -58,6 +119,9 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
             />
           ))}
         </View>
+
+        <Text>Haven't Received the Code?</Text>
+        <Text onPress={onPressResend}>Resend!</Text>
       </View>
       {errorMessage !== '' && <Text style={Styles.errorText}>{errorMessage}</Text>}
       {isLoading ? (
@@ -69,6 +133,15 @@ const OtpEntry = ({ length, value, disabled, onChange, navigation }) => {
       )}
     </View>
   );
+};
+
+OtpEntry.propTypes = {
+  length: PropTypes.number,
+  value: PropTypes.string,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  navigation: PropTypes.object,
+  route: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

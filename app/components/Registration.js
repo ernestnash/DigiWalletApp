@@ -160,7 +160,7 @@ export default function Registration({ navigation }) {
           value={pin}
           keyboardType='numeric'
           underlineColorAndroid={'transparent'}
-          maxLength={6}
+          maxLength={4}
         />
         <TextInput
           style={[
@@ -176,7 +176,7 @@ export default function Registration({ navigation }) {
           value={confirmPin}
           keyboardType='numeric'
           underlineColorAndroid={'transparent'}
-          maxLength={6}
+          maxLength={4}
         />
          {/* Display pin error message */}
          {pinError !== '' && <Text style={Styles.errorText}>{pinError}</Text>}

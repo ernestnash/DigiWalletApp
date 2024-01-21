@@ -1,5 +1,6 @@
 
 import { initializeApp } from '@react-native-firebase/app';
+// import { getAnalytics } from "firebase/analytics";
 
 
 export const firebaseConfig = {
@@ -13,3 +14,4 @@ export const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);

@@ -6,6 +6,7 @@ import GetStarted from '../pages/GetStarted';
 import Login from '../components/LoginComponent';
 import Register from '../components/Registration';
 import OtpRequest from '../OTP/OtpRequest';
+import EnterEmail from '../OTP/EnterEmail';
 import OtpEntry from '../OTP/OtpEntry';
 import ChangePassword from '../OTP/ChangePassword';
 
@@ -32,6 +33,10 @@ const AuthNavigator = () => (
     <AuthStack.Screen 
           name="OtpRequest" 
           component={OtpRequest} 
+          options={{ headerShown: false }} />
+    <AuthStack.Screen 
+          name="EnterEmail" 
+          component={EnterEmail} 
           options={{ headerShown: false }} />
     <AuthStack.Screen 
           name="OtpEntry" 

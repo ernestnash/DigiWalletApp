@@ -122,6 +122,7 @@ export default function Login({ navigation }) {
                 secureTextEntry={true}
                 onFocus={() => setIsPinInputFocused(true)}
                 onBlur={() => setIsPinInputFocused(false)}
+                maxLength={4}
                 value={pin}
                 underlineColorAndroid={'transparent'}
               />
