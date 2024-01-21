@@ -95,6 +95,11 @@ export default function TransactionDetails({ route }) {
 
                     <View style={Styles.detailsContainer}>
                         {/* Transaction details */}
+                        {transaction.reference && (
+                        <View style={Styles.detailRow}>
+                            <Text style={Styles.detailLabel}>Transaction Ref:</Text>
+                            <Text style={Styles.detailContent}>{transaction.reference}</Text>
+                        </View>)}
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Name:</Text>
                             <Text style={Styles.detailContent}>{getDisplayName()}</Text>
@@ -103,10 +108,17 @@ export default function TransactionDetails({ route }) {
                             <Text style={Styles.detailLabel}>Amount:</Text>
                             <Text style={Styles.detailContent}>{transaction.amount}</Text>
                         </View>
+                        {transaction.fee && (
+                            <View style={Styles.detailRow}>
+                                <Text style={Styles.detailLabel}>Fee:</Text>
+                                <Text style={Styles.detailContent}>{transaction.fee}</Text>
+                            </View>
+                        )}
                         <View style={Styles.detailRow}>
                             <Text style={Styles.detailLabel}>Type:</Text>
                             <Text style={Styles.detailContent}>{transaction.transaction_type}</Text>
                         </View>
+
                     </View>
 
                     {/* Conditionally render recipient details */}

@@ -45,9 +45,11 @@ export default function OtpRequest() {
         // Check if there is a registered email
         if (responseData.user_data && responseData.user_data.email) {
           // Send OTP to the registered email
-          const otp = await sendOtpToEmail(responseData.user_data.email, phoneNumber);
+          const email = responseData.user_data.email;
+          console.log(email);
+          const otp = await sendOtpToEmail(email, phoneNumber);
           // Navigate to the OTP entry screen
-          navigation.navigate('OtpEntry', { phoneNumber, userData: responseData.user_data, otp });
+          navigation.navigate('OtpEntry', { phoneNumber, userData: responseData.user_data, otp, email });
         } else {
           // Navigate to the Enter Email screen
           navigation.navigate('EnterEmail', { phoneNumber, userData: responseData.user_data });
